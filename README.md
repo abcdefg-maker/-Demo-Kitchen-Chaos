@@ -3,6 +3,8 @@
 > A Unity 3D cooking game project built by following Code Monkey’s **Kitchen Chaos** course, with my own annotated source code (Chinese comments) and packaged assets included for portfolio review.
 
 ---
+   - <img width="2549" height="1418" alt="image" src="https://github.com/user-attachments/assets/5da925be-ba08-4ac7-8250-a1d317f0863a" />
+
 
 ## 1. 项目简介 · Overview
 
