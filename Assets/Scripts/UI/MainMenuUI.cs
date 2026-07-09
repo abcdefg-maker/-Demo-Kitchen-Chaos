@@ -14,23 +14,23 @@ public class MainMenuUI : MonoBehaviour
 
     private void Awake()
     {
-        Time.timeScale = 1f; //Èç¹ûÊÇ´ÓPause×´Ì¬¹ıÀ´µÄ£¬ÄÇ»Ö¸´Ò»ÏÂÊ±¼äÁ÷ÊÅ
+        Time.timeScale = 1f; //å¦‚æœæ˜¯ä»PauseçŠ¶æ€è¿‡æ¥çš„ï¼Œé‚£æ¢å¤ä¸€ä¸‹æ—¶é—´æµé€
 
         playButton.onClick.AddListener(() =>
         {
-            //  ()=> ÎªLambda±í´ïÊ½(ÄäÃûº¯Êı),
-            //  ()ÄÚÎª²ÎÊı±í£¬
-            //  =>±íÊ¾Ö´ĞĞºóÃæ{}µÄ´úÂë£¬
-            //  {}ÄÚ·ÅÖÃº¯ÊıÌå
+            //  ()=> ä¸ºLambdaè¡¨è¾¾å¼(åŒ¿åå‡½æ•°),
+            //  ()å†…ä¸ºå‚æ•°è¡¨ï¼Œ
+            //  =>è¡¨ç¤ºæ‰§è¡Œåé¢{}çš„ä»£ç ï¼Œ
+            //  {}å†…æ”¾ç½®å‡½æ•°ä½“
             Loader.Load(Loader.Scene.MainScene);
         });
 
         quitButton.onClick.AddListener(() =>
         {
             #if UNITY_EDITOR
-                EditorApplication.isPlaying = false;   // ÔÚ Unity ±à¼­Æ÷ÄÚÍ£Ö¹²¥·Å
+                EditorApplication.isPlaying = false;   // åœ¨ Unity ç¼–è¾‘å™¨å†…åœæ­¢æ’­æ”¾
             #else
-                Application.Quit();                    // ÔÚ´ò°üºóµÄÓÎÏ·ÖĞÍË³ö
+                Application.Quit();                    // åœ¨æ‰“åŒ…åçš„æ¸¸æˆä¸­é€€å‡º
             #endif
         });
     }

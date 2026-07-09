@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour //¹ÜÀí¸÷ÖÖÒôĞ§µÄÀà
-                                          //ÓÉÓÚ¡°Âß¼­ & ÊÓ¾õÌı¾õ ·ÖÀë¡±µÄÒªÇó£¬´Ë´¦ÓĞ´óÁ¿µÄ¼àÌıº¯Êı
-                                          //²»¹ıÑÏ¸ñÀ´Ëµ£¬Õâ¿éµÄÂß¼­ºÍÌı¾õ·ÖµÄÒ²²»ÊÇÄÇÃ´Çå³ş£¬
-                                          //±Ï¾¹µ÷½ÚÒôÁ¿´óĞ¡µÄÂß¼­£¨ChangeVolumeº¯Êı£©ÔÚ´Ë´¦ÊµÏÖ
+public class SoundManager : MonoBehaviour //ç®¡ç†å„ç§éŸ³æ•ˆçš„ç±»
+                                          //ç”±äºâ€œé€»è¾‘ & è§†è§‰å¬è§‰ åˆ†ç¦»â€çš„è¦æ±‚ï¼Œæ­¤å¤„æœ‰å¤§é‡çš„ç›‘å¬å‡½æ•°
+                                          //ä¸è¿‡ä¸¥æ ¼æ¥è¯´ï¼Œè¿™å—çš„é€»è¾‘å’Œå¬è§‰åˆ†çš„ä¹Ÿä¸æ˜¯é‚£ä¹ˆæ¸…æ¥šï¼Œ
+                                          //æ¯•ç«Ÿè°ƒèŠ‚éŸ³é‡å¤§å°çš„é€»è¾‘ï¼ˆChangeVolumeå‡½æ•°ï¼‰åœ¨æ­¤å¤„å®ç°
 {
     private const string PLAYER_PREFS_SOUND_EFFECTS_VOLUME = "SoundEffectsVolume";
 
@@ -68,17 +68,17 @@ public class SoundManager : MonoBehaviour //¹ÜÀí¸÷ÖÖÒôĞ§µÄÀà
         PlaySound(audioClipRefsSO.deliveryFailed, deliveryCounter.transform.position);
     }
 
-    private void PlaySound(AudioClip audioClip,Vector3 position,float volume =1f) //²¥·ÅÒôĞ§µÄº¯Êı 
+    private void PlaySound(AudioClip audioClip,Vector3 position,float volume =1f) //æ’­æ”¾éŸ³æ•ˆçš„å‡½æ•° 
     {
         AudioSource.PlayClipAtPoint(audioClip, position, volume);
     }
 
-    private void PlaySound(AudioClip[] audioClipArray, Vector3 position, float volumeMultiplier = 1f) //ÉÏÃæµÄº¯ÊıµÄº¯ÊıÖØÔØ
+    private void PlaySound(AudioClip[] audioClipArray, Vector3 position, float volumeMultiplier = 1f) //ä¸Šé¢çš„å‡½æ•°çš„å‡½æ•°é‡è½½
     {
         AudioSource.PlayClipAtPoint(audioClipArray[Random.Range(0,audioClipArray.Length)], position, volumeMultiplier * volume);
     }
 
-    public void PlayFootstepsSound(Vector3 position, float volume) //ÎªPlayerSoundÀàÊµÏÖµÄ²¥·Å×ßÂ·ÒôĞ§µÄº¯Êı
+    public void PlayFootstepsSound(Vector3 position, float volume) //ä¸ºPlayerSoundç±»å®ç°çš„æ’­æ”¾èµ°è·¯éŸ³æ•ˆçš„å‡½æ•°
     {
         PlaySound(audioClipRefsSO.footstep,position,volume);
     }
@@ -88,7 +88,7 @@ public class SoundManager : MonoBehaviour //¹ÜÀí¸÷ÖÖÒôĞ§µÄÀà
         PlaySound(audioClipRefsSO.warning, Vector3.zero);
     }
 
-    public void PlayWarningSound(Vector3 position) //Îª²¥·ÅÂ¯×ÓÉÕ½¹¾¯¸æÉùÒôÊµÏÖµÄº¯Êı
+    public void PlayWarningSound(Vector3 position) //ä¸ºæ’­æ”¾ç‚‰å­çƒ§ç„¦è­¦å‘Šå£°éŸ³å®ç°çš„å‡½æ•°
     {
         PlaySound(audioClipRefsSO.warning, position);
     }
@@ -101,7 +101,7 @@ public class SoundManager : MonoBehaviour //¹ÜÀí¸÷ÖÖÒôĞ§µÄÀà
             volume = 0f;
         }
 
-        PlayerPrefs.SetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, volume); //½«ĞŞ¸ÄºóµÄÒôÁ¿±£´æ
+        PlayerPrefs.SetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, volume); //å°†ä¿®æ”¹åçš„éŸ³é‡ä¿å­˜
         PlayerPrefs.Save();
     }
 

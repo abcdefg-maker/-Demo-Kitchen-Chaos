@@ -12,47 +12,47 @@ public class ClearCounter : BaseCounter
     {
         if (!HasKitchenObject())
         {
-            //Ì¨ÃæÉÏÃ»¶«Î÷
+            //å°é¢ä¸Šæ²¡ä¸œè¥¿
             if (player.HasKitchenObject())
             {
-                // Íæ¼ÒÊÖÀïÓĞ¶«Î÷
-                player.GetKitchenObject().SetKitchenObjectParent(this); //°Ñ¶«Î÷·ÅÔÚÌ¨ÃæÉÏ
+                // ç©å®¶æ‰‹é‡Œæœ‰ä¸œè¥¿
+                player.GetKitchenObject().SetKitchenObjectParent(this); //æŠŠä¸œè¥¿æ”¾åœ¨å°é¢ä¸Š
             }
             else
             {
-                // Íæ¼ÒÊÖÀïÃ»ÓĞ¶«Î÷
+                // ç©å®¶æ‰‹é‡Œæ²¡æœ‰ä¸œè¥¿
             }
         }
         else
         {
-            //Ì¨ÃæÓĞ¶«Î÷
+            //å°é¢æœ‰ä¸œè¥¿
             if (player.HasKitchenObject())
             {
-                // Íæ¼ÒÊÖÀïÓĞ¶«Î÷
+                // ç©å®¶æ‰‹é‡Œæœ‰ä¸œè¥¿
                 if(player.GetKitchenObject().TryGetPlate(out PlateKitchenObject plateKitchenObject))
                 {
-                    //Íæ¼ÒÊÖÀïÄÃ×ÅÅÌ×Ó£¨ÕâÊ±ºòÎÒÃÇÏ£Íû°ÑclearcounterÉÏµÄ¶«Î÷·Åµ½ÅÌ×ÓÀï£©
-                    //asÊÇ°²È«ÀàĞÍ×ª»»
-                    //·µ»Ø obj Ç¿×ªºóµÄ¶ÔÏó£¬Èç¹û²»ÄÜ×ª»»£¬¾Í·µ»Ø null£¬²»»áÅ×Òì³£
-                    //·´Ö®£¬Èç¹ûÓÃÇ¿ÖÆÀàĞÍ×ª»»(Type)a,ÕâÑù×ª»»Ê§°ÜµÄÊ±ºò»áÅ×³öÒì³£
-                    if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))//ÅĞ¶ÏÕâ¸öÅÌ×ÓÀïÊÇ·ñÒÑ¾­Ìí¼Ó¹ıÕâ¸öÊ³²Ä
-                                                                                                     //Èç¹ûÌí¼Ó¹ıÏàÍ¬µÄÊ³²ÄÄÇ¾Í²»ÄÜÔÙ°ÑÕâ¸ö¶«Î÷·Å½øÈ¥
-                                                                                                     //ÕâÑùÉè¼ÆÊÇÒòÎªÎÒÃÇÉè¶¨µÄÊ³ÎïÅä·½
-                                                                                                     //ÔÚÍ¬Ò»¸ö²ËÆ·ÄÚ²»»á³öÏÖÏàÍ¬µÄÊ³²ÄÊ¹ÓÃÁ½´ÎµÄÇé¿ö
-                                                                                                     //£¨e.g. double cheese ...£©
-                                                                                                     //ËùÒÔÈç¹ûºóĞøĞèÒªÍØÕ¹ÕâÖÖÍæ·¨µÄ»°£¬Õâ¿éµÄ´úÂëÊÇĞèÒª¸ÄµÄ
+                    //ç©å®¶æ‰‹é‡Œæ‹¿ç€ç›˜å­ï¼ˆè¿™æ—¶å€™æˆ‘ä»¬å¸Œæœ›æŠŠclearcounterä¸Šçš„ä¸œè¥¿æ”¾åˆ°ç›˜å­é‡Œï¼‰
+                    //asæ˜¯å®‰å…¨ç±»å‹è½¬æ¢
+                    //è¿”å› obj å¼ºè½¬åçš„å¯¹è±¡ï¼Œå¦‚æœä¸èƒ½è½¬æ¢ï¼Œå°±è¿”å› nullï¼Œä¸ä¼šæŠ›å¼‚å¸¸
+                    //åä¹‹ï¼Œå¦‚æœç”¨å¼ºåˆ¶ç±»å‹è½¬æ¢(Type)a,è¿™æ ·è½¬æ¢å¤±è´¥çš„æ—¶å€™ä¼šæŠ›å‡ºå¼‚å¸¸
+                    if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))//åˆ¤æ–­è¿™ä¸ªç›˜å­é‡Œæ˜¯å¦å·²ç»æ·»åŠ è¿‡è¿™ä¸ªé£Ÿæ
+                                                                                                     //å¦‚æœæ·»åŠ è¿‡ç›¸åŒçš„é£Ÿæé‚£å°±ä¸èƒ½å†æŠŠè¿™ä¸ªä¸œè¥¿æ”¾è¿›å»
+                                                                                                     //è¿™æ ·è®¾è®¡æ˜¯å› ä¸ºæˆ‘ä»¬è®¾å®šçš„é£Ÿç‰©é…æ–¹
+                                                                                                     //åœ¨åŒä¸€ä¸ªèœå“å†…ä¸ä¼šå‡ºç°ç›¸åŒçš„é£Ÿæä½¿ç”¨ä¸¤æ¬¡çš„æƒ…å†µ
+                                                                                                     //ï¼ˆe.g. double cheese ...ï¼‰
+                                                                                                     //æ‰€ä»¥å¦‚æœåç»­éœ€è¦æ‹“å±•è¿™ç§ç©æ³•çš„è¯ï¼Œè¿™å—çš„ä»£ç æ˜¯éœ€è¦æ”¹çš„
                     {
                         GetKitchenObject().DestorySelf();
                     }
                 }
                 else
                 {
-                    //Íæ¼ÒÊÖÀïÓĞ¶«Î÷£¬µ«ÊÇÍæ¼ÒÊÖÀïµÄ¶«Î÷²»ÊÇÒ»¸öÅÌ×Ó
-                    if(GetKitchenObject().TryGetPlate(out  plateKitchenObject)) //¿´¿´ClearCounterÉÏÃæÊÇ·ñÓĞÅÌ×Ó
+                    //ç©å®¶æ‰‹é‡Œæœ‰ä¸œè¥¿ï¼Œä½†æ˜¯ç©å®¶æ‰‹é‡Œçš„ä¸œè¥¿ä¸æ˜¯ä¸€ä¸ªç›˜å­
+                    if(GetKitchenObject().TryGetPlate(out  plateKitchenObject)) //çœ‹çœ‹ClearCounterä¸Šé¢æ˜¯å¦æœ‰ç›˜å­
                     {
                         if (plateKitchenObject.TryAddIngredient(player.GetKitchenObject().GetKitchenObjectSO()))
                         {
-                            //°ÑÍæ¼ÒÊÖÀïµÄ¶«Î÷·Åµ½ÅÌ×ÓÉÏ
+                            //æŠŠç©å®¶æ‰‹é‡Œçš„ä¸œè¥¿æ”¾åˆ°ç›˜å­ä¸Š
                             player.GetKitchenObject().DestorySelf();
                         }
                     }
@@ -60,8 +60,8 @@ public class ClearCounter : BaseCounter
             }
             else
             {
-                // Íæ¼ÒÊÖÀïÃ»ÓĞ¶«Î÷
-                GetKitchenObject().SetKitchenObjectParent(player);//°Ñ¶«Î÷·ÅÔÚÍæ¼ÒÊÖÉÏ
+                // ç©å®¶æ‰‹é‡Œæ²¡æœ‰ä¸œè¥¿
+                GetKitchenObject().SetKitchenObjectParent(player);//æŠŠä¸œè¥¿æ”¾åœ¨ç©å®¶æ‰‹ä¸Š
             }
         }
     }

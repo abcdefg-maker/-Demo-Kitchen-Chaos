@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlateCompleteVisual : MonoBehaviour
 {
     [Serializable]
-    public struct KitchenObjectSO_GameObject    //°ÑprefabÀïµÄ¶ÔÏóºÍSO½øĞĞ°ó¶¨£¬ÕâÑùÎÒÃÇ¾Í²»ÓÃÍ¨¹ıstringÀ´Ê¶±ğ×Ó¶ÔÏóÁË
+    public struct KitchenObjectSO_GameObject    //æŠŠprefabé‡Œçš„å¯¹è±¡å’ŒSOè¿›è¡Œç»‘å®šï¼Œè¿™æ ·æˆ‘ä»¬å°±ä¸ç”¨é€šè¿‡stringæ¥è¯†åˆ«å­å¯¹è±¡äº†
     {
         public GameObject gameObject;
         public KitchenObjectSO kitchenObjectSO;
@@ -21,7 +21,7 @@ public class PlateCompleteVisual : MonoBehaviour
         foreach (KitchenObjectSO_GameObject kitchenObjectSOGameObject in kitchenObjectSOGameObjectList)
         {
 
-                kitchenObjectSOGameObject.gameObject.SetActive(false); //³õÊ¼»¯ÉèÖÃÎª¶¼²»¿É¼û 
+                kitchenObjectSOGameObject.gameObject.SetActive(false); //åˆå§‹åŒ–è®¾ç½®ä¸ºéƒ½ä¸å¯è§ 
 
         }
     }
@@ -32,7 +32,7 @@ public class PlateCompleteVisual : MonoBehaviour
         {
             if(kitchenObjectSOGameObject.kitchenObjectSO == e.kitchenObjectSO)
             {
-                kitchenObjectSOGameObject.gameObject.SetActive(true); //Èç¹ûÕÒµ½ÁË¶ÔÓ¦µÄSO£¬¾Í¼¤»îÕâ¸ö¶ÔÏó£¨ÊÓ¾õÉÏ¾ÍÄÜ¿´¼ûÁË£©
+                kitchenObjectSOGameObject.gameObject.SetActive(true); //å¦‚æœæ‰¾åˆ°äº†å¯¹åº”çš„SOï¼Œå°±æ¿€æ´»è¿™ä¸ªå¯¹è±¡ï¼ˆè§†è§‰ä¸Šå°±èƒ½çœ‹è§äº†ï¼‰
             }
         }
 

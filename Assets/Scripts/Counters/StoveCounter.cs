@@ -5,13 +5,13 @@ using UnityEngine;
 using static CuttingCounter;
 
 public class StoveCounter :BaseCounter, IHasProgress  
-                                        //ÓÉÓÚÈâ±ıĞèÒª±»¼åÕ¨³É²»Í¬µÄ×´Ì¬£¬Òò´Ë¶ÔÓ¦µÄstoveÒ²ĞèÒªÓĞ²»Í¬µÄ×´Ì¬
-                                        //ÎªÁËÊµÏÖÕâÖÖÇé¿ö£¬Õâ¸östovecounterÀà±»ÄÚÖÃÁËÒ»¸ö×´Ì¬»ú£¬
-                                        //ÓÃenumÀ´Ã¶¾Ù×´Ì¬£¬ÉúÃüÖÜÆÚº¯Êı¹ÜÀí×´Ì¬
+                                        //ç”±äºè‚‰é¥¼éœ€è¦è¢«ç…ç‚¸æˆä¸åŒçš„çŠ¶æ€ï¼Œå› æ­¤å¯¹åº”çš„stoveä¹Ÿéœ€è¦æœ‰ä¸åŒçš„çŠ¶æ€
+                                        //ä¸ºäº†å®ç°è¿™ç§æƒ…å†µï¼Œè¿™ä¸ªstovecounterç±»è¢«å†…ç½®äº†ä¸€ä¸ªçŠ¶æ€æœºï¼Œ
+                                        //ç”¨enumæ¥æšä¸¾çŠ¶æ€ï¼Œç”Ÿå‘½å‘¨æœŸå‡½æ•°ç®¡ç†çŠ¶æ€
 {
-    public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged; //¿ØÖÆ½ø¶ÈÌõµÄÊÂ¼ş
+    public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged; //æ§åˆ¶è¿›åº¦æ¡çš„äº‹ä»¶
 
-    public event EventHandler<OnStateChangedEventArgs> OnStateChanged; //ÓÃÀ´¸øStoveCounterVisual´«µİ×´Ì¬±ä»¯µÄÊÂ¼ş
+    public event EventHandler<OnStateChangedEventArgs> OnStateChanged; //ç”¨æ¥ç»™StoveCounterVisualä¼ é€’çŠ¶æ€å˜åŒ–çš„äº‹ä»¶
     public class OnStateChangedEventArgs : EventArgs
     {
         public State state;
@@ -37,10 +37,10 @@ public class StoveCounter :BaseCounter, IHasProgress
 
     private void Start()
     {
-        state = State.Idle; //³õÊ¼»¯×´Ì¬»ú×´Ì¬
+        state = State.Idle; //åˆå§‹åŒ–çŠ¶æ€æœºçŠ¶æ€
     }
 
-    private void Update()   //×´Ì¬»úµÄºËĞÄÂß¼­£¬¹ÜÀí×´Ì¬½øÈëºÍÇĞ»»
+    private void Update()   //çŠ¶æ€æœºçš„æ ¸å¿ƒé€»è¾‘ï¼Œç®¡ç†çŠ¶æ€è¿›å…¥å’Œåˆ‡æ¢
     {
         if (HasKitchenObject())
         {
@@ -58,7 +58,7 @@ public class StoveCounter :BaseCounter, IHasProgress
 
                     if (fryingTimer >= fryingRecipeSO.fryingTimerMax)
                     {
-                        //¼åÕ¨ºÃÁË
+                        //ç…ç‚¸å¥½äº†
                         fryingTimer = 0f;
 
                         GetKitchenObject().DestorySelf();
@@ -84,7 +84,7 @@ public class StoveCounter :BaseCounter, IHasProgress
 
                     if (burningTimer >= burningRecipeSO.burningTimerMax)
                     {
-                        //¼åÕ¨¹ıÍ·ÁË
+                        //ç…ç‚¸è¿‡å¤´äº†
 
                         GetKitchenObject().DestorySelf();
 
@@ -116,13 +116,13 @@ public class StoveCounter :BaseCounter, IHasProgress
     {
         if (!HasKitchenObject())
         {
-            //Ì¨ÃæÉÏÃ»¶«Î÷
+            //å°é¢ä¸Šæ²¡ä¸œè¥¿
             if (player.HasKitchenObject())
             {
-                // Íæ¼ÒÊÖÀïÓĞ¶«Î÷
-                if (HasRecipeWithInput(player.GetKitchenObject().GetKitchenObjectSO()))//¶«Î÷ÊÇ¿ÉÒÔ¼åÕ¨µÄ
+                // ç©å®¶æ‰‹é‡Œæœ‰ä¸œè¥¿
+                if (HasRecipeWithInput(player.GetKitchenObject().GetKitchenObjectSO()))//ä¸œè¥¿æ˜¯å¯ä»¥ç…ç‚¸çš„
                 {
-                    player.GetKitchenObject().SetKitchenObjectParent(this); //°Ñ¶«Î÷·ÅÔÚÌ¨ÃæÉÏ
+                    player.GetKitchenObject().SetKitchenObjectParent(this); //æŠŠä¸œè¥¿æ”¾åœ¨å°é¢ä¸Š
 
 
                     fryingRecipeSO = GetFryingRecipeSOWithInput(GetKitchenObject().GetKitchenObjectSO());
@@ -143,30 +143,30 @@ public class StoveCounter :BaseCounter, IHasProgress
             }
             else
             {
-                // Íæ¼ÒÊÖÀïÃ»ÓĞ¶«Î÷
+                // ç©å®¶æ‰‹é‡Œæ²¡æœ‰ä¸œè¥¿
             }
         }
         else
         {
-            //Ì¨ÃæÓĞ¶«Î÷
+            //å°é¢æœ‰ä¸œè¥¿
             if (player.HasKitchenObject())
             {
-                // Íæ¼ÒÊÖÀïÓĞ¶«Î÷
+                // ç©å®¶æ‰‹é‡Œæœ‰ä¸œè¥¿
                 if (player.GetKitchenObject().TryGetPlate(out PlateKitchenObject plateKitchenObject))
                 {
-                    //Íæ¼ÒÊÖÀïÄÃ×ÅÅÌ×Ó£¨ÕâÊ±ºòÎÒÃÇÏ£Íû°ÑclearcounterÉÏµÄ¶«Î÷·Åµ½ÅÌ×ÓÀï£©
-                    //asÊÇ°²È«ÀàĞÍ×ª»»
-                    //·µ»Ø obj Ç¿×ªºóµÄ¶ÔÏó£¬Èç¹û²»ÄÜ×ª»»£¬¾Í·µ»Ø null£¬²»»áÅ×Òì³£
-                    //·´Ö®£¬Èç¹ûÓÃÇ¿ÖÆÀàĞÍ×ª»»(Type)a,ÕâÑù×ª»»Ê§°ÜµÄÊ±ºò»áÅ×³öÒì³£
-                    if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))//ÅĞ¶ÏÕâ¸öÅÌ×ÓÀïÊÇ·ñÒÑ¾­Ìí¼Ó¹ıÕâ¸öÊ³²Ä
-                                                                                                     //Èç¹ûÌí¼Ó¹ıÏàÍ¬µÄÊ³²ÄÄÇ¾Í²»ÄÜÔÙ°ÑÕâ¸ö¶«Î÷·Å½øÈ¥
-                                                                                                     //ÕâÑùÉè¼ÆÊÇÒòÎªÎÒÃÇÉè¶¨µÄÊ³ÎïÅä·½
-                                                                                                     //ÔÚÍ¬Ò»¸ö²ËÆ·ÄÚ²»»á³öÏÖÏàÍ¬µÄÊ³²ÄÊ¹ÓÃÁ½´ÎµÄÇé¿ö
-                                                                                                     //£¨e.g. double cheese ...£©
-                                                                                                     //ËùÒÔÈç¹ûºóĞøĞèÒªÍØÕ¹ÕâÖÖÍæ·¨µÄ»°£¬Õâ¿éµÄ´úÂëÊÇĞèÒª¸ÄµÄ
+                    //ç©å®¶æ‰‹é‡Œæ‹¿ç€ç›˜å­ï¼ˆè¿™æ—¶å€™æˆ‘ä»¬å¸Œæœ›æŠŠclearcounterä¸Šçš„ä¸œè¥¿æ”¾åˆ°ç›˜å­é‡Œï¼‰
+                    //asæ˜¯å®‰å…¨ç±»å‹è½¬æ¢
+                    //è¿”å› obj å¼ºè½¬åçš„å¯¹è±¡ï¼Œå¦‚æœä¸èƒ½è½¬æ¢ï¼Œå°±è¿”å› nullï¼Œä¸ä¼šæŠ›å¼‚å¸¸
+                    //åä¹‹ï¼Œå¦‚æœç”¨å¼ºåˆ¶ç±»å‹è½¬æ¢(Type)a,è¿™æ ·è½¬æ¢å¤±è´¥çš„æ—¶å€™ä¼šæŠ›å‡ºå¼‚å¸¸
+                    if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))//åˆ¤æ–­è¿™ä¸ªç›˜å­é‡Œæ˜¯å¦å·²ç»æ·»åŠ è¿‡è¿™ä¸ªé£Ÿæ
+                                                                                                     //å¦‚æœæ·»åŠ è¿‡ç›¸åŒçš„é£Ÿæé‚£å°±ä¸èƒ½å†æŠŠè¿™ä¸ªä¸œè¥¿æ”¾è¿›å»
+                                                                                                     //è¿™æ ·è®¾è®¡æ˜¯å› ä¸ºæˆ‘ä»¬è®¾å®šçš„é£Ÿç‰©é…æ–¹
+                                                                                                     //åœ¨åŒä¸€ä¸ªèœå“å†…ä¸ä¼šå‡ºç°ç›¸åŒçš„é£Ÿæä½¿ç”¨ä¸¤æ¬¡çš„æƒ…å†µ
+                                                                                                     //ï¼ˆe.g. double cheese ...ï¼‰
+                                                                                                     //æ‰€ä»¥å¦‚æœåç»­éœ€è¦æ‹“å±•è¿™ç§ç©æ³•çš„è¯ï¼Œè¿™å—çš„ä»£ç æ˜¯éœ€è¦æ”¹çš„
                     {
                         GetKitchenObject().DestorySelf();
-                        state = State.Idle; //Íæ¼ÒÄÃÆğÈâ±ıºó£¬ÖØÖÃÎª³õÊ¼×´Ì¬
+                        state = State.Idle; //ç©å®¶æ‹¿èµ·è‚‰é¥¼åï¼Œé‡ç½®ä¸ºåˆå§‹çŠ¶æ€
                         OnStateChanged?.Invoke(this, new OnStateChangedEventArgs
                         {
                             state = this.state,
@@ -181,10 +181,10 @@ public class StoveCounter :BaseCounter, IHasProgress
             }
             else
             {
-                // Íæ¼ÒÊÖÀïÃ»ÓĞ¶«Î÷
-                GetKitchenObject().SetKitchenObjectParent(player);//°Ñ¶«Î÷·ÅÔÚÍæ¼ÒÊÖÉÏ
+                // ç©å®¶æ‰‹é‡Œæ²¡æœ‰ä¸œè¥¿
+                GetKitchenObject().SetKitchenObjectParent(player);//æŠŠä¸œè¥¿æ”¾åœ¨ç©å®¶æ‰‹ä¸Š
                 
-                state = State.Idle; //Íæ¼ÒÄÃÆğÈâ±ıºó£¬ÖØÖÃÎª³õÊ¼×´Ì¬
+                state = State.Idle; //ç©å®¶æ‹¿èµ·è‚‰é¥¼åï¼Œé‡ç½®ä¸ºåˆå§‹çŠ¶æ€
                 OnStateChanged?.Invoke(this, new OnStateChangedEventArgs
                 {
                     state = this.state,
@@ -198,7 +198,7 @@ public class StoveCounter :BaseCounter, IHasProgress
         }
     }
 
-    private KitchenObjectSO GetOutputForInput(KitchenObjectSO inputKitchenObjectSO) //²éÕÒ¼åÕ¨Ç°ºÍ¼åÕ¨ºó¶ÔÓ¦µÄgameobject
+    private KitchenObjectSO GetOutputForInput(KitchenObjectSO inputKitchenObjectSO) //æŸ¥æ‰¾ç…ç‚¸å‰å’Œç…ç‚¸åå¯¹åº”çš„gameobject
     {
         FryingRecipeSO fryingRecipeSO = GetFryingRecipeSOWithInput(inputKitchenObjectSO);
         if (fryingRecipeSO != null)
@@ -211,7 +211,7 @@ public class StoveCounter :BaseCounter, IHasProgress
         }
     }
 
-    private bool HasRecipeWithInput(KitchenObjectSO inputKitchenObjectSO) //ÅĞ¶ÏÒ»¸öÎïÆ·ÊÇ·ñÊÇ¿ÉÒÔ¼åÕ¨µÄ
+    private bool HasRecipeWithInput(KitchenObjectSO inputKitchenObjectSO) //åˆ¤æ–­ä¸€ä¸ªç‰©å“æ˜¯å¦æ˜¯å¯ä»¥ç…ç‚¸çš„
     {
         FryingRecipeSO fryingRecipeSO = GetFryingRecipeSOWithInput(inputKitchenObjectSO);
         return fryingRecipeSO != null;
@@ -219,7 +219,7 @@ public class StoveCounter :BaseCounter, IHasProgress
 
 
 
-    private FryingRecipeSO GetFryingRecipeSOWithInput(KitchenObjectSO inputKitchenObjectSO)//²éÕÒÎïÆ·ÊÇ·ñÄÜ¹»¼åÕ¨£¬¿ÉÒÔ¾Í·µ»Ørecipe
+    private FryingRecipeSO GetFryingRecipeSOWithInput(KitchenObjectSO inputKitchenObjectSO)//æŸ¥æ‰¾ç‰©å“æ˜¯å¦èƒ½å¤Ÿç…ç‚¸ï¼Œå¯ä»¥å°±è¿”å›recipe
     {
         foreach (FryingRecipeSO fryingRecipeSO in fryingRecipeSOArray)
         {
@@ -231,7 +231,7 @@ public class StoveCounter :BaseCounter, IHasProgress
         return null;
     }
 
-    private BurningRecipeSO GetBurningRecipeSOWithInput(KitchenObjectSO inputKitchenObjectSO)//²éÕÒÎïÆ·ÊÇ·ñÄÜ¹»¼åÕ¨¹ıÍ·£¬¿ÉÒÔ¾Í·µ»Ørecipe
+    private BurningRecipeSO GetBurningRecipeSOWithInput(KitchenObjectSO inputKitchenObjectSO)//æŸ¥æ‰¾ç‰©å“æ˜¯å¦èƒ½å¤Ÿç…ç‚¸è¿‡å¤´ï¼Œå¯ä»¥å°±è¿”å›recipe
     {
         foreach (BurningRecipeSO buringRecipeSO in burningRecipeSOArray)
         {

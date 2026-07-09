@@ -8,43 +8,43 @@ public class KitchenObject : MonoBehaviour
     [SerializeField] private KitchenObjectSO kitchenObjectSO;
     
     
-    private IKitchenObjectParent kitchenObjectParent;  //ÎªÁË¸øµ±Ç°µÄÎïÆ·¶¨Î»£¬È·¶¨Ëü´¦ÓÚÄÄ¸öÎ»ÖÃ
+    private IKitchenObjectParent kitchenObjectParent;  //ä¸ºäº†ç»™å½“å‰çš„ç‰©å“å®šä½ï¼Œç¡®å®šå®ƒå¤„äºå“ªä¸ªä½ç½®
 
     public KitchenObjectSO GetKitchenObjectSO()
     {
         return kitchenObjectSO;
     }
     /// <summary>
-    /// º¯Êı¹¦ÄÜ£º³õÊ¼»¯»òĞŞ¸ÄkitchenObjectµÄÎ»ÖÃ
+    /// å‡½æ•°åŠŸèƒ½ï¼šåˆå§‹åŒ–æˆ–ä¿®æ”¹kitchenObjectçš„ä½ç½®
     /// </summary>
     /// <param name="kitchenObjectParent"></param>
     public void SetKitchenObjectParent(IKitchenObjectParent kitchenObjectParent)      
-                                                                //ÓÉÓÚKO.csÄÚ±£´æÁËccµÄÎ»ÖÃ£¬CC.csÄÚ±£´æÁËkOµÄÎ»ÖÃ
-                                                                //ËùÒÔ½øĞĞĞŞ¸ÄÎ»ÖÃ²Ù×÷µÄÊ±ºò£¬±ØĞëÍ¬Ê±ĞŞ¸Ä
-                                                                //£¨µ±È»Õâ¸öº¯ÊıÒ²ÓĞ¡°³õÊ¼»¯kO¶ÔÓ¦µÄcc¡°µÄ¹¦ÄÜ£¬µ«ÊÇÕâÀïÖ÷ÒªÌÖÂÛ¡°ĞŞ¸Ä¡±²Ù×÷£©
-                                                                //Õâ¸öº¯ÊıÒÑ¾­½øĞĞÁËÏàµ±ÍêÉÆ¶ø°²È«µÄÊµÏÖ
-                                                                //Âß¼­£º
-                                                                //É¾³ıÔ­ccÉÏµÄkO ¡ú kO.cc = new CC ¡ú È·±£new CCÉÏÃ»ÓĞkO ¡ú new CC.kO = kO
+                                                                //ç”±äºKO.cså†…ä¿å­˜äº†ccçš„ä½ç½®ï¼ŒCC.cså†…ä¿å­˜äº†kOçš„ä½ç½®
+                                                                //æ‰€ä»¥è¿›è¡Œä¿®æ”¹ä½ç½®æ“ä½œçš„æ—¶å€™ï¼Œå¿…é¡»åŒæ—¶ä¿®æ”¹
+                                                                //ï¼ˆå½“ç„¶è¿™ä¸ªå‡½æ•°ä¹Ÿæœ‰â€œåˆå§‹åŒ–kOå¯¹åº”çš„ccâ€œçš„åŠŸèƒ½ï¼Œä½†æ˜¯è¿™é‡Œä¸»è¦è®¨è®ºâ€œä¿®æ”¹â€æ“ä½œï¼‰
+                                                                //è¿™ä¸ªå‡½æ•°å·²ç»è¿›è¡Œäº†ç›¸å½“å®Œå–„è€Œå®‰å…¨çš„å®ç°
+                                                                //é€»è¾‘ï¼š
+                                                                //åˆ é™¤åŸccä¸Šçš„kO â†’ kO.cc = new CC â†’ ç¡®ä¿new CCä¸Šæ²¡æœ‰kO â†’ new CC.kO = kO
     {
-        if (this.kitchenObjectParent != null)   //Èç¹ûkOÖ®Ç°ÒÑ¾­ÔÚÄ³¸öÌ¨ÃæÉÏ·Å×Å
+        if (this.kitchenObjectParent != null)   //å¦‚æœkOä¹‹å‰å·²ç»åœ¨æŸä¸ªå°é¢ä¸Šæ”¾ç€
         {
-            this.kitchenObjectParent.ClearKitchenObject(); //Èç¹ûÒÆ¶¯Î»ÖÃÇ°µÄCCÉÏÓĞkO£¬É¾ÁËËü,
-                                                    //Èç¹ûÕâÀï²»É¾£¬ÄÇthis.cc±»ÇĞ»»ÎªĞÂµÄccºó£¬ĞÂµÄcc.kO±»¸³Öµ£¬
-                                                    //¾Í»á³öÏÖÎÊÌâ£ºÁ½¸öccÉÏ¶¼·Å×ÅÒ»¸ökO
+            this.kitchenObjectParent.ClearKitchenObject(); //å¦‚æœç§»åŠ¨ä½ç½®å‰çš„CCä¸Šæœ‰kOï¼Œåˆ äº†å®ƒ,
+                                                    //å¦‚æœè¿™é‡Œä¸åˆ ï¼Œé‚£this.ccè¢«åˆ‡æ¢ä¸ºæ–°çš„ccåï¼Œæ–°çš„cc.kOè¢«èµ‹å€¼ï¼Œ
+                                                    //å°±ä¼šå‡ºç°é—®é¢˜ï¼šä¸¤ä¸ªccä¸Šéƒ½æ”¾ç€ä¸€ä¸ªkO
         }
 
-        this.kitchenObjectParent = kitchenObjectParent;       //³õÊ¼»¯ÎªÄ³¸öCC/ÇĞ»»µ½ĞÂµÄCC
+        this.kitchenObjectParent = kitchenObjectParent;       //åˆå§‹åŒ–ä¸ºæŸä¸ªCC/åˆ‡æ¢åˆ°æ–°çš„CC
 
-        if (kitchenObjectParent.HasKitchenObject())    //½øĞĞ¸³ÖµÇ°µÄ¼ì²é
+        if (kitchenObjectParent.HasKitchenObject())    //è¿›è¡Œèµ‹å€¼å‰çš„æ£€æŸ¥
         {
-            Debug.LogError("Õâ¸öÌ¨ÃæÉÏÒÑ¾­·Å×ÅÒ»¸öÎïÆ·ÁË£¡Äã±ØĞëÏÈÒÆ³ı¾ÉÎïÆ·£¡(in KitchenObject.cs)");
+            Debug.LogError("è¿™ä¸ªå°é¢ä¸Šå·²ç»æ”¾ç€ä¸€ä¸ªç‰©å“äº†ï¼ä½ å¿…é¡»å…ˆç§»é™¤æ—§ç‰©å“ï¼(in KitchenObject.cs)");
         }
 
-        kitchenObjectParent.SetKitchenObject(this);    //°ÑÕâ¸öCCÉÏµÄkOĞŞ¸ÄÎªthis
+        kitchenObjectParent.SetKitchenObject(this);    //æŠŠè¿™ä¸ªCCä¸Šçš„kOä¿®æ”¹ä¸ºthis
 
-        transform.parent = kitchenObjectParent.GetKitchenObjectFollowTransform();  //ÒòÎªÊÓ¾õºÍÂß¼­·ÖÀë£¬ËùÒÔÕâÀï»ñÈ¡µÄÊÇEmptyObject,
-                                                                            //Ò²¾ÍÊÇprefab£¨ÊÓ¾õ£©µÄparent
-        transform.localPosition = Vector3.zero;                             //ÊÓ¾õÉÏ£¬ÈÃÎïÆ·´¦ÓÚcounterTopPointµÄÖĞĞÄ
+        transform.parent = kitchenObjectParent.GetKitchenObjectFollowTransform();  //å› ä¸ºè§†è§‰å’Œé€»è¾‘åˆ†ç¦»ï¼Œæ‰€ä»¥è¿™é‡Œè·å–çš„æ˜¯EmptyObject,
+                                                                            //ä¹Ÿå°±æ˜¯prefabï¼ˆè§†è§‰ï¼‰çš„parent
+        transform.localPosition = Vector3.zero;                             //è§†è§‰ä¸Šï¼Œè®©ç‰©å“å¤„äºcounterTopPointçš„ä¸­å¿ƒ
     }
 
     public IKitchenObjectParent GetKitchenObjectParent()
@@ -52,7 +52,7 @@ public class KitchenObject : MonoBehaviour
         return this.kitchenObjectParent;
     }
     /// <summary>
-    /// °ÑÒ»¸öGameObjectÔÚparent£¨Âß¼­ÉÏ£©ºÍ×ÔÉí£¨ÊÓ¾õÉÏ£©¶¼Çå³ı
+    /// æŠŠä¸€ä¸ªGameObjectåœ¨parentï¼ˆé€»è¾‘ä¸Šï¼‰å’Œè‡ªèº«ï¼ˆè§†è§‰ä¸Šï¼‰éƒ½æ¸…é™¤
     /// </summary>
     public void DestorySelf() 
     {
@@ -60,21 +60,21 @@ public class KitchenObject : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public static KitchenObject SpawnKitchenObject(KitchenObjectSO kitchenObjectSO,IKitchenObjectParent kitchenObjectParent) //·â×°ºÃµÄÉú³ÉkOµÄº¯Êı
+    public static KitchenObject SpawnKitchenObject(KitchenObjectSO kitchenObjectSO,IKitchenObjectParent kitchenObjectParent) //å°è£…å¥½çš„ç”ŸæˆkOçš„å‡½æ•°
     {
 
-        Transform kitchenObjectTransform = Instantiate(kitchenObjectSO.prefabs);   //ÔÚunityÄÚ¹¹ÔìÒ»¸ötransform£¨ÊÓ¾õÊµÏÖ£©
-                                                                                   //°ÑÌ¨Ãæ¶¥²¿×÷Îª·¬ÇÑtransfromµÄparent
-        kitchenObjectTransform.GetComponent<KitchenObject>().SetKitchenObjectParent(kitchenObjectParent);     //°ÑÎïÆ··ÅÉÏÀ´£¨Âß¼­ÊµÏÖ£©
+        Transform kitchenObjectTransform = Instantiate(kitchenObjectSO.prefabs);   //åœ¨unityå†…æ„é€ ä¸€ä¸ªtransformï¼ˆè§†è§‰å®ç°ï¼‰
+                                                                                   //æŠŠå°é¢é¡¶éƒ¨ä½œä¸ºç•ªèŒ„transfromçš„parent
+        kitchenObjectTransform.GetComponent<KitchenObject>().SetKitchenObjectParent(kitchenObjectParent);     //æŠŠç‰©å“æ”¾ä¸Šæ¥ï¼ˆé€»è¾‘å®ç°ï¼‰
 
         KitchenObject kitchenObject = kitchenObjectTransform.GetComponent<KitchenObject>();
 
         return kitchenObject;
     }
 
-    public bool TryGetPlate(out PlateKitchenObject plateKitchenObject) //C#²»ÏñPythonÖ§³Ö¶à¸ö·µ»ØÖµ£¬outÊÇº¯Êı·µ»Ø¶à¸öÖµµÄ·½·¨
-                                                                       //µ«ÊÇº¯ÊıÄÚ²¿±ØĞë¸øÕâ¸ö²ÎÊı¸³Öµ
-                                                                       //²¢ÇÒ´«²ÎµÄÊ±ºòĞèÒª¸ñÊ½ÈçÏÂ
+    public bool TryGetPlate(out PlateKitchenObject plateKitchenObject) //C#ä¸åƒPythonæ”¯æŒå¤šä¸ªè¿”å›å€¼ï¼Œoutæ˜¯å‡½æ•°è¿”å›å¤šä¸ªå€¼çš„æ–¹æ³•
+                                                                       //ä½†æ˜¯å‡½æ•°å†…éƒ¨å¿…é¡»ç»™è¿™ä¸ªå‚æ•°èµ‹å€¼
+                                                                       //å¹¶ä¸”ä¼ å‚çš„æ—¶å€™éœ€è¦æ ¼å¼å¦‚ä¸‹
                                                                        //TryGetPlate(out a);
     {
         if(this is PlateKitchenObject)
@@ -84,7 +84,7 @@ public class KitchenObject : MonoBehaviour
         }
         else
         {
-            plateKitchenObject = null;  //´Ë´¦²»¸øÕâ¸ö²ÎÊı¸³Öµ£¬¾Í»á±¨´í£¬Ô­Òò¼ûÉÏ·½¶ÔÓÚoutµÄËµÃ÷
+            plateKitchenObject = null;  //æ­¤å¤„ä¸ç»™è¿™ä¸ªå‚æ•°èµ‹å€¼ï¼Œå°±ä¼šæŠ¥é”™ï¼ŒåŸå› è§ä¸Šæ–¹å¯¹äºoutçš„è¯´æ˜
             return false;
         }
     }

@@ -15,7 +15,7 @@ public class DeliveryCounter : BaseCounter
         {
             if(player.GetKitchenObject().TryGetPlate(out PlateKitchenObject plateKitchenObject))
             {
-                //只有玩家手里拿着盘子的时候才能够往传送带上放东西
+                //鍙湁鐜╁鎵嬮噷鎷跨潃鐩樺瓙鐨勬椂鍊欐墠鑳藉寰�浼犻�佸甫涓婃斁涓滆タ
 
                 DeliveryManager.Instance.DeliveryRecipe(plateKitchenObject);
                 player.GetKitchenObject().DestorySelf();

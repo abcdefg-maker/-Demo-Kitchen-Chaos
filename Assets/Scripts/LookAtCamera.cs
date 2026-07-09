@@ -19,9 +19,9 @@ public class LookAtCamera : MonoBehaviour
         switch (mode)
         {
             case Mode.LookAt:
-                transform.LookAt(Camera.main.transform); break; //ÒÔÇ°µÄ½Ì³ÌËµ²»ÒªÓÃCamera.main£¬ÒòÎªÖ®Ç°Ã¿µ÷ÓÃÕâ¸ö±äÁ¿£¬
-                                                                //¶¼ÒªÔÚunity±éÀúËùÓĞtranformÀ´ÕÒµ½Camera.main£¬ºÜËğÊ§ĞÔÄÜ
-                                                                //µ«ÊÇÏÖÔÚÔÚunityÄÚÓĞCamera.mainµÄ»º´æÁË£¬ËùÓĞ²»´æÔÚÕâ¸öÎÊÌâÁË
+                transform.LookAt(Camera.main.transform); break; //ä»¥å‰çš„æ•™ç¨‹è¯´ä¸è¦ç”¨Camera.mainï¼Œå› ä¸ºä¹‹å‰æ¯è°ƒç”¨è¿™ä¸ªå˜é‡ï¼Œ
+                                                                //éƒ½è¦åœ¨unityéå†æ‰€æœ‰tranformæ¥æ‰¾åˆ°Camera.mainï¼Œå¾ˆæŸå¤±æ€§èƒ½
+                                                                //ä½†æ˜¯ç°åœ¨åœ¨unityå†…æœ‰Camera.mainçš„ç¼“å­˜äº†ï¼Œæ‰€æœ‰ä¸å­˜åœ¨è¿™ä¸ªé—®é¢˜äº†
             case Mode.LookAtInverted:
                 Vector3 dirFromCamera = transform.position - Camera.main.transform.position;
                 transform.LookAt(dirFromCamera + transform.position);

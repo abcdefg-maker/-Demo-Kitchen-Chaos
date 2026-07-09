@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseCounter : MonoBehaviour, IKitchenObjectParent //ÀûÓÃ½Ó¿ÚÀ´ÊµÏÖ¶à¼Ì³Ğ£¨C#Àà²»Ö§³Ö¶à¼Ì³Ğ£©
+public class BaseCounter : MonoBehaviour, IKitchenObjectParent //åˆ©ç”¨æ¥å£æ¥å®ç°å¤šç»§æ‰¿ï¼ˆC#ç±»ä¸æ”¯æŒå¤šç»§æ‰¿ï¼‰
 {
-    public static event EventHandler OnAnyObjectPlacedHere; //µ÷ÓÃ·ÅÖÃÎïÆ·ÒôĞ§µÄÊÂ¼ş
+    public static event EventHandler OnAnyObjectPlacedHere; //è°ƒç”¨æ”¾ç½®ç‰©å“éŸ³æ•ˆçš„äº‹ä»¶
 
-    public static void ResetStaticData() //ÔÚÇĞ»»µ½Ö÷²Ëµ¥µÄÊ±ºò£¬ÖØÖÃOnAnyObjectPlacedHereÕâ¸ö¾²Ì¬ÊÂ¼ş
+    public static void ResetStaticData() //åœ¨åˆ‡æ¢åˆ°ä¸»èœå•çš„æ—¶å€™ï¼Œé‡ç½®OnAnyObjectPlacedHereè¿™ä¸ªé™æ€äº‹ä»¶
     {
         OnAnyObjectPlacedHere = null;
     }
@@ -26,29 +26,29 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent //ÀûÓÃ½Ó¿ÚÀ´ÊµÏÖ¶
         //Debug.LogError("BaseCounter InteractAlternate();");
     }
 
-    public Transform GetKitchenObjectFollowTransform()  //»ñÈ¡kOÓ¦¸Ã±»·ÅÖÃµÄÎ»ÖÃ£¬
-                                                        //ÕâÀïÊÇÅäºÏ×ªÒÆkOÎ»ÖÃ¶øÊµÏÖµÄº¯Êı½Ó¿Ú£¬
-                                                        //ÓÃÓÚ»ñÈ¡secondCCµÄÎïÆ··ÅÖÃÎ»ÖÃ
+    public Transform GetKitchenObjectFollowTransform()  //è·å–kOåº”è¯¥è¢«æ”¾ç½®çš„ä½ç½®ï¼Œ
+                                                        //è¿™é‡Œæ˜¯é…åˆè½¬ç§»kOä½ç½®è€Œå®ç°çš„å‡½æ•°æ¥å£ï¼Œ
+                                                        //ç”¨äºè·å–secondCCçš„ç‰©å“æ”¾ç½®ä½ç½®
     {
         return counterTopPoint;
     }
 
-    public void SetKitchenObject(KitchenObject kitchenObjtect) //ÎïÆ·Ôö
+    public void SetKitchenObject(KitchenObject kitchenObjtect) //ç‰©å“å¢
     {
         this.kitchenObject = kitchenObjtect;
 
         if (kitchenObjtect != null)
         {
-            OnAnyObjectPlacedHere?.Invoke(this,EventArgs.Empty);  //µ÷ÓÃ·ÅÖÃÎïÆ·ÒôĞ§µÄÊÂ¼ş
+            OnAnyObjectPlacedHere?.Invoke(this,EventArgs.Empty);  //è°ƒç”¨æ”¾ç½®ç‰©å“éŸ³æ•ˆçš„äº‹ä»¶
         }
     }
-    public KitchenObject GetKitchenObject() { return kitchenObject; } //ÎïÆ·²é
-    public void ClearKitchenObject() //ÎïÆ·É¾
+    public KitchenObject GetKitchenObject() { return kitchenObject; } //ç‰©å“æŸ¥
+    public void ClearKitchenObject() //ç‰©å“åˆ 
     {
         kitchenObject = null;
     }
 
-    public bool HasKitchenObject()  //²é¿´kOÊÇ·ñ±»¸³Öµ
+    public bool HasKitchenObject()  //æŸ¥çœ‹kOæ˜¯å¦è¢«èµ‹å€¼
     {
         return kitchenObject != null;
     }

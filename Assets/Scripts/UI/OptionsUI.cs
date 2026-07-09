@@ -30,7 +30,7 @@ public class OptionsUI : MonoBehaviour
     [SerializeField] private Button interactAlternateButton;
     [SerializeField] private Button pauseButton;
 
-    [SerializeField] private Transform pressToRebindKeyTransform; //rebindingÊ±ºòµÄ¹ı³¡½çÃæ
+    [SerializeField] private Transform pressToRebindKeyTransform; //rebindingæ—¶å€™çš„è¿‡åœºç•Œé¢
 
     private void Awake()
     {
@@ -38,23 +38,23 @@ public class OptionsUI : MonoBehaviour
 
         soundEffectButton.onClick.AddListener(() =>
         {
-            SoundManager.Instance.ChangeVolume(); //¸Ãº¯ÊıÖ§³ÖÃ¿°´Ò»´Î°´Å¥£¬ÒôÁ¿+5%£¬³¬¹ı100%Ö±½Ó¹éÁã
+            SoundManager.Instance.ChangeVolume(); //è¯¥å‡½æ•°æ”¯æŒæ¯æŒ‰ä¸€æ¬¡æŒ‰é’®ï¼ŒéŸ³é‡+5%ï¼Œè¶…è¿‡100%ç›´æ¥å½’é›¶
             UpdateVisual();
         });
 
         musicButton.onClick.AddListener(() =>
         {
-            MusicManager.Instance.ChangeVolume();   //¸Ãº¯ÊıÖ§³ÖÃ¿°´Ò»´Î°´Å¥£¬ÒôÁ¿+10%£¬³¬¹ı100%Ö±½Ó¹éÁã
+            MusicManager.Instance.ChangeVolume();   //è¯¥å‡½æ•°æ”¯æŒæ¯æŒ‰ä¸€æ¬¡æŒ‰é’®ï¼ŒéŸ³é‡+10%ï¼Œè¶…è¿‡100%ç›´æ¥å½’é›¶
             UpdateVisual();
         });
         closeButton.onClick.AddListener(() =>
         {
-            Hide(); //¸Ãº¯ÊıÖ§³ÖÃ¿°´Ò»´Î°´Å¥£¬¹Ø±Õoption½çÃæ
+            Hide(); //è¯¥å‡½æ•°æ”¯æŒæ¯æŒ‰ä¸€æ¬¡æŒ‰é’®ï¼Œå…³é—­optionç•Œé¢
         });
 
         moveUpButton.onClick.AddListener(() =>
         {
-            //¸Ãº¯ÊıÖ§³ÖÃ¿°´Ò»´Î°´Å¥£¬¿ÉÒÔÖØĞÂ°ó¶¨ĞĞÎª¶ÔÓ¦µÄ°´Å¥
+            //è¯¥å‡½æ•°æ”¯æŒæ¯æŒ‰ä¸€æ¬¡æŒ‰é’®ï¼Œå¯ä»¥é‡æ–°ç»‘å®šè¡Œä¸ºå¯¹åº”çš„æŒ‰é’®
             RebindBinding(GameInput.Binding.Move_Up);
         });
         moveDownButton.onClick.AddListener(() => { RebindBinding(GameInput.Binding.Move_Down); });
@@ -68,8 +68,8 @@ public class OptionsUI : MonoBehaviour
 
     private void Start()
     {
-        KitchenGameManager.Instance.OnGameUnpaused += KitchenGameManager_OnGameUnpaused; //Í¬Ê±Õâ¸öoption½çÃæÒ²Ö§³Öesc¹Ø±Õ£¬
-                                                                                        //ÕâÊ±Í¬Ê±¹Ø±Õpasue½çÃæºÍoption½çÃæ
+        KitchenGameManager.Instance.OnGameUnpaused += KitchenGameManager_OnGameUnpaused; //åŒæ—¶è¿™ä¸ªoptionç•Œé¢ä¹Ÿæ”¯æŒescå…³é—­ï¼Œ
+                                                                                        //è¿™æ—¶åŒæ—¶å…³é—­pasueç•Œé¢å’Œoptionç•Œé¢
         UpdateVisual();
 
         HidePressToRebindKey();
@@ -81,10 +81,10 @@ public class OptionsUI : MonoBehaviour
         Hide();
     }
 
-    private void UpdateVisual() //¸üĞÂ°´Å¥µÄÊÓ¾õ£¨ÄÚ²¿ÎÄ×Ö £©
+    private void UpdateVisual() //æ›´æ–°æŒ‰é’®çš„è§†è§‰ï¼ˆå†…éƒ¨æ–‡å­— ï¼‰
     {
-        soundEffectText.text = "ÒôĞ§ÒôÁ¿´óĞ¡£º" + Mathf.Round(SoundManager.Instance.GetVolume() * 5f * 10f) / 10f;
-        musicText.text = "ÒôÀÖÒôÁ¿´óĞ¡£º" + Mathf.Round(MusicManager.Instance.GetVolume() * 10f);
+        soundEffectText.text = "éŸ³æ•ˆéŸ³é‡å¤§å°ï¼š" + Mathf.Round(SoundManager.Instance.GetVolume() * 5f * 10f) / 10f;
+        musicText.text = "éŸ³ä¹éŸ³é‡å¤§å°ï¼š" + Mathf.Round(MusicManager.Instance.GetVolume() * 10f);
 
         moveUpText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Move_Up);
         moveDownText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Move_Down);
@@ -105,7 +105,7 @@ public class OptionsUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void ShowPressToRebindKey() //Õ¹Ê¾ºÍÒş²Ø rebindingÊ±¹ı³¡½çÃæµÄº¯Êı
+    public void ShowPressToRebindKey() //å±•ç¤ºå’Œéšè— rebindingæ—¶è¿‡åœºç•Œé¢çš„å‡½æ•°
     {
         pressToRebindKeyTransform.gameObject.SetActive(true);
     }

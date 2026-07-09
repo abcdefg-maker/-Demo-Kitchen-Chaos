@@ -10,13 +10,13 @@ public class GameInput : MonoBehaviour
     private const string PLAYER_PRESS_BINDINGS = "InputBindings";
     public static GameInput Instance {  get; private set; }
 
-    public event EventHandler OnInteractAction;//Í¨³£ÒÔOn¿ªÍ·ÃüÃû
+    public event EventHandler OnInteractAction;//é€šå¸¸ä»¥Onå¼€å¤´å‘½å
     public event EventHandler OnInteractAlternateAction;
     public event EventHandler OnPauseAction;
     public event EventHandler OnBindingRebind;
     
     
-    public enum Binding //°´¼ü°ó¶¨ µÄ Ã¶¾Ù
+    public enum Binding //æŒ‰é”®ç»‘å®š çš„ æšä¸¾
     {
         Move_Up,
         Move_Down,
@@ -35,7 +35,7 @@ public class GameInput : MonoBehaviour
 
         playerInputActions = new PlayerInputActions();
 
-        if (PlayerPrefs.HasKey(PLAYER_PRESS_BINDINGS)) //ÔØÈë£¨×îĞÂ°æµÄ->Èç¹ûĞŞ¸Ä¹ı£©ÊäÈë°´¼ü
+        if (PlayerPrefs.HasKey(PLAYER_PRESS_BINDINGS)) //è½½å…¥ï¼ˆæœ€æ–°ç‰ˆçš„->å¦‚æœä¿®æ”¹è¿‡ï¼‰è¾“å…¥æŒ‰é”®
         {
             playerInputActions.LoadBindingOverridesFromJson(PlayerPrefs.GetString(PLAYER_PRESS_BINDINGS));
         }
@@ -43,24 +43,24 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Enable();
 
         playerInputActions.Player.Interact.performed += Interact_performed;
-        //µ±Íæ¼Ò´¥·¢ Interact ¶¯×÷µÄ performed ½×¶ÎÊ±£¬µ÷ÓÃÄãµÄ·½·¨ Interact_performed
-        //InteractÊÇÎÒÔÚunityµÄplayerInputActionÄÚÉèÖÃµÄÒ»¸ö¶¯×÷
-        //ÔÚ Input System ÖĞ£¬¶¯×÷ÓĞÈıÖÖµäĞÍ¡°½×¶Î¡±(Callback phases)¡ª¡ªÆä±¾ÖÊÊÇÈı¸öÊÂ¼ş£¨Event£©:
-        //started	    ÓÃ»§¸Õ¿ªÊ¼°´¼ü
-        //performed     ¶¯×÷È·ÈÏÍê³É£¨ÀıÈç°´¼ü°´ÏÂÊ±£©
-        //canceled      ËÉ¿ª¡¢È¡Ïû
-        //performedÊÂ¼ş£¬ÓÃ+=À´·ÖÅäÒ»¸ö¼àÌıÕß£¨ÕâÀïÊÇ¼àÌıº¯ÊıInteract_performed£©
+        //å½“ç©å®¶è§¦å‘ Interact åŠ¨ä½œçš„ performed é˜¶æ®µæ—¶ï¼Œè°ƒç”¨ä½ çš„æ–¹æ³• Interact_performed
+        //Interactæ˜¯æˆ‘åœ¨unityçš„playerInputActionå†…è®¾ç½®çš„ä¸€ä¸ªåŠ¨ä½œ
+        //åœ¨ Input System ä¸­ï¼ŒåŠ¨ä½œæœ‰ä¸‰ç§å…¸å‹â€œé˜¶æ®µâ€(Callback phases)â€”â€”å…¶æœ¬è´¨æ˜¯ä¸‰ä¸ªäº‹ä»¶ï¼ˆEventï¼‰:
+        //started	    ç”¨æˆ·åˆšå¼€å§‹æŒ‰é”®
+        //performed     åŠ¨ä½œç¡®è®¤å®Œæˆï¼ˆä¾‹å¦‚æŒ‰é”®æŒ‰ä¸‹æ—¶ï¼‰
+        //canceled      æ¾å¼€ã€å–æ¶ˆ
+        //performedäº‹ä»¶ï¼Œç”¨+=æ¥åˆ†é…ä¸€ä¸ªç›‘å¬è€…ï¼ˆè¿™é‡Œæ˜¯ç›‘å¬å‡½æ•°Interact_performedï¼‰
         //
-        //ÔËĞĞË³Ğò£º
-        //Interact£¨¶¯×÷£©´¥·¢£¨±ÈÈçÕâÀïÊÇ°´E¼ü£© -> performed£¨ÊÂ¼ş£©±»´¥·¢
-        //-> µ÷ÓÃÎ¯ÍĞÁĞ±íÀïµÄËùÓĞ¼àÌıÕß£¨Èç Interact_performed ·½·¨£©
+        //è¿è¡Œé¡ºåºï¼š
+        //Interactï¼ˆåŠ¨ä½œï¼‰è§¦å‘ï¼ˆæ¯”å¦‚è¿™é‡Œæ˜¯æŒ‰Eé”®ï¼‰ -> performedï¼ˆäº‹ä»¶ï¼‰è¢«è§¦å‘
+        //-> è°ƒç”¨å§”æ‰˜åˆ—è¡¨é‡Œçš„æ‰€æœ‰ç›‘å¬è€…ï¼ˆå¦‚ Interact_performed æ–¹æ³•ï¼‰
         playerInputActions.Player.InteractAlternate.performed += InteractAlternate_performed;
         playerInputActions.Player.Pause.performed += Pause_performed;
 
 
     }
 
-    private void OnDestroy()    //ÓÃÀ´½â¾öPlayerActionInputµÄÏú»Ù²»Í¬²½ÎÊÌâ£¨ÈÔĞèÏ¸¾¿£©
+    private void OnDestroy()    //ç”¨æ¥è§£å†³PlayerActionInputçš„é”€æ¯ä¸åŒæ­¥é—®é¢˜ï¼ˆä»éœ€ç»†ç©¶ï¼‰
     {
         playerInputActions.Player.Interact.performed -= Interact_performed;
         playerInputActions.Player.InteractAlternate.performed -= InteractAlternate_performed;
@@ -79,9 +79,9 @@ public class GameInput : MonoBehaviour
         OnInteractAlternateAction?.Invoke(this, EventArgs.Empty);
     }
 
-    private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)//+=ºó°´¡°Tab¡±×Ô¶¯Éú³ÉµÄÊÂ¼şÎ¯ÍĞ£¨delegate£©
+    private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)//+=åæŒ‰â€œTabâ€è‡ªåŠ¨ç”Ÿæˆçš„äº‹ä»¶å§”æ‰˜ï¼ˆdelegateï¼‰
     {
-        OnInteractAction?.Invoke(this, EventArgs.Empty);//ºÍÒÔÏÂ´úÂë¹¦ÄÜÏàÍ¬
+        OnInteractAction?.Invoke(this, EventArgs.Empty);//å’Œä»¥ä¸‹ä»£ç åŠŸèƒ½ç›¸åŒ
         //if (OnInteractAction != null)  
         //{
         //    OnInteractAction(this, EventArgs.Empty);
@@ -91,12 +91,12 @@ public class GameInput : MonoBehaviour
     public Vector2 GetMovementVectorNormalized()
     {
         Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
-        //ÓÃÒÔÉÏInput SystemµÄ×é¼ş£¬À´´úÌæ×Ô¼ºÊµÏÖWASDµÄÊäÈë 
-        /*Ô­ÊµÏÖÄ£Ê½£º
+        //ç”¨ä»¥ä¸ŠInput Systemçš„ç»„ä»¶ï¼Œæ¥ä»£æ›¿è‡ªå·±å®ç°WASDçš„è¾“å…¥ 
+        /*åŸå®ç°æ¨¡å¼ï¼š
          * 
          * 
-        ////ÊäÈëËÙ¶È
-        ////ÓÉÓÚÊäÈëÖ»ÓĞÁ½¸öÎ¬¶È£¬ËùÒÔÕâÀïÓÃVector3ÊÇ²»ºÏÊÊµÄ
+        ////è¾“å…¥é€Ÿåº¦
+        ////ç”±äºè¾“å…¥åªæœ‰ä¸¤ä¸ªç»´åº¦ï¼Œæ‰€ä»¥è¿™é‡Œç”¨Vector3æ˜¯ä¸åˆé€‚çš„
         //Vector2 inputVector = new Vector2(0, 0);
         //if (Input.GetKey(KeyCode.W))
         //{
@@ -116,19 +116,19 @@ public class GameInput : MonoBehaviour
         //}
 
         */
-        //ËÙ¶È¸³Öµ
-        inputVector = inputVector.normalized; //¹éÒ»»¯ÒÆ¶¯ËÙ¶È£¬¶Ô½ÇÏßÊ±ºò²»»áÅÜµÄ¸ü¿ì
+        //é€Ÿåº¦èµ‹å€¼
+        inputVector = inputVector.normalized; //å½’ä¸€åŒ–ç§»åŠ¨é€Ÿåº¦ï¼Œå¯¹è§’çº¿æ—¶å€™ä¸ä¼šè·‘çš„æ›´å¿«
 
         return inputVector;
     }
 
-    public string GetBindingText(Binding binding) //´ÓĞĞÎª°ó¶¨µÄ°´¼ü£¬»ñµÃ°ó¶¨°´¼üµÄtext£¬ÓÃÓÚÏÔÊ¾
+    public string GetBindingText(Binding binding) //ä»è¡Œä¸ºç»‘å®šçš„æŒ‰é”®ï¼Œè·å¾—ç»‘å®šæŒ‰é”®çš„textï¼Œç”¨äºæ˜¾ç¤º
     {
         switch(binding)
         {
             default:
             case Binding.Interact:
-                return playerInputActions.Player.Interact.bindings[0].ToDisplayString(); //bingsÊı×éÄÚ´æ·ÅËùÓĞ°ó¶¨µÄ°´¼ü
+                return playerInputActions.Player.Interact.bindings[0].ToDisplayString(); //bingsæ•°ç»„å†…å­˜æ”¾æ‰€æœ‰ç»‘å®šçš„æŒ‰é”®
             case Binding.InteractAlternate:
                 return playerInputActions.Player.InteractAlternate.bindings[0].ToDisplayString();
             case Binding.Pause:
@@ -144,9 +144,9 @@ public class GameInput : MonoBehaviour
         }
     }
 
-    public void RebingBinding(Binding binding, Action onActionRebound) //ÖØĞÂ°ó¶¨°´¼üµÄº¯Êı
+    public void RebingBinding(Binding binding, Action onActionRebound) //é‡æ–°ç»‘å®šæŒ‰é”®çš„å‡½æ•°
     {
-        playerInputActions.Player.Disable(); //Ê×ÏÈ£¬ÔÚÇĞ»»µÄ¹ı³ÌÖĞ£¬½ûÖ¹µ÷ÓÃÕâ¸öinputÏµÍ³
+        playerInputActions.Player.Disable(); //é¦–å…ˆï¼Œåœ¨åˆ‡æ¢çš„è¿‡ç¨‹ä¸­ï¼Œç¦æ­¢è°ƒç”¨è¿™ä¸ªinputç³»ç»Ÿ
 
         InputAction inputAction = null;
         int bindingIndex = 0;
@@ -190,7 +190,7 @@ public class GameInput : MonoBehaviour
                 playerInputActions.Player.Enable();
                 onActionRebound();
 
-                PlayerPrefs.SetString(PLAYER_PRESS_BINDINGS, playerInputActions.SaveBindingOverridesAsJson()); //±£´æ°´¼üÉèÖÃ
+                PlayerPrefs.SetString(PLAYER_PRESS_BINDINGS, playerInputActions.SaveBindingOverridesAsJson()); //ä¿å­˜æŒ‰é”®è®¾ç½®
                 PlayerPrefs.Save();
 
 

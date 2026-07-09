@@ -22,7 +22,7 @@ public class GameStartCountDownUI : MonoBehaviour
         KitchenGameManager.Instance.OnStateChanged += KitchenGameManager_OnStateChanged;
     }
 
-    private void KitchenGameManager_OnStateChanged(object sender, System.EventArgs e) //控制是否显示倒计时的监听函数
+    private void KitchenGameManager_OnStateChanged(object sender, System.EventArgs e) //鎺у埗鏄惁鏄剧ず鍊掕鏃剁殑鐩戝惉鍑芥暟
     {
         if (KitchenGameManager.Instance.IsCountDownToStartActive())
         {

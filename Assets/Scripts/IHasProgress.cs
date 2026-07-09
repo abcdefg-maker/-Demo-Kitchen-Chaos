@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//C#½Ó¿Ú£¬ÎªËùÓĞÓĞ¹ı³ÌµÄ¶«Î÷£¬ÖÆ×÷½ø¶ÈÌõ
+//C#æ¥å£ï¼Œä¸ºæ‰€æœ‰æœ‰è¿‡ç¨‹çš„ä¸œè¥¿ï¼Œåˆ¶ä½œè¿›åº¦æ¡
 public interface IHasProgress
 {
-    public event EventHandler<OnProgressChangedEventArgs> OnProgressChanged; //¿ØÖÆ½ø¶ÈÌõµÄÊÂ¼ş
+    public event EventHandler<OnProgressChangedEventArgs> OnProgressChanged; //æ§åˆ¶è¿›åº¦æ¡çš„äº‹ä»¶
     public class OnProgressChangedEventArgs : EventArgs
     {
         public float progressNormalized;

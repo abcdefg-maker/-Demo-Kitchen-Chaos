@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class TrashCounter : BaseCounter
 {
-    public static event EventHandler OnAnyObjectTrashed; //µ÷ÓÃ¶ªÀ¬»øÒôĞ§µÄÊÂ¼ş
+    public static event EventHandler OnAnyObjectTrashed; //è°ƒç”¨ä¸¢åƒåœ¾éŸ³æ•ˆçš„äº‹ä»¶
 
-    new public static void ResetStaticData() //ÔÚÇĞ»»µ½Ö÷²Ëµ¥µÄÊ±ºò£¬ÖØÖÃOnAnyObjectTrashedÕâ¸ö¾²Ì¬ÊÂ¼ş
+    new public static void ResetStaticData() //åœ¨åˆ‡æ¢åˆ°ä¸»èœå•çš„æ—¶å€™ï¼Œé‡ç½®OnAnyObjectTrashedè¿™ä¸ªé™æ€äº‹ä»¶
     {
         OnAnyObjectTrashed = null;
     }
@@ -17,7 +17,7 @@ public class TrashCounter : BaseCounter
         {
             player.GetKitchenObject().DestorySelf();
 
-            OnAnyObjectTrashed?.Invoke(this, EventArgs.Empty); //µ÷ÓÃ¶ªÀ¬»øÒôĞ§µÄÊÂ¼ş
+            OnAnyObjectTrashed?.Invoke(this, EventArgs.Empty); //è°ƒç”¨ä¸¢åƒåœ¾éŸ³æ•ˆçš„äº‹ä»¶
         }
     }
 }

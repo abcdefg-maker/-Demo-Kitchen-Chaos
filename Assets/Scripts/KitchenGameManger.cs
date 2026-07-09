@@ -9,8 +9,8 @@ public class KitchenGameManager : MonoBehaviour
 
 
 
-    public event EventHandler OnStateChanged;   //¹ÜÀíÓÎÏ·¿ªÊ¼×´Ì¬±ä»¯ µÄÊÂ¼ş
-    public event EventHandler OnGamePaused;     //¹ÜÀíÓÎÏ·ÔİÍ£µÄÊÂ¼ş£¨ÏÂÍ¬£©
+    public event EventHandler OnStateChanged;   //ç®¡ç†æ¸¸æˆå¼€å§‹çŠ¶æ€å˜åŒ– çš„äº‹ä»¶
+    public event EventHandler OnGamePaused;     //ç®¡ç†æ¸¸æˆæš‚åœçš„äº‹ä»¶ï¼ˆä¸‹åŒï¼‰
     public event EventHandler OnGameUnpaused;
 
     private enum State
@@ -86,7 +86,7 @@ public class KitchenGameManager : MonoBehaviour
 
     public  bool IsGamePlaying()
     {
-        //ÅĞ¶ÏÓÎÏ·ÊÇ·ñÔÚGamePlaying×´Ì¬
+        //åˆ¤æ–­æ¸¸æˆæ˜¯å¦åœ¨GamePlayingçŠ¶æ€
         return state == State.GamePlaying;
     }
 
@@ -115,8 +115,8 @@ public class KitchenGameManager : MonoBehaviour
         isGamePaused = !isGamePaused;
         if (isGamePaused) 
         {
-            Time.timeScale = 0f;    //ÓÉÓÚÓÎÏ·ÄÚµÄÖî¶àÂß¼­¶¼ÊÇÍ¨¹ıTime.deltaTimeÊµÏÖµÄ
-                                    //ÕâÑù¿ØÖÆÊ±¼äÁ÷ËÙÎª0£¬ÒÔÊµÏÖ¶ÔdeltaTimeµÄ¿ØÖÆ£¬Ò²¾ÍÊµÏÖÁËÓÎÏ·ÔİÍ£µÄĞ§¹û 
+            Time.timeScale = 0f;    //ç”±äºæ¸¸æˆå†…çš„è¯¸å¤šé€»è¾‘éƒ½æ˜¯é€šè¿‡Time.deltaTimeå®ç°çš„
+                                    //è¿™æ ·æ§åˆ¶æ—¶é—´æµé€Ÿä¸º0ï¼Œä»¥å®ç°å¯¹deltaTimeçš„æ§åˆ¶ï¼Œä¹Ÿå°±å®ç°äº†æ¸¸æˆæš‚åœçš„æ•ˆæœ 
             OnGamePaused?.Invoke(this,EventArgs.Empty);
         }
         else

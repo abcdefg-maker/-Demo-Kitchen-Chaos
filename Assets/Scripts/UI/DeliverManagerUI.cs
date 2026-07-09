@@ -9,7 +9,7 @@ public class DeliverManagerUI : MonoBehaviour
 
     private void Awake()
     {
-        recipeTemplate.gameObject.SetActive(false); //Òş²ØÕâ¸öÄ£°å
+        recipeTemplate.gameObject.SetActive(false); //éšè—è¿™ä¸ªæ¨¡æ¿
     }
 
     private void Start()
@@ -17,7 +17,7 @@ public class DeliverManagerUI : MonoBehaviour
         DeliveryManager.Instance.OnRecipeSpawned += Delivery_OnRecipeSpawned;
         DeliveryManager.Instance.OnRecipeCompleted += Delivery_OnRecipeCompleted;
 
-        UpdateVisual(); //È·±£³õÊ¼Ä£°åµÄrecipeTemplate²»ÒªÏÔÊ¾³öÀ´
+        UpdateVisual(); //ç¡®ä¿åˆå§‹æ¨¡æ¿çš„recipeTemplateä¸è¦æ˜¾ç¤ºå‡ºæ¥
     }
 
     private void Delivery_OnRecipeSpawned(object sender, System.EventArgs e)
@@ -34,14 +34,14 @@ public class DeliverManagerUI : MonoBehaviour
     {
         foreach (Transform child in container)
         {
-            if (child == recipeTemplate) continue;//²»É¾³ıÄ£°å
-            Destroy(child.gameObject); //ÔÚÌí¼ÓĞÂµÄÍ¼±êÖ®Ç°£¬Òª°ÑÉÏÒ»´ÎµÄÍ¼±êÈ¥µô£¨³ıÁËÄ£°å£¬·ñÔòscriptÄÚµÄ×é¼ş¾ÍÎªnullÁË£©
+            if (child == recipeTemplate) continue;//ä¸åˆ é™¤æ¨¡æ¿
+            Destroy(child.gameObject); //åœ¨æ·»åŠ æ–°çš„å›¾æ ‡ä¹‹å‰ï¼Œè¦æŠŠä¸Šä¸€æ¬¡çš„å›¾æ ‡å»æ‰ï¼ˆé™¤äº†æ¨¡æ¿ï¼Œå¦åˆ™scriptå†…çš„ç»„ä»¶å°±ä¸ºnulläº†ï¼‰
         }
         
         foreach (RecipeSO recipeSO in DeliveryManager.Instance.GetWaitingRecipeSOList())
         {
             Transform recipeTransform = Instantiate(recipeTemplate, container);
-            recipeTransform.gameObject.SetActive(true);   //°Ñ³ıÁËÄ£°åÍâ£¬ĞÂÉú³ÉµÄiconsÉèÎª¿É¼û
+            recipeTransform.gameObject.SetActive(true);   //æŠŠé™¤äº†æ¨¡æ¿å¤–ï¼Œæ–°ç”Ÿæˆçš„iconsè®¾ä¸ºå¯è§
             recipeTransform.GetComponent<DeliverManagerSingleUI>().SetRecipeSO(recipeSO);
         }
     }

@@ -10,7 +10,7 @@ public class PlateIconUI : MonoBehaviour
 
     private void Awake()
     {
-        iconTemplate.gameObject.SetActive(false); //²»Ï£ÍûÒ»Ö±ÄÜ¿´µ½Õâ¸öÍ¼±ê£¬ËùÒÔÔÚ´´½¨µÄÊ±ºò°ÑËûÉèÎªfalse£¬Éú³ÉÍ¼±êÊ±ºòÔÙÉèÎªtrue
+        iconTemplate.gameObject.SetActive(false); //ä¸å¸Œæœ›ä¸€ç›´èƒ½çœ‹åˆ°è¿™ä¸ªå›¾æ ‡ï¼Œæ‰€ä»¥åœ¨åˆ›å»ºçš„æ—¶å€™æŠŠä»–è®¾ä¸ºfalseï¼Œç”Ÿæˆå›¾æ ‡æ—¶å€™å†è®¾ä¸ºtrue
     }
 
     private void Start()
@@ -20,20 +20,20 @@ public class PlateIconUI : MonoBehaviour
 
     private void PlateKitchenObject_OnIngredientAdd(object sender, PlateKitchenObject.OnIngredinetAddEventArgs e)
     {
-        UpdateVisual(); //ÔÚ·¢ÉúÌí¼ÓingredientÊÂ¼şµÄÊ±ºò£¬Í¬Ê±ÔÚÊÓ¾õÉÏÌí¼Ó¸Ãingredient
+        UpdateVisual(); //åœ¨å‘ç”Ÿæ·»åŠ ingredientäº‹ä»¶çš„æ—¶å€™ï¼ŒåŒæ—¶åœ¨è§†è§‰ä¸Šæ·»åŠ è¯¥ingredient
     }
 
     private void UpdateVisual()
     {
         foreach(Transform child in transform)
         {
-            if (child == iconTemplate) continue;//²»É¾³ıÄ£°å
-            Destroy(child.gameObject); //ÔÚÌí¼ÓĞÂµÄÍ¼±êÖ®Ç°£¬Òª°ÑÉÏÒ»´ÎµÄÍ¼±êÈ¥µô£¨³ıÁËÄ£°å£¬·ñÔòscriptÄÚµÄ×é¼ş¾ÍÎªnullÁË£©
+            if (child == iconTemplate) continue;//ä¸åˆ é™¤æ¨¡æ¿
+            Destroy(child.gameObject); //åœ¨æ·»åŠ æ–°çš„å›¾æ ‡ä¹‹å‰ï¼Œè¦æŠŠä¸Šä¸€æ¬¡çš„å›¾æ ‡å»æ‰ï¼ˆé™¤äº†æ¨¡æ¿ï¼Œå¦åˆ™scriptå†…çš„ç»„ä»¶å°±ä¸ºnulläº†ï¼‰
         }
         foreach(KitchenObjectSO kitchenObjectSO in plateKitchenObject.GetKitchenObjectSOList())
         {
             Transform iconTransform = Instantiate(iconTemplate, transform);
-            iconTransform.gameObject.SetActive(true);   //°Ñ³ıÁËÄ£°åÍâ£¬ĞÂÉú³ÉµÄiconsÉèÎª¿É¼û
+            iconTransform.gameObject.SetActive(true);   //æŠŠé™¤äº†æ¨¡æ¿å¤–ï¼Œæ–°ç”Ÿæˆçš„iconsè®¾ä¸ºå¯è§
             iconTransform.GetComponent<PlateIconSingleUI>().SetKitchenObjectSO(kitchenObjectSO);
         }
     }

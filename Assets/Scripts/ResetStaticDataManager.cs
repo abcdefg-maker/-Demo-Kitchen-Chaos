@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResetStaticDataManager : MonoBehaviour //ÓÉÓÚ¾²Ì¬¶ÔÏóÔÚÇĞ»»³¡¾°Ê±ºò²»»á×Ô¶¯Ïú»Ù£¬¿ÉÄÜµ¼ÖÂÖØ¸´½øÈëÓÎÏ·µÄÊ±ºò²úÉúbug
-                                                    //Òò´ËÉèÖÃ´ËÀàÀ´½øĞĞ¾²Ì¬Êı¾İ¹ÜÀí
+public class ResetStaticDataManager : MonoBehaviour //ç”±äºé™æ€å¯¹è±¡åœ¨åˆ‡æ¢åœºæ™¯æ—¶å€™ä¸ä¼šè‡ªåŠ¨é”€æ¯ï¼Œå¯èƒ½å¯¼è‡´é‡å¤è¿›å…¥æ¸¸æˆçš„æ—¶å€™äº§ç”Ÿbug
+                                                    //å› æ­¤è®¾ç½®æ­¤ç±»æ¥è¿›è¡Œé™æ€æ•°æ®ç®¡ç†
 {
     private void Awake()
     {

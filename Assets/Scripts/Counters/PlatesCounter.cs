@@ -36,12 +36,12 @@ public class PlatesCounter :BaseCounter
         {
             if(plateSpawnedAmount > 0) 
             {
-                //жаиыспр╩╦Желвс
+                //Х┤ЁЕ╟▒Ф°┴Д╦─Д╦╙Г⌡≤Е╜░
                 plateSpawnedAmount--;
 
-                //мФ╪р╟яелвсдцфПю╢
+                //Г▌╘Е╝╤Ф┼┼Г⌡≤Е╜░Ф▀©Х╣╥Ф²╔
                 KitchenObject.SpawnKitchenObject(plateKitchenObjectSO, player);
-                OnPlateRemoved?.Invoke(this, EventArgs.Empty); //╪Уиыйс╬УиоелвсйЩа©╣дйб╪Ч
+                OnPlateRemoved?.Invoke(this, EventArgs.Empty); //Е┤▐Е╟▒Х╖├Х╖┴Д╦┼Г⌡≤Е╜░Ф∙╟И┤▐Г └Д╨▀Д╩╤
             }
         }
     }

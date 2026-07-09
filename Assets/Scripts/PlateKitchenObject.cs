@@ -6,15 +6,15 @@ using UnityEngine;
 public class PlateKitchenObject : KitchenObject
 {
 
-    public event EventHandler<OnIngredinetAddEventArgs> OnIngredientAdd; //ÊÓ¾õÉÏÏÔÊ¾Ê³²ÄÌí¼ÓµÄÊÂ¼ş
+    public event EventHandler<OnIngredinetAddEventArgs> OnIngredientAdd; //è§†è§‰ä¸Šæ˜¾ç¤ºé£Ÿææ·»åŠ çš„äº‹ä»¶
     public class OnIngredinetAddEventArgs: EventArgs
     {
         public KitchenObjectSO kitchenObjectSO;
     }
 
-    [SerializeField] private List<KitchenObjectSO> validKitchenObjectList;  //ÎÒÃÇ²»Ï£ÍûÊ²Ã´ÎïÆ·¶¼¿ÉÒÔ±»·Å½øÅÌ×ÓÀï
-                                                                            //Ö»Ï£ÍûÔÚ×îÖÕÅä·½µÄÊ³²Ä¿ÉÒÔ·ÅÔÚÅÌ×ÓÀïÃæ£¬
-                                                                            //±ÈÈçÕû¿ÅµÄ·¬ÇÑ£¬ÎÒÃÇÊÇ²»Ï£Íû¿ÉÒÔ·Å½øÈ¥µÄ
+    [SerializeField] private List<KitchenObjectSO> validKitchenObjectList;  //æˆ‘ä»¬ä¸å¸Œæœ›ä»€ä¹ˆç‰©å“éƒ½å¯ä»¥è¢«æ”¾è¿›ç›˜å­é‡Œ
+                                                                            //åªå¸Œæœ›åœ¨æœ€ç»ˆé…æ–¹çš„é£Ÿæå¯ä»¥æ”¾åœ¨ç›˜å­é‡Œé¢ï¼Œ
+                                                                            //æ¯”å¦‚æ•´é¢—çš„ç•ªèŒ„ï¼Œæˆ‘ä»¬æ˜¯ä¸å¸Œæœ›å¯ä»¥æ”¾è¿›å»çš„
 
     private List<KitchenObjectSO> kitchenObjectSOList;
 
@@ -24,27 +24,27 @@ public class PlateKitchenObject : KitchenObject
     }
 
     /// <summary>
-    /// °ÑÒ»¸öÎïÆ·ÒÆ¶¯µ½ÅÌ×ÓÉÏÃæ
+    /// æŠŠä¸€ä¸ªç‰©å“ç§»åŠ¨åˆ°ç›˜å­ä¸Šé¢
     /// </summary>
     /// <param name="kitchenObjectSO"></param>
     public bool TryAddIngredient(KitchenObjectSO kitchenObjectSO) 
     {
         if(!validKitchenObjectList.Contains(kitchenObjectSO))
         {
-            //²»ÊÇ¿ÉÒÔ·Å½øÅÌ×ÓÀïµÄÊ³Îï
+            //ä¸æ˜¯å¯ä»¥æ”¾è¿›ç›˜å­é‡Œçš„é£Ÿç‰©
             return false;
         }
         if (kitchenObjectSOList.Contains(kitchenObjectSO))
         {
-            //ÉÏÃæÒÑ¾­·Å×ÅÕâ¸öÊ³²Ä
+            //ä¸Šé¢å·²ç»æ”¾ç€è¿™ä¸ªé£Ÿæ
             return false;
         }
         else
         {
 
-            kitchenObjectSOList.Add(kitchenObjectSO); //Âß¼­ÉÏ°ÑÎïÆ·µÄso¼ÓÈëÅÌ×ÓµÄlist
+            kitchenObjectSOList.Add(kitchenObjectSO); //é€»è¾‘ä¸ŠæŠŠç‰©å“çš„soåŠ å…¥ç›˜å­çš„list
 
-            OnIngredientAdd?.Invoke(this, new OnIngredinetAddEventArgs //ÊÓ¾õÉÏ¼¤»îÕâ¸öingredientµÄ×é¼şµÄÊÂ¼ş
+            OnIngredientAdd?.Invoke(this, new OnIngredinetAddEventArgs //è§†è§‰ä¸Šæ¿€æ´»è¿™ä¸ªingredientçš„ç»„ä»¶çš„äº‹ä»¶
             {
                 kitchenObjectSO = kitchenObjectSO,
             });

@@ -5,18 +5,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour , IKitchenObjectParent
 {
-    public static Player Instance { get; private set; } //ÊôĞÔ£¨property£©ÒªÓÃÅÁË¹¿¨¶ûÃüÃû
+    public static Player Instance { get; private set; } //å±æ€§ï¼ˆpropertyï¼‰è¦ç”¨å¸•æ–¯å¡å°”å‘½å
 
 
-    public event EventHandler OnPickedSomething; //¼ñÆğÎïÆ·Ê±ºòµ÷ÓÃÒôĞ§µÄÊÂ¼ş 
-    public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;//·ºĞÍ(Generics)µÄÊÂ¼ş
-    public class OnSelectedCounterChangedEventArgs : EventArgs //ÕâÊÇÒ»¸öÊÂ¼ş²ÎÊıÀà£¬ÓÃÀ´×°ÊÂ¼şĞèÒª´«³öÈ¥µÄÊı¾İ¡£
+    public event EventHandler OnPickedSomething; //æ¡èµ·ç‰©å“æ—¶å€™è°ƒç”¨éŸ³æ•ˆçš„äº‹ä»¶ 
+    public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;//æ³›å‹(Generics)çš„äº‹ä»¶
+    public class OnSelectedCounterChangedEventArgs : EventArgs //è¿™æ˜¯ä¸€ä¸ªäº‹ä»¶å‚æ•°ç±»ï¼Œç”¨æ¥è£…äº‹ä»¶éœ€è¦ä¼ å‡ºå»çš„æ•°æ®ã€‚
     {
         public BaseCounter selectedCounter;
     }
 
     [SerializeField] private float moveSpeed = 7f;
-    [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask counterLayerMask;
     [SerializeField] private Transform kitchenObjectHoldPoint;
 
@@ -29,9 +28,9 @@ public class Player : MonoBehaviour , IKitchenObjectParent
 
     private void Awake()
     {
-        if(Instance != null)//µ¥ÀıÄ£Ê½µÄ°²È«¼ì²é
+        if(Instance != null)//å•ä¾‹æ¨¡å¼çš„å®‰å…¨æ£€æŸ¥
         {
-            Debug.Log("³öÏÖ³¬¹ıÒ»¸öÍæ¼Ò");
+            Debug.Log("å‡ºç°è¶…è¿‡ä¸€ä¸ªç©å®¶");
         }
 
         Instance = this; 
@@ -39,8 +38,8 @@ public class Player : MonoBehaviour , IKitchenObjectParent
 
     private void Start()
     {
-        gameInput.OnInteractAction += GameInput_OnInteractAction;
-        gameInput.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
+        GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
+        GameInput.Instance.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
     }
 
     
@@ -53,7 +52,7 @@ public class Player : MonoBehaviour , IKitchenObjectParent
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
     {
-        if (!KitchenGameManager.Instance.IsGamePlaying()) return; //Èç¹ûÓÎÏ·²»ÊÇGamePlayingµÄ×´Ì¬£¬²»ÔÊĞí½øĞĞ½»»¥
+        if (!KitchenGameManager.Instance.IsGamePlaying()) return; //å¦‚æœæ¸¸æˆä¸æ˜¯GamePlayingçš„çŠ¶æ€ï¼Œä¸å…è®¸è¿›è¡Œäº¤äº’
 
         if(selectedCounter!=null)
         {
@@ -63,7 +62,7 @@ public class Player : MonoBehaviour , IKitchenObjectParent
 
     private void GameInput_OnInteractAlternateAction(object sender, EventArgs e)
     {
-        if (!KitchenGameManager.Instance.IsGamePlaying()) return; //Èç¹ûÓÎÏ·²»ÊÇGamePlayingµÄ×´Ì¬£¬²»ÔÊĞí½øĞĞ½»»¥
+        if (!KitchenGameManager.Instance.IsGamePlaying()) return; //å¦‚æœæ¸¸æˆä¸æ˜¯GamePlayingçš„çŠ¶æ€ï¼Œä¸å…è®¸è¿›è¡Œäº¤äº’
 
         if (selectedCounter != null)
         {
@@ -71,51 +70,51 @@ public class Player : MonoBehaviour , IKitchenObjectParent
         }
     }
 
-    private void HandleInteractions()//´¦ÀíÓëÍæ¼Ò»¥¶¯¶ÔÏóÂß¼­µÄº¯Êı
+    private void HandleInteractions()//å¤„ç†ä¸ç©å®¶äº’åŠ¨å¯¹è±¡é€»è¾‘çš„å‡½æ•°
     {
-        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
+        Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
         if (moveDir != Vector3.zero)
         {
             lastInteractDir = moveDir; 
-            //ÔÚraycastº¯ÊıÄÚÓÃÕâ¸ö²ÎÊı´úÌæmoveDir¡£
-            //ÕâÑù¼´Ê¹Í£Ö¹ÒÆ¶¯£¨Í£Ö¹input·½Ïò£¬ÕâÑùmoveDirÎªvector3.zero£©
-            //raycastº¯ÊıÒ²²»»áÒòÎªÃ»ÓĞÊäÈë·½Ïò£¬¶ø¼´Ê¹Ãæ¶Ô×ÅÄ³¸ö¿É»¥¶¯ÎïÌå¶øÎŞ·¨»¥¶¯
+            //åœ¨raycastå‡½æ•°å†…ç”¨è¿™ä¸ªå‚æ•°ä»£æ›¿moveDirã€‚
+            //è¿™æ ·å³ä½¿åœæ­¢ç§»åŠ¨ï¼ˆåœæ­¢inputæ–¹å‘ï¼Œè¿™æ ·moveDirä¸ºvector3.zeroï¼‰
+            //raycastå‡½æ•°ä¹Ÿä¸ä¼šå› ä¸ºæ²¡æœ‰è¾“å…¥æ–¹å‘ï¼Œè€Œå³ä½¿é¢å¯¹ç€æŸä¸ªå¯äº’åŠ¨ç‰©ä½“è€Œæ— æ³•äº’åŠ¨
         }
 
         float interactDistance = 2f;
 
-        RaycastHit raycastHit;//ÓÃÕâÖÖ°üº¬outµÄraycastº¯ÊıÖØ¹¹£¬¿ÉÒÔ»ñÈ¡Åö×²µ½ÎïÌåµÄĞÅÏ¢
-                               //raycast´«²Îlayermask£¬¿ÉÒÔÖ»¼ì²â¹Ì¶¨layerµÄÅö×²
+        RaycastHit raycastHit;//ç”¨è¿™ç§åŒ…å«outçš„raycastå‡½æ•°é‡æ„ï¼Œå¯ä»¥è·å–ç¢°æ’åˆ°ç‰©ä½“çš„ä¿¡æ¯
+                               //raycastä¼ å‚layermaskï¼Œå¯ä»¥åªæ£€æµ‹å›ºå®šlayerçš„ç¢°æ’
         if (Physics.Raycast(transform.position, lastInteractDir, out raycastHit,interactDistance,counterLayerMask))
         {
             if(raycastHit.transform.TryGetComponent(out BaseCounter baseCounter))
             {
-                //TryGetComponentÀàËÆGetComponentº¯Êı£¬Ö»²»¹ıËü×Ô¶¯´¦Àí¿ÕµÄÇé¿ö
-                //´ú±íÓĞClearCounter
-                if(baseCounter != selectedCounter)//°Ñraycast¼ì²âµ½µÄcounterÉèÖÃÎª±»Ñ¡ÖĞµÄcounter
+                //TryGetComponentç±»ä¼¼GetComponentå‡½æ•°ï¼Œåªä¸è¿‡å®ƒè‡ªåŠ¨å¤„ç†ç©ºçš„æƒ…å†µ
+                //ä»£è¡¨æœ‰ClearCounter
+                if(baseCounter != selectedCounter)//æŠŠraycastæ£€æµ‹åˆ°çš„counterè®¾ç½®ä¸ºè¢«é€‰ä¸­çš„counter
                 {
                     SetSelectedCounter(baseCounter);
                 }
             }
             else
             {
-                SetSelectedCounter(null);//Èç¹ûÃ»ÕÒµ½£¬Ñ¡ÖĞcounterÉèÎª¿Õ
+                SetSelectedCounter(null);//å¦‚æœæ²¡æ‰¾åˆ°ï¼Œé€‰ä¸­counterè®¾ä¸ºç©º
             }
             
         }
         else
         {
-            SetSelectedCounter(null);//Èç¹ûÃ»ÕÒµ½£¬Ñ¡ÖĞcounterÉèÎª¿Õ
+            SetSelectedCounter(null);//å¦‚æœæ²¡æ‰¾åˆ°ï¼Œé€‰ä¸­counterè®¾ä¸ºç©º
         }
 
         //Debug.Log(selectedCounter);
     }
 
-    private void HandleMovement()//´¦ÀíÍæ¼ÒÒÆ¶¯Âß¼­µÄº¯Êı
+    private void HandleMovement()//å¤„ç†ç©å®¶ç§»åŠ¨é€»è¾‘çš„å‡½æ•°
     {
-        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
+        Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
         float moveDistance = moveSpeed * Time.deltaTime;
@@ -124,37 +123,37 @@ public class Player : MonoBehaviour , IKitchenObjectParent
         bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, moveDistance);
         if (!canMove)
         {
-            //Èç¹ûÖ»ÔÚÒ»¸ö·½Ïò£¨X/ZÖá£©ÓĞÅö×²ÏŞÖÆ£¬ÄÇÃ´°´¶à¸ö·½Ïò¼üÊ±£¬ÔÚÁíÍâµÄ·½ÏòÓ¦¸ÃÄÜ¹»ÒÆ¶¯
-            //ÒÔÏÂ»á¸øcanMove½øĞĞÅĞ¶Ï¸³Öµ£¬ÕâÑù²ÅÄÜ½øÈëÏÂÃæµÄ¸øtransform.position¸³ÖµµÄ·ÖÖ§Àï¡£
-            //ËùÒÔÔÚÕâ¸ö´ó·ÖÖ§ÀïµÄĞ¡·ÖÖ§µÄÅĞ¶ÏÌõ¼ş¶¼ÒªÊÇcanMove£¬¶ø²»ÄÜ¸Ä³É±ğµÄ¡£
+            //å¦‚æœåªåœ¨ä¸€ä¸ªæ–¹å‘ï¼ˆX/Zè½´ï¼‰æœ‰ç¢°æ’é™åˆ¶ï¼Œé‚£ä¹ˆæŒ‰å¤šä¸ªæ–¹å‘é”®æ—¶ï¼Œåœ¨å¦å¤–çš„æ–¹å‘åº”è¯¥èƒ½å¤Ÿç§»åŠ¨
+            //ä»¥ä¸‹ä¼šç»™canMoveè¿›è¡Œåˆ¤æ–­èµ‹å€¼ï¼Œè¿™æ ·æ‰èƒ½è¿›å…¥ä¸‹é¢çš„ç»™transform.positionèµ‹å€¼çš„åˆ†æ”¯é‡Œã€‚
+            //æ‰€ä»¥åœ¨è¿™ä¸ªå¤§åˆ†æ”¯é‡Œçš„å°åˆ†æ”¯çš„åˆ¤æ–­æ¡ä»¶éƒ½è¦æ˜¯canMoveï¼Œè€Œä¸èƒ½æ”¹æˆåˆ«çš„ã€‚
 
 
-            //¿´XÖáÄÜ·ñÒÆ¶¯
-            Vector3 movDirX = new Vector3(moveDir.x, 0, 0).normalized;//¹éÒ»»¯£¬È¡Ïû¶Ô½ÇÏßÒÆ¶¯µÄ¼õËÙ¡£ÏÂÍ¬
+            //çœ‹Xè½´èƒ½å¦ç§»åŠ¨
+            Vector3 movDirX = new Vector3(moveDir.x, 0, 0).normalized;//å½’ä¸€åŒ–ï¼Œå–æ¶ˆå¯¹è§’çº¿ç§»åŠ¨çš„å‡é€Ÿã€‚ä¸‹åŒ
             canMove = moveDir.x != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, movDirX, moveDistance);
             if (canMove)
             {
-                //Ö»ÄÜÔÚxÖáÒÆ¶¯
+                //åªèƒ½åœ¨xè½´ç§»åŠ¨
                 moveDir = movDirX;
-                //Debug.Log("ÔÚZÖá²»ÄÜÒÆ¶¯£¬ÔÚXÖá¿ÉÒÔÒÆ¶¯");
+                //Debug.Log("åœ¨Zè½´ä¸èƒ½ç§»åŠ¨ï¼Œåœ¨Xè½´å¯ä»¥ç§»åŠ¨");
 
             }
             else
             {
-                //ÔÚXÖá²»ÄÜÒÆ¶¯£¬¿´ÔÚZÖáÄÜ·ñÒÆ¶¯
+                //åœ¨Xè½´ä¸èƒ½ç§»åŠ¨ï¼Œçœ‹åœ¨Zè½´èƒ½å¦ç§»åŠ¨
 
                 Vector3 movDirZ = new Vector3(0, 0, moveDir.z).normalized;
                 canMove = moveDir.z != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, movDirZ, moveDistance);
                 if (canMove)
                 {
-                    //ÔÚXÖá²»ÄÜÒÆ¶¯£¬ÔÚZÖáÄÜÒÆ¶¯
+                    //åœ¨Xè½´ä¸èƒ½ç§»åŠ¨ï¼Œåœ¨Zè½´èƒ½ç§»åŠ¨
                     moveDir = movDirZ;
-                    //Debug.Log("ÔÚXÖá²»ÄÜÒÆ¶¯£¬ÔÚZÖá¿ÉÒÔÒÆ¶¯");
+                    //Debug.Log("åœ¨Xè½´ä¸èƒ½ç§»åŠ¨ï¼Œåœ¨Zè½´å¯ä»¥ç§»åŠ¨");
                 }
                 else
                 {
-                    //ÔÚXºÍZÖá¶¼²»ÄÜÒÆ¶¯
-                    //Debug.Log("ÔÚXºÍZÖá¶¼²»ÄÜÒÆ¶¯");
+                    //åœ¨Xå’ŒZè½´éƒ½ä¸èƒ½ç§»åŠ¨
+                    //Debug.Log("åœ¨Xå’ŒZè½´éƒ½ä¸èƒ½ç§»åŠ¨");
                 }
             }
 
@@ -164,14 +163,14 @@ public class Player : MonoBehaviour , IKitchenObjectParent
 
         if (canMove)
         {
-            transform.position += (Vector3)moveDir * moveSpeed * Time.deltaTime; //¡Á Time.deltaTimeµÄÔ­Òò£º
-                                                                                 //ÎªÁË¿ØÖÆÒÆ¶¯ËÙ¶È²»ËæÖ¡ÂÊ±ä»¯
+            transform.position += (Vector3)moveDir * moveSpeed * Time.deltaTime; //Ã— Time.deltaTimeçš„åŸå› ï¼š
+                                                                                 //ä¸ºäº†æ§åˆ¶ç§»åŠ¨é€Ÿåº¦ä¸éšå¸§ç‡å˜åŒ–
         }
         isWalking = moveDir != Vector3.zero;
 
         float rotateSpeed = 10f;
-        transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed); //¿ØÖÆ×ªÉíµÄ·½Ïò
-                                                                                                     //Slerpº¯ÊıÓÃÓÚË¿»¬×ªÏò
+        transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed); //æ§åˆ¶è½¬èº«çš„æ–¹å‘
+                                                                                                     //Slerpå‡½æ•°ç”¨äºä¸æ»‘è½¬å‘
     }
 
     public bool IsWalking()
@@ -179,43 +178,43 @@ public class Player : MonoBehaviour , IKitchenObjectParent
         return isWalking;
     }
 
-    private void SetSelectedCounter(BaseCounter selectedCounter) //´¥·¢ OnSelectedCounterChanged ÊÂ¼ş£¬²¢°Ñµ±Ç° Player Ñ¡ÖĞµÄ Counter ĞÅÏ¢£¬Í¨¹ıÊÂ¼ş²ÎÊı´«µİ¸øËùÓĞÊÂ¼ş¼àÌıÕß¡£
+    private void SetSelectedCounter(BaseCounter selectedCounter) //è§¦å‘ OnSelectedCounterChanged äº‹ä»¶ï¼Œå¹¶æŠŠå½“å‰ Player é€‰ä¸­çš„ Counter ä¿¡æ¯ï¼Œé€šè¿‡äº‹ä»¶å‚æ•°ä¼ é€’ç»™æ‰€æœ‰äº‹ä»¶ç›‘å¬è€…ã€‚
     {
         this.selectedCounter = selectedCounter;
 
         OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs
-        //´¥·¢ OnSelectedCounterChanged ÊÂ¼ş£¬
-        //²¢°Ñµ±Ç° Player Ñ¡ÖĞµÄ Counter ĞÅÏ¢£¬Í¨¹ıÊÂ¼ş²ÎÊı´«µİ¸øËùÓĞÊÂ¼ş¼àÌıÕß¡£
+        //è§¦å‘ OnSelectedCounterChanged äº‹ä»¶ï¼Œ
+        //å¹¶æŠŠå½“å‰ Player é€‰ä¸­çš„ Counter ä¿¡æ¯ï¼Œé€šè¿‡äº‹ä»¶å‚æ•°ä¼ é€’ç»™æ‰€æœ‰äº‹ä»¶ç›‘å¬è€…ã€‚
         {
-            selectedCounter = selectedCounter   //ËäÈ»ÕâÁ©Ãû×ÖÒ»Ñù£¬µ«ÊÇ¹â±êÒÆÉÏÈ¥¾ÍÖªµÀ¸÷×ÔÊÇÊ²Ã´ÁË¡£
-                                                //µÚÒ»¸öÊÇEventArgsÒª´«µİµÄ²ÎÊı£¬
-                                                //µÚ¶ş¸öÊÇPlayerÀàµÄ³ÉÔ±±äÁ¿selectCounter
+            selectedCounter = selectedCounter   //è™½ç„¶è¿™ä¿©åå­—ä¸€æ ·ï¼Œä½†æ˜¯å…‰æ ‡ç§»ä¸Šå»å°±çŸ¥é“å„è‡ªæ˜¯ä»€ä¹ˆäº†ã€‚
+                                                //ç¬¬ä¸€ä¸ªæ˜¯EventArgsè¦ä¼ é€’çš„å‚æ•°ï¼Œ
+                                                //ç¬¬äºŒä¸ªæ˜¯Playerç±»çš„æˆå‘˜å˜é‡selectCounter
         });
     }
 
-    public Transform GetKitchenObjectFollowTransform()  //»ñÈ¡kOÓ¦¸Ã±»·ÅÖÃµÄÎ»ÖÃ£¬
-                                                        //ÕâÀïÊÇÅäºÏ×ªÒÆkOÎ»ÖÃ¶øÊµÏÖµÄº¯Êı½Ó¿Ú£¬
-                                                        //ÓÃÓÚ»ñÈ¡secondCCµÄÎïÆ··ÅÖÃÎ»ÖÃ
+    public Transform GetKitchenObjectFollowTransform()  //è·å–kOåº”è¯¥è¢«æ”¾ç½®çš„ä½ç½®ï¼Œ
+                                                        //è¿™é‡Œæ˜¯é…åˆè½¬ç§»kOä½ç½®è€Œå®ç°çš„å‡½æ•°æ¥å£ï¼Œ
+                                                        //ç”¨äºè·å–secondCCçš„ç‰©å“æ”¾ç½®ä½ç½®
     {
         return kitchenObjectHoldPoint;
     }
 
-    public void SetKitchenObject(KitchenObject kitchenObjtect) //ÎïÆ·Ôö
+    public void SetKitchenObject(KitchenObject kitchenObjtect) //ç‰©å“å¢
     {
         this.kitchenObject = kitchenObjtect;
 
         if(kitchenObjtect != null)
         {
-            OnPickedSomething?.Invoke(this, EventArgs.Empty); //¼ñÆğÎïÆ·Ê±ºòµ÷ÓÃÒôĞ§µÄÊÂ¼ş
+            OnPickedSomething?.Invoke(this, EventArgs.Empty); //æ¡èµ·ç‰©å“æ—¶å€™è°ƒç”¨éŸ³æ•ˆçš„äº‹ä»¶
         }
     }
-    public KitchenObject GetKitchenObject() { return kitchenObject; } //ÎïÆ·²é
-    public void ClearKitchenObject() //ÎïÆ·É¾
+    public KitchenObject GetKitchenObject() { return kitchenObject; } //ç‰©å“æŸ¥
+    public void ClearKitchenObject() //ç‰©å“åˆ 
     {
         kitchenObject = null;
     }
 
-    public bool HasKitchenObject()  //²é¿´kOÊÇ·ñ±»¸³Öµ
+    public bool HasKitchenObject()  //æŸ¥çœ‹kOæ˜¯å¦è¢«èµ‹å€¼
     {
         return kitchenObject != null;
     }

@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//C#½Å±¾
-//Ëü¶¨ÒåÁËÒ»¸ö ScriptableObject Êı¾İ×ÊÔ´ÀàĞÍ ¡ª¡ª KitchenObjectSO¡£
-//Õâ¸öÀà²»ÊÇ MonoBehaviour£¬¶øÊÇ ÓÃÓÚ´æ´¢Êı¾İµÄ×ÊÔ´¶ÔÏó
-//Unity »á¸ù¾İÕâ¸öÀà£¬ÔÚ Project Ãæ°åÀïÉú³ÉÒ»¸ö.asset ÎÄ¼ş£¬
-//ÀïÃæ±£´æÊ³Îï¡¢µÀ¾ßµÈµÄ¾²Ì¬Êı¾İ¡£
+//C#è„šæœ¬
+//å®ƒå®šä¹‰äº†ä¸€ä¸ª ScriptableObject æ•°æ®èµ„æºç±»å‹ â€”â€” KitchenObjectSOã€‚
+//è¿™ä¸ªç±»ä¸æ˜¯ MonoBehaviourï¼Œè€Œæ˜¯ ç”¨äºå­˜å‚¨æ•°æ®çš„èµ„æºå¯¹è±¡
+//Unity ä¼šæ ¹æ®è¿™ä¸ªç±»ï¼Œåœ¨ Project é¢æ¿é‡Œç”Ÿæˆä¸€ä¸ª.asset æ–‡ä»¶ï¼Œ
+//é‡Œé¢ä¿å­˜é£Ÿç‰©ã€é“å…·ç­‰çš„é™æ€æ•°æ®ã€‚
 
-[CreateAssetMenu()] //ÕâÊÇÒ»¸ö Unity µÄÌØĞÔ£¨Attribute£©£¬×÷ÓÃÊÇ£º
-                    //ÔÚ Unity µÄ Assets ¡ú Create ²Ëµ¥ÀïÌí¼Ó´´½¨¸Ã ScriptableObject µÄÑ¡Ïî¡£
-                    //¿ÉÒÔÉú³É.assetÎÄ¼ş£¬ÓÃÓÚ´æ´¢Äã¶¨ÒåµÄÒÔÏÂĞÅÏ¢e.g. prefabs sprites objectNames...
-public class KitchenObjectSO : ScriptableObject //×¢ÒâÕâÀï²»ÊÇMonobehavior
+[CreateAssetMenu()] //è¿™æ˜¯ä¸€ä¸ª Unity çš„ç‰¹æ€§ï¼ˆAttributeï¼‰ï¼Œä½œç”¨æ˜¯ï¼š
+                    //åœ¨ Unity çš„ Assets â†’ Create èœå•é‡Œæ·»åŠ åˆ›å»ºè¯¥ ScriptableObject çš„é€‰é¡¹ã€‚
+                    //å¯ä»¥ç”Ÿæˆ.assetæ–‡ä»¶ï¼Œç”¨äºå­˜å‚¨ä½ å®šä¹‰çš„ä»¥ä¸‹ä¿¡æ¯e.g. prefabs sprites objectNames...
+public class KitchenObjectSO : ScriptableObject //æ³¨æ„è¿™é‡Œä¸æ˜¯Monobehavior
 {
 
     public Transform prefabs;

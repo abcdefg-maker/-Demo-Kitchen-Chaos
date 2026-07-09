@@ -29,11 +29,11 @@ public class StoveCounterSound : MonoBehaviour
     private void StoveCounter_OnStateChanged(object sender, StoveCounter.OnStateChangedEventArgs e)
     {
         bool playSound = e.state == StoveCounter.State.Frying || e.state == StoveCounter.State.Fried;
-        if (playSound)  //如果正在煎炸，就播放音效
+        if (playSound)  //濡傛灉姝ｅ湪鐓庣偢锛屽氨鎾斁闊虫晥
         {
             audioSource.Play();
         }
-        else            //如果没有正在煎炸，就暂停
+        else            //濡傛灉娌℃湁姝ｅ湪鐓庣偢锛屽氨鏆傚仠
         {
             audioSource.Pause();
         }

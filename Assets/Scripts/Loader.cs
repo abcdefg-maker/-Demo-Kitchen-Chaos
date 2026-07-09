@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class Loader //静态类的所有成员都必须是静态的
+public static class Loader //闈欐�佺被鐨勬墍鏈夋垚鍛橀兘蹇呴』鏄潤鎬佺殑
 {
     public enum Scene
     {

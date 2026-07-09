@@ -6,16 +6,16 @@ using UnityEngine.Rendering;
 
 public class CuttingCounter : BaseCounter , IHasProgress
 {
-    public static event EventHandler OnAnyCut; //¿ØÖÆÇĞ²ËÒôĞ§µÄÊÂ¼ş
+    public static event EventHandler OnAnyCut; //æ§åˆ¶åˆ‡èœéŸ³æ•ˆçš„äº‹ä»¶
 
-    new public static void ResetStaticData() //ÔÚÇĞ»»µ½Ö÷²Ëµ¥µÄÊ±ºò£¬ÖØÖÃOnAnyCutÕâ¸ö¾²Ì¬ÊÂ¼ş
+    new public static void ResetStaticData() //åœ¨åˆ‡æ¢åˆ°ä¸»èœå•çš„æ—¶å€™ï¼Œé‡ç½®OnAnyCutè¿™ä¸ªé™æ€äº‹ä»¶
     {
         OnAnyCut = null;
     }
 
-    public event EventHandler <IHasProgress.OnProgressChangedEventArgs> OnProgressChanged; //¿ØÖÆÇĞ²Ë½ø¶ÈÌõµÄÊÂ¼ş
+    public event EventHandler <IHasProgress.OnProgressChangedEventArgs> OnProgressChanged; //æ§åˆ¶åˆ‡èœè¿›åº¦æ¡çš„äº‹ä»¶
 
-    public event EventHandler OnCut;    //¿ØÖÆÇĞ²Ë¶¯»­µÄÊÂ¼ş
+    public event EventHandler OnCut;    //æ§åˆ¶åˆ‡èœåŠ¨ç”»çš„äº‹ä»¶
 
     [SerializeField] private CuttingRecipeSO[] cuttingRecipeSOArray;
     
@@ -25,13 +25,13 @@ public class CuttingCounter : BaseCounter , IHasProgress
     {
         if (!HasKitchenObject())
         {
-            //Ì¨ÃæÉÏÃ»¶«Î÷
+            //å°é¢ä¸Šæ²¡ä¸œè¥¿
             if (player.HasKitchenObject())
             {
-                // Íæ¼ÒÊÖÀïÓĞ¶«Î÷
-                if (HasRecipeWithInput(player.GetKitchenObject().GetKitchenObjectSO()))//¶«Î÷ÊÇ¿ÉÒÔÇĞÆ¬µÄ
+                // ç©å®¶æ‰‹é‡Œæœ‰ä¸œè¥¿
+                if (HasRecipeWithInput(player.GetKitchenObject().GetKitchenObjectSO()))//ä¸œè¥¿æ˜¯å¯ä»¥åˆ‡ç‰‡çš„
                 {
-                    player.GetKitchenObject().SetKitchenObjectParent(this); //°Ñ¶«Î÷·ÅÔÚÌ¨ÃæÉÏ
+                    player.GetKitchenObject().SetKitchenObjectParent(this); //æŠŠä¸œè¥¿æ”¾åœ¨å°é¢ä¸Š
                     cuttingProgress = 0;
 
                     CuttingRecipeSO cuttingRecipeSO = GetCuttingRecipeSOWithInput(GetKitchenObject().GetKitchenObjectSO());
@@ -44,27 +44,27 @@ public class CuttingCounter : BaseCounter , IHasProgress
             }
             else
             {
-                // Íæ¼ÒÊÖÀïÃ»ÓĞ¶«Î÷
+                // ç©å®¶æ‰‹é‡Œæ²¡æœ‰ä¸œè¥¿
             }
         }
         else
         {
-            //Ì¨ÃæÓĞ¶«Î÷
+            //å°é¢æœ‰ä¸œè¥¿
             if (player.HasKitchenObject())
             {
-                // Íæ¼ÒÊÖÀïÓĞ¶«Î÷
+                // ç©å®¶æ‰‹é‡Œæœ‰ä¸œè¥¿
                 if (player.GetKitchenObject().TryGetPlate(out PlateKitchenObject plateKitchenObject))
                 {
-                    //Íæ¼ÒÊÖÀïÄÃ×ÅÅÌ×Ó£¨ÕâÊ±ºòÎÒÃÇÏ£Íû°ÑclearcounterÉÏµÄ¶«Î÷·Åµ½ÅÌ×ÓÀï£©
-                    //asÊÇ°²È«ÀàĞÍ×ª»»
-                    //·µ»Ø obj Ç¿×ªºóµÄ¶ÔÏó£¬Èç¹û²»ÄÜ×ª»»£¬¾Í·µ»Ø null£¬²»»áÅ×Òì³£
-                    //·´Ö®£¬Èç¹ûÓÃÇ¿ÖÆÀàĞÍ×ª»»(Type)a,ÕâÑù×ª»»Ê§°ÜµÄÊ±ºò»áÅ×³öÒì³£
-                    if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))//ÅĞ¶ÏÕâ¸öÅÌ×ÓÀïÊÇ·ñÒÑ¾­Ìí¼Ó¹ıÕâ¸öÊ³²Ä
-                                                                                                     //Èç¹ûÌí¼Ó¹ıÏàÍ¬µÄÊ³²ÄÄÇ¾Í²»ÄÜÔÙ°ÑÕâ¸ö¶«Î÷·Å½øÈ¥
-                                                                                                     //ÕâÑùÉè¼ÆÊÇÒòÎªÎÒÃÇÉè¶¨µÄÊ³ÎïÅä·½
-                                                                                                     //ÔÚÍ¬Ò»¸ö²ËÆ·ÄÚ²»»á³öÏÖÏàÍ¬µÄÊ³²ÄÊ¹ÓÃÁ½´ÎµÄÇé¿ö
-                                                                                                     //£¨e.g. double cheese ...£©
-                                                                                                     //ËùÒÔÈç¹ûºóĞøĞèÒªÍØÕ¹ÕâÖÖÍæ·¨µÄ»°£¬Õâ¿éµÄ´úÂëÊÇĞèÒª¸ÄµÄ
+                    //ç©å®¶æ‰‹é‡Œæ‹¿ç€ç›˜å­ï¼ˆè¿™æ—¶å€™æˆ‘ä»¬å¸Œæœ›æŠŠclearcounterä¸Šçš„ä¸œè¥¿æ”¾åˆ°ç›˜å­é‡Œï¼‰
+                    //asæ˜¯å®‰å…¨ç±»å‹è½¬æ¢
+                    //è¿”å› obj å¼ºè½¬åçš„å¯¹è±¡ï¼Œå¦‚æœä¸èƒ½è½¬æ¢ï¼Œå°±è¿”å› nullï¼Œä¸ä¼šæŠ›å¼‚å¸¸
+                    //åä¹‹ï¼Œå¦‚æœç”¨å¼ºåˆ¶ç±»å‹è½¬æ¢(Type)a,è¿™æ ·è½¬æ¢å¤±è´¥çš„æ—¶å€™ä¼šæŠ›å‡ºå¼‚å¸¸
+                    if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))//åˆ¤æ–­è¿™ä¸ªç›˜å­é‡Œæ˜¯å¦å·²ç»æ·»åŠ è¿‡è¿™ä¸ªé£Ÿæ
+                                                                                                     //å¦‚æœæ·»åŠ è¿‡ç›¸åŒçš„é£Ÿæé‚£å°±ä¸èƒ½å†æŠŠè¿™ä¸ªä¸œè¥¿æ”¾è¿›å»
+                                                                                                     //è¿™æ ·è®¾è®¡æ˜¯å› ä¸ºæˆ‘ä»¬è®¾å®šçš„é£Ÿç‰©é…æ–¹
+                                                                                                     //åœ¨åŒä¸€ä¸ªèœå“å†…ä¸ä¼šå‡ºç°ç›¸åŒçš„é£Ÿæä½¿ç”¨ä¸¤æ¬¡çš„æƒ…å†µ
+                                                                                                     //ï¼ˆe.g. double cheese ...ï¼‰
+                                                                                                     //æ‰€ä»¥å¦‚æœåç»­éœ€è¦æ‹“å±•è¿™ç§ç©æ³•çš„è¯ï¼Œè¿™å—çš„ä»£ç æ˜¯éœ€è¦æ”¹çš„
                     {
                         GetKitchenObject().DestorySelf();
                     }
@@ -72,20 +72,20 @@ public class CuttingCounter : BaseCounter , IHasProgress
             }
             else
             {
-                // Íæ¼ÒÊÖÀïÃ»ÓĞ¶«Î÷
-                GetKitchenObject().SetKitchenObjectParent(player);//°Ñ¶«Î÷·ÅÔÚÍæ¼ÒÊÖÉÏ
+                // ç©å®¶æ‰‹é‡Œæ²¡æœ‰ä¸œè¥¿
+                GetKitchenObject().SetKitchenObjectParent(player);//æŠŠä¸œè¥¿æ”¾åœ¨ç©å®¶æ‰‹ä¸Š
             }
         }
     }
     public override void InteractAlternate(Player player)
     {
-       if(HasKitchenObject() && HasRecipeWithInput(GetKitchenObject().GetKitchenObjectSO())) //±£Ö¤ÇĞÆ¬Ò»´ÎÖ®ºó£¬Slice²»ÔÙ±»ÇĞ
+       if(HasKitchenObject() && HasRecipeWithInput(GetKitchenObject().GetKitchenObjectSO())) //ä¿è¯åˆ‡ç‰‡ä¸€æ¬¡ä¹‹åï¼ŒSliceä¸å†è¢«åˆ‡
         {
-            //Ì¨ÃæÉÏÓĞ¶«Î÷
+            //å°é¢ä¸Šæœ‰ä¸œè¥¿
             cuttingProgress++;
 
-            OnCut?.Invoke(this,EventArgs.Empty);    //µ÷¶¯ÇĞ²Ë¶¯»­µÄÊÂ¼ş
-            OnAnyCut?.Invoke(this,EventArgs.Empty); //µ÷¶¯ÇĞ²ËÉùÒôµÄÊÂ¼ş
+            OnCut?.Invoke(this,EventArgs.Empty);    //è°ƒåŠ¨åˆ‡èœåŠ¨ç”»çš„äº‹ä»¶
+            OnAnyCut?.Invoke(this,EventArgs.Empty); //è°ƒåŠ¨åˆ‡èœå£°éŸ³çš„äº‹ä»¶
 
             CuttingRecipeSO cuttingRecipeSO = GetCuttingRecipeSOWithInput(GetKitchenObject().GetKitchenObjectSO());
 
@@ -95,19 +95,19 @@ public class CuttingCounter : BaseCounter , IHasProgress
             });
 
 
-            if (cuttingProgress >= cuttingRecipeSO.cuttingProgressMax) //Èç¹ûÇĞµÄ´ÎÊıµ½ÁË£¬¾Í±ä³ÉÆ¬
+            if (cuttingProgress >= cuttingRecipeSO.cuttingProgressMax) //å¦‚æœåˆ‡çš„æ¬¡æ•°åˆ°äº†ï¼Œå°±å˜æˆç‰‡
             {
-                KitchenObjectSO outputKitchenObjectSO = GetOutputForInput(GetKitchenObject().GetKitchenObjectSO()); //ÕÒÇĞÆ¬ºóµÄSO
+                KitchenObjectSO outputKitchenObjectSO = GetOutputForInput(GetKitchenObject().GetKitchenObjectSO()); //æ‰¾åˆ‡ç‰‡åçš„SO
 
                 this.GetKitchenObject().DestorySelf();
 
 
-                KitchenObject.SpawnKitchenObject(outputKitchenObjectSO, this);//Éú³ÉÇĞÆ¬ºóSO¶ÔÓ¦µÄprefab
+                KitchenObject.SpawnKitchenObject(outputKitchenObjectSO, this);//ç”Ÿæˆåˆ‡ç‰‡åSOå¯¹åº”çš„prefab
             }
         }
     }
 
-    private KitchenObjectSO GetOutputForInput(KitchenObjectSO inputKitchenObjectSO) //²éÕÒÇĞÆ¬Ç°ºÍÇĞÆ¬ºó¶ÔÓ¦µÄgameobject
+    private KitchenObjectSO GetOutputForInput(KitchenObjectSO inputKitchenObjectSO) //æŸ¥æ‰¾åˆ‡ç‰‡å‰å’Œåˆ‡ç‰‡åå¯¹åº”çš„gameobject
     {
        CuttingRecipeSO cuttingRecipeSO = GetCuttingRecipeSOWithInput(inputKitchenObjectSO);
         if (cuttingRecipeSO != null)
@@ -120,13 +120,13 @@ public class CuttingCounter : BaseCounter , IHasProgress
         }
     }
 
-    private bool HasRecipeWithInput(KitchenObjectSO inputKitchenObjectSO) //ÅĞ¶ÏÒ»¸öÎïÆ·ÊÇ·ñÊÇ¿ÉÒÔÇĞÆ¬µÄ
+    private bool HasRecipeWithInput(KitchenObjectSO inputKitchenObjectSO) //åˆ¤æ–­ä¸€ä¸ªç‰©å“æ˜¯å¦æ˜¯å¯ä»¥åˆ‡ç‰‡çš„
     {
         CuttingRecipeSO cuttingRecipeSO = GetCuttingRecipeSOWithInput(inputKitchenObjectSO);
         return cuttingRecipeSO != null;
     }
 
-    private CuttingRecipeSO GetCuttingRecipeSOWithInput(KitchenObjectSO inputKitchenObjectSO)//²éÕÒÎïÆ·ÊÇ·ñÄÜ¹»ÇĞÆ¬£¬¿ÉÒÔ¾Í·µ»Ørecipe
+    private CuttingRecipeSO GetCuttingRecipeSOWithInput(KitchenObjectSO inputKitchenObjectSO)//æŸ¥æ‰¾ç‰©å“æ˜¯å¦èƒ½å¤Ÿåˆ‡ç‰‡ï¼Œå¯ä»¥å°±è¿”å›recipe
     {
         foreach (CuttingRecipeSO cuttingRecipeSO in cuttingRecipeSOArray)
         {

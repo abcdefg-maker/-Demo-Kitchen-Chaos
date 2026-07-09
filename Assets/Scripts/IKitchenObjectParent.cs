@@ -2,29 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//  C#½Ó¿Ú
-public interface IKitchenObjectParent      //C#½Ó¿Ú£¨interface£©ÏñÊÇÒ»¸öºÏÍ¬£¬
-                                           //ËûÖ»»áÉùÃ÷Ò»Ğ©º¯Êı£¬µ«ÊÇ²»»áÊµÏÖÕâĞ©º¯Êı
-                                           //ÔÚÒ»¸öÀàAÒÔ¸Ã½Ó¿Ú×÷Îª»ùÀàµÄÊ±ºò£¬
-                                           //A±ØĞëÔÚÀàÄÚÊµÏÖÕâ¸ö½Ó¿ÚÉùÃ÷µÄËùÓĞº¯Êı
-                                           //ÁíÍâ£¬
-                                           //C#²»Ö§³ÖÀàµÄ¶à¼Ì³Ğ£¬µ«ÊÇÒ»¸öÀà¿ÉÒÔ¼Ì³Ğ¶à¸ö½Ó¿Ú
+//  C#æ¥å£
+public interface IKitchenObjectParent      //C#æ¥å£ï¼ˆinterfaceï¼‰åƒæ˜¯ä¸€ä¸ªåˆåŒï¼Œ
+                                           //ä»–åªä¼šå£°æ˜ä¸€äº›å‡½æ•°ï¼Œä½†æ˜¯ä¸ä¼šå®ç°è¿™äº›å‡½æ•°
+                                           //åœ¨ä¸€ä¸ªç±»Aä»¥è¯¥æ¥å£ä½œä¸ºåŸºç±»çš„æ—¶å€™ï¼Œ
+                                           //Aå¿…é¡»åœ¨ç±»å†…å®ç°è¿™ä¸ªæ¥å£å£°æ˜çš„æ‰€æœ‰å‡½æ•°
+                                           //å¦å¤–ï¼Œ
+                                           //C#ä¸æ”¯æŒç±»çš„å¤šç»§æ‰¿ï¼Œä½†æ˜¯ä¸€ä¸ªç±»å¯ä»¥ç»§æ‰¿å¤šä¸ªæ¥å£
 
-                                           //ÏÖÔÚ£¬ÎªÁË·½±ãÊµÏÖplayer×¥È¡kOµÄ´úÂë
-                                           //°ÑccÕâ¸ö¾ßÌåµÄÀà£¬´úÌæÎª½Ó¿Ú£¬À´ÊµÏÖÕâ¸ö¹¦ÄÜ£¬×¢ÊÍÀÁµÃ¸üĞÂÁË£¬Ô­Àí²»±ä
+                                           //ç°åœ¨ï¼Œä¸ºäº†æ–¹ä¾¿å®ç°playeræŠ“å–kOçš„ä»£ç 
+                                           //æŠŠccè¿™ä¸ªå…·ä½“çš„ç±»ï¼Œä»£æ›¿ä¸ºæ¥å£ï¼Œæ¥å®ç°è¿™ä¸ªåŠŸèƒ½ï¼Œæ³¨é‡Šæ‡’å¾—æ›´æ–°äº†ï¼ŒåŸç†ä¸å˜
 {
-    public Transform GetKitchenObjectFollowTransform();  //»ñÈ¡kOÓ¦¸Ã±»·ÅÖÃµÄÎ»ÖÃ£¬
-                                                         //ÕâÀïÊÇÅäºÏ×ªÒÆkOÎ»ÖÃ¶øÊµÏÖµÄº¯Êı½Ó¿Ú£¬
-                                                         //ÓÃÓÚ»ñÈ¡secondCCµÄÎïÆ··ÅÖÃÎ»ÖÃ
+    public Transform GetKitchenObjectFollowTransform();  //è·å–kOåº”è¯¥è¢«æ”¾ç½®çš„ä½ç½®ï¼Œ
+                                                         //è¿™é‡Œæ˜¯é…åˆè½¬ç§»kOä½ç½®è€Œå®ç°çš„å‡½æ•°æ¥å£ï¼Œ
+                                                         //ç”¨äºè·å–secondCCçš„ç‰©å“æ”¾ç½®ä½ç½®
 
 
 
-    public void SetKitchenObject(KitchenObject kitchenObjtect); //ÎïÆ·Ôö
+    public void SetKitchenObject(KitchenObject kitchenObjtect); //ç‰©å“å¢
 
-    public KitchenObject GetKitchenObject(); //ÎïÆ·²é
-    public void ClearKitchenObject(); //ÎïÆ·É¾
+    public KitchenObject GetKitchenObject(); //ç‰©å“æŸ¥
+    public void ClearKitchenObject(); //ç‰©å“åˆ 
 
 
-    public bool HasKitchenObject();  //²é¿´kOÊÇ·ñ±»¸³Öµ
+    public bool HasKitchenObject();  //æŸ¥çœ‹kOæ˜¯å¦è¢«èµ‹å€¼
     
 }

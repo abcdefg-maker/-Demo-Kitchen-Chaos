@@ -38,7 +38,7 @@ public class DeliveryResultUI : MonoBehaviour
         animator.SetTrigger(POPUP);
         backgroundImage.color = failedColor;
         iconImage.sprite = failedSprite;
-        message.text = "上菜失败"; 
+        message.text = "涓婅彍澶辫触"; 
 
     }
 
@@ -48,6 +48,6 @@ public class DeliveryResultUI : MonoBehaviour
         animator.SetTrigger(POPUP);
         backgroundImage.color = successColor;
         iconImage.sprite = successSprite;
-        message.text = "上菜成功";
+        message.text = "涓婅彍鎴愬姛";
     }
 }

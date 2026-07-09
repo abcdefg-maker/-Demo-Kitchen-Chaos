@@ -15,7 +15,7 @@ public class TutorialUI : MonoBehaviour
 
 
 
-    private void UpdateVisual() //rebind按键时，更新视觉
+    private void UpdateVisual() //rebind鎸夐敭鏃讹紝鏇存柊瑙嗚
     {
         keyMoveUpText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Move_Up);
         keyMoveDownText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Move_Down);

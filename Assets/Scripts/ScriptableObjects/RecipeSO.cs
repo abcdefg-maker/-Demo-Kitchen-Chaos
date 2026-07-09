@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-//脚本,用于存储应该提交的订单的食谱
+//鑴氭湰,鐢ㄤ簬瀛樺偍搴旇鎻愪氦鐨勮鍗曠殑椋熻氨
 [CreateAssetMenu()]
 public class RecipeSO : ScriptableObject
 {

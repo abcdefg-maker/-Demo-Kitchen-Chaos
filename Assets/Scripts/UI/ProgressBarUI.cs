@@ -12,11 +12,11 @@ public class ProgressBarUI : MonoBehaviour
     private IHasProgress hasProgress;
     private void Start()
     {
-        hasProgress = hasProgressGameObject.GetComponent<IHasProgress>(); //ÕâÑùÊµÏÖÊÇÒòÎªunityµÄinspectorÄÚ²»»áÏÔÊ¾interface
-                                                                          //ËùÒÔ²»ÄÜÓÃĞòÁĞ»¯µÄ·½Ê½³õÊ¼»¯½Ó¿Ú±äÁ¿
+        hasProgress = hasProgressGameObject.GetComponent<IHasProgress>(); //è¿™æ ·å®ç°æ˜¯å› ä¸ºunityçš„inspectorå†…ä¸ä¼šæ˜¾ç¤ºinterface
+                                                                          //æ‰€ä»¥ä¸èƒ½ç”¨åºåˆ—åŒ–çš„æ–¹å¼åˆå§‹åŒ–æ¥å£å˜é‡
         if(hasProgress == null )
         {
-            Debug.LogError(hasProgressGameObject + "Ã»ÓĞÒ»¸öIHasProgreess½Ó¿ÚÀàĞÍµÄComponent!");
+            Debug.LogError(hasProgressGameObject + "æ²¡æœ‰ä¸€ä¸ªIHasProgreessæ¥å£ç±»å‹çš„Component!");
         }
 
         hasProgress.OnProgressChanged += HasProgress_OnProgressChanged;
@@ -30,11 +30,11 @@ public class ProgressBarUI : MonoBehaviour
     {
         barImage.fillAmount = e.progressNormalized;
 
-        if(e.progressNormalized == 0f || e.progressNormalized ==1f) //Èç¹ûÒ»µãÃ»ÇĞ»òÕßÇĞÍêÁË£¬Òş²ØBar
+        if(e.progressNormalized == 0f || e.progressNormalized ==1f) //å¦‚æœä¸€ç‚¹æ²¡åˆ‡æˆ–è€…åˆ‡å®Œäº†ï¼Œéšè—Bar
         {
             Hide();
         }
-        else  //ÏÔÊ¾Bar 
+        else  //æ˜¾ç¤ºBar 
         {
             Show();
         }

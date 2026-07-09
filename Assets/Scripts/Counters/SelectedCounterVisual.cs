@@ -8,12 +8,12 @@ public class SelectedCounterVisual : MonoBehaviour
     [SerializeField] private BaseCounter baseCounter;
     [SerializeField] private GameObject[] visualGameObjectArray;
 
-    private void Start()    //´Ë´¦±ØĞëÎªStart£¬·ñÔò±ÈPlayerÀàµÄAwakeº¯ÊıÏÈÔËĞĞµÄ»°£¬Instance == null
-                            //ÎªÁË±ÜÃâÕâÖÖÎÊÌâ£¬ÓĞÒ»¸ö¼¼ÇÉ£º
-                            //ÀàÄÚ²¿µÄ³õÊ¼»¯¶¼ÔÚAwakeÄÚ½øĞĞ£¬¶ÔÍâ²¿±äÁ¿µÄ·ÃÎÊ¡¢¸³Öµ¶¼ÔÚStart½øĞĞ¡£
-                            //ÒòÎªËùÓĞµÄAwakeµÄÔËĞĞÊ±¼äÒ»¶¨ÏÈÓÚËùÓĞµÄStart
+    private void Start()    //æ­¤å¤„å¿…é¡»ä¸ºStartï¼Œå¦åˆ™æ¯”Playerç±»çš„Awakeå‡½æ•°å…ˆè¿è¡Œçš„è¯ï¼ŒInstance == null
+                            //ä¸ºäº†é¿å…è¿™ç§é—®é¢˜ï¼Œæœ‰ä¸€ä¸ªæŠ€å·§ï¼š
+                            //ç±»å†…éƒ¨çš„åˆå§‹åŒ–éƒ½åœ¨Awakeå†…è¿›è¡Œï¼Œå¯¹å¤–éƒ¨å˜é‡çš„è®¿é—®ã€èµ‹å€¼éƒ½åœ¨Startè¿›è¡Œã€‚
+                            //å› ä¸ºæ‰€æœ‰çš„Awakeçš„è¿è¡Œæ—¶é—´ä¸€å®šå…ˆäºæ‰€æœ‰çš„Start
     {
-        //ÒòÎªInstanceÎª¾²Ì¬³ÉÔ±£¬ËùÒÔÒªÍ¨¹ıÀàÃû½øĞĞ·ÃÎÊ,ËüÊôÓÚÀà£¬²»ÊôÓÚ¶ÔÏó
+        //å› ä¸ºInstanceä¸ºé™æ€æˆå‘˜ï¼Œæ‰€ä»¥è¦é€šè¿‡ç±»åè¿›è¡Œè®¿é—®,å®ƒå±äºç±»ï¼Œä¸å±äºå¯¹è±¡
         Player.Instance.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
     }
 

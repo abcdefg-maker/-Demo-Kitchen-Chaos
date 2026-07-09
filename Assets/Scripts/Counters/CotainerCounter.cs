@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ContainerCounter : BaseCounter //¹¦ÄÜ£º°Ñ¶«Î÷´ÓÌ¨ÃæÀïÄÃµ½Íæ¼ÒÊÖÉÏ
+public class ContainerCounter : BaseCounter //åŠŸèƒ½ï¼šæŠŠä¸œè¥¿ä»å°é¢é‡Œæ‹¿åˆ°ç©å®¶æ‰‹ä¸Š
 {
     public event EventHandler OnPlayerGrabbedObject;
 
@@ -11,11 +11,11 @@ public class ContainerCounter : BaseCounter //¹¦ÄÜ£º°Ñ¶«Î÷´ÓÌ¨ÃæÀïÄÃµ½Íæ¼ÒÊÖÉÏ
 
     public override void Interact(Player player)
     {
-        if (!player.HasKitchenObject())//Èç¹ûÍæ¼ÒÊÖÀïÓĞ¶«Î÷¾Í²»ÄÜÔÙ¸øÍæ¼Ò¶«Î÷ÁË
+        if (!player.HasKitchenObject())//å¦‚æœç©å®¶æ‰‹é‡Œæœ‰ä¸œè¥¿å°±ä¸èƒ½å†ç»™ç©å®¶ä¸œè¥¿äº†
         {
             KitchenObject.SpawnKitchenObject(kitchenObjectSO, player);
 
-            OnPlayerGrabbedObject?.Invoke(this, EventArgs.Empty);    //´¥·¢ÊÂ¼ş
+            OnPlayerGrabbedObject?.Invoke(this, EventArgs.Empty);    //è§¦å‘äº‹ä»¶
         }
     }
 

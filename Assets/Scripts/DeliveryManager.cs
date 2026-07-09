@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DeliveryManager : MonoBehaviour 
-    //´æ´¢¹Ë¿ÍµÈ´ıµÄ²Ëµ¥
+    //å­˜å‚¨é¡¾å®¢ç­‰å¾…çš„èœå•
 {
-    public event EventHandler OnRecipeSpawned;      //²úÉúrecipeµÄÊ±ºò£¬¿ØÖÆuiÏÔÊ¾µÄÊÂ¼ş
-    public event EventHandler OnRecipeCompleted;    //Íê³ÉrecipeµÄÊ±ºò£¬¿ØÖÆuiÏûÊ§µÄÊÂ¼ş
-    public event EventHandler OnRecipeSuccess;      //³É¹¦Íê³ÉrecipeµÄÊ±ºò£¬²¥·Å³É¹¦ÒôĞ§µÄÊÂ¼ş
-    public event EventHandler OnRecipeFailed;       //Ã»ÄÜÍê³ÉrecipeµÄÊ±ºò£¬²¥·ÅÊ§°ÜÒôĞ§µÄÊÂ¼ş
+    public event EventHandler OnRecipeSpawned;      //äº§ç”Ÿrecipeçš„æ—¶å€™ï¼Œæ§åˆ¶uiæ˜¾ç¤ºçš„äº‹ä»¶
+    public event EventHandler OnRecipeCompleted;    //å®Œæˆrecipeçš„æ—¶å€™ï¼Œæ§åˆ¶uiæ¶ˆå¤±çš„äº‹ä»¶
+    public event EventHandler OnRecipeSuccess;      //æˆåŠŸå®Œæˆrecipeçš„æ—¶å€™ï¼Œæ’­æ”¾æˆåŠŸéŸ³æ•ˆçš„äº‹ä»¶
+    public event EventHandler OnRecipeFailed;       //æ²¡èƒ½å®Œæˆrecipeçš„æ—¶å€™ï¼Œæ’­æ”¾å¤±è´¥éŸ³æ•ˆçš„äº‹ä»¶
 
 
     public static DeliveryManager Instance { get; private set; }
@@ -30,7 +30,7 @@ public class DeliveryManager : MonoBehaviour
     }
     private void Update()
     {
-        //¶¨ÆÚ²úÉú¶©µ¥recipe
+        //å®šæœŸäº§ç”Ÿè®¢å•recipe
         spawnRecipeTimer -= Time.deltaTime;
         if(spawnRecipeTimer <= 0f)
         {
@@ -39,7 +39,7 @@ public class DeliveryManager : MonoBehaviour
             if (KitchenGameManager.Instance.IsGamePlaying() && waitingRecipeSOList.Count < waitingRecipesMax)
             {
                 RecipeSO waitingRecipeSO = recipeListSO.recipeSOList[UnityEngine.Random.Range(0, recipeListSO.recipeSOList.Count)];
-                //recipeSOListÊÇRecipeListSOÀàÄÚµÄÒ»¸ölist£¬listÀàÄÚ²¿´æ´¢×ÅËùÓĞµÄrecipeSO
+                //recipeSOListæ˜¯RecipeListSOç±»å†…çš„ä¸€ä¸ªlistï¼Œlistç±»å†…éƒ¨å­˜å‚¨ç€æ‰€æœ‰çš„recipeSO
                 waitingRecipeSOList.Add(waitingRecipeSO);
 
                 OnRecipeSpawned?.Invoke(this,EventArgs.Empty);
@@ -47,16 +47,16 @@ public class DeliveryManager : MonoBehaviour
         }
     }
     /// <summary>
-    /// ¸ºÔğ¼ì²é´«ËÍ´ø½ÓÊÕµÄ²ËÆ·£¬¼ì²é²ËÆ·ÊÇ·ñºÏ¸ñ
+    /// è´Ÿè´£æ£€æŸ¥ä¼ é€å¸¦æ¥æ”¶çš„èœå“ï¼Œæ£€æŸ¥èœå“æ˜¯å¦åˆæ ¼
     /// </summary>
     /// <param name="plateKitchenObject"></param>
     public void DeliveryRecipe(PlateKitchenObject plateKitchenObject)
-                                                                      //ÕâÀïËÆºõÒªÓÃµ½3ÖØÑ­»·£¬
-                                                                      //ÄÇÕâ²¿·Ö¾ÍÊÇÕâ¸öÏîÄ¿Ä¿Ç°Ê±¼ä¸´ÔÓ¶È×î¸ßµÄº¯ÊıÁËhhh
-                                                                      //2025.11.29 ¿Î³ÌµÚÆß¸öĞ¡Ê±
+                                                                      //è¿™é‡Œä¼¼ä¹è¦ç”¨åˆ°3é‡å¾ªç¯ï¼Œ
+                                                                      //é‚£è¿™éƒ¨åˆ†å°±æ˜¯è¿™ä¸ªé¡¹ç›®ç›®å‰æ—¶é—´å¤æ‚åº¦æœ€é«˜çš„å‡½æ•°äº†hhh
+                                                                      //2025.11.29 è¯¾ç¨‹ç¬¬ä¸ƒä¸ªå°æ—¶
     {
-        for(int i = 0; i < waitingRecipeSOList.Count; i++)//Ëæ±ã´«waitingRecipeSOListÄÚµÄÈÎºÎÒ»¸örecipe£¬
-                                                          //Ö»ÒªÓĞÒ»¸öÄÜ¹»Æ¥Åä£¬¾ÍËãÍ¨¹ı
+        for(int i = 0; i < waitingRecipeSOList.Count; i++)//éšä¾¿ä¼ waitingRecipeSOListå†…çš„ä»»ä½•ä¸€ä¸ªrecipeï¼Œ
+                                                          //åªè¦æœ‰ä¸€ä¸ªèƒ½å¤ŸåŒ¹é…ï¼Œå°±ç®—é€šè¿‡
         {
             RecipeSO waitingRecipeSO = waitingRecipeSOList[i];
 
@@ -64,41 +64,41 @@ public class DeliveryManager : MonoBehaviour
             {
                 bool plateContentsMatchesRecipe = true; 
 
-                //Èç¹ûÁ½¸öÅä·½µÄingredientÊıÁ¿ÏàÍ¬
+                //å¦‚æœä¸¤ä¸ªé…æ–¹çš„ingredientæ•°é‡ç›¸åŒ
                 foreach(KitchenObjectSO recipeKitchenObejctSO in waitingRecipeSO.kitchenObjectSOList)
                 {
                     bool ingredientFound = false;
-                    //±éÀú Åä·½ÄÚµÄÃ¿Ò»¸öÔªËØ
+                    //éå† é…æ–¹å†…çš„æ¯ä¸€ä¸ªå…ƒç´ 
                     foreach(KitchenObjectSO plateKitchenObjectSO in plateKitchenObject.GetKitchenObjectSOList())
                     {
-                        //±éÀú Ìá½»µÄÅÌ×ÓÄÚµÄÃ¿Ò»¸öÔªËØ
+                        //éå† æäº¤çš„ç›˜å­å†…çš„æ¯ä¸€ä¸ªå…ƒç´ 
                         if(plateKitchenObjectSO == recipeKitchenObejctSO)
                         {
-                            //Æ¥Åä³É¹¦
+                            //åŒ¹é…æˆåŠŸ
                             ingredientFound = true;
                             break;
                         }
                     }
                     if (!ingredientFound)
                     {
-                        //ÓĞÔªËØÃ»ÓĞÆ¥Åä³É¹¦
+                        //æœ‰å…ƒç´ æ²¡æœ‰åŒ¹é…æˆåŠŸ
                         plateContentsMatchesRecipe = false;
                     }
                 }
                 if (plateContentsMatchesRecipe)
                 {
-                    //Á½¸örecipeµÄÔªËØ¸öÊıÏàÍ¬ ÇÒ ËùÓĞÔªËØ¶¼Æ¥Åä³É¹¦ÁË
-                    waitingRecipeSOList.RemoveAt(i); //°ÑÌá½»³É¹¦µÄ²ËÆ·´ÓµÈ´ıÃûµ¥ÖĞÈ¥µô
+                    //ä¸¤ä¸ªrecipeçš„å…ƒç´ ä¸ªæ•°ç›¸åŒ ä¸” æ‰€æœ‰å…ƒç´ éƒ½åŒ¹é…æˆåŠŸäº†
+                    waitingRecipeSOList.RemoveAt(i); //æŠŠæäº¤æˆåŠŸçš„èœå“ä»ç­‰å¾…åå•ä¸­å»æ‰
                     successfulRecipeAmount++;
                     OnRecipeCompleted?.Invoke(this,EventArgs.Empty);  
-                    OnRecipeSuccess?.Invoke(this,EventArgs.Empty); //²¥·Å³É¹¦ÒôĞ§
+                    OnRecipeSuccess?.Invoke(this,EventArgs.Empty); //æ’­æ”¾æˆåŠŸéŸ³æ•ˆ
                     return;
                 }
             }
         }
-        //Ã»ÓĞÆ¥Åä³É¹¦µÄÑ¡Ïî
-        //Íæ¼ÒÌá½»µÄrecipeÓĞÎÊÌâ
-        OnRecipeFailed?.Invoke(this,EventArgs.Empty); //²¥·ÅÊ§°ÜÒôĞ§
+        //æ²¡æœ‰åŒ¹é…æˆåŠŸçš„é€‰é¡¹
+        //ç©å®¶æäº¤çš„recipeæœ‰é—®é¢˜
+        OnRecipeFailed?.Invoke(this,EventArgs.Empty); //æ’­æ”¾å¤±è´¥éŸ³æ•ˆ
         return;
     }
 

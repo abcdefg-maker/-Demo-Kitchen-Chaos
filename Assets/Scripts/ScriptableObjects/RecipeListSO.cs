@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//脚本，用来管理存储的recipeSO
-//[CreateAssetMenu()] 我们只希望有一个recipeSOList，所以为了以防万一，我们不再允许创造这个类型的脚本文件
+//鑴氭湰锛岀敤鏉ョ鐞嗗瓨鍌ㄧ殑recipeSO
+//[CreateAssetMenu()] 鎴戜滑鍙笇鏈涙湁涓�涓猺ecipeSOList锛屾墍浠ヤ负浜嗕互闃蹭竾涓�锛屾垜浠笉鍐嶅厑璁稿垱閫犺繖涓被鍨嬬殑鑴氭湰鏂囦欢
 public class RecipeListSO : ScriptableObject
 {
     public List<RecipeSO> recipeSOList;

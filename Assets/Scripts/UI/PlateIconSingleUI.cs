@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlateIconSingleUI : MonoBehaviour //此类 在给汉堡显示ingredient的函数内，负责每一个小iconTemplate的运转逻辑
+public class PlateIconSingleUI : MonoBehaviour //姝ょ被 鍦ㄧ粰姹夊牎鏄剧ずingredient鐨勫嚱鏁板唴锛岃礋璐ｆ瘡涓�涓皬iconTemplate鐨勮繍杞�昏緫
 {
     [SerializeField] private Image image;
 
