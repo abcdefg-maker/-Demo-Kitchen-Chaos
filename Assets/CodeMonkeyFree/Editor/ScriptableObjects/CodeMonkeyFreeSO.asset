@@ -14,28 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentVersion: 1.01
   subtype: kitchenchaos
-  lastShownTimestamp: 1783518946
+  lastShownTimestamp: 1783784563
   lastUpdateResponse:
     version: 1.01
     versionUrl: https://unitycodemonkey.com
-  checkedLastUpdateTimestamp: 1783518946
+  checkedLastUpdateTimestamp: 1783784563
   lastQOTDResponse:
-    questionId: 319
-    questionText: 'What is the Color on the SpriteRenderer after running this code?
-
-      <p>Color
-      myColor = Color.red;</p>
-
-      <p>spriteRenderer.color = myColor;</p>
-
-      <p>myColor
-      = Color.blue;</p>'
-    answerA: Red
-    answerB: Blue
-    answerC: Don't Know
+    questionId: 321
+    questionText: When you create a new script, do you always have to extend MonoBehaviour?
+    answerA: Yes
+    answerB: No
+    answerC: Only if you want to use it as a Game Object Component
     answerD: 
     answerE: 
-  lastQotdTimestamp: 1783518946
+  lastQotdTimestamp: 1783784563
   lastDynamicHeaderResponse:
     topImageUrl: https://codemonkeyexternal.blob.core.windows.net/external/Misc/summer2025CodeMonkeyBundle.png
     topText: Get 80% OFF on ALL my Courses and Games!!!
@@ -43,19 +35,19 @@ MonoBehaviour:
     bottomText: DONT MISS the latest important trends, sign up for my FREE Weekly
       Newsletter!
     bottomLink: gamedevreport
-  lastDynamicHeaderTimestamp: 1783518946
+  lastDynamicHeaderTimestamp: 1783784563
   websiteLatestMessage:
     text: <a href="https://cmonkey.co/freecourses">Check out all my FREE courses!
       Click here!</a>
-  websiteLatestMessageTimestamp: 1783518946
+  websiteLatestMessageTimestamp: 1783784563
   websiteLatestVideos:
     videos:
+    - youTubeId: zkKU7Vj5Syc
+      title: Do THIS to pick your next SUCCESSFUL game idea!
     - youTubeId: NjNbIHHu9Z0
       title: Steam Marketing EXPERT on how to find SUCCESS in 2026!
     - youTubeId: ngQCio7raFY
       title: Apparently Indie devs are NOT dead?
     - youTubeId: C9iHZDlnXdk
       title: BEST NEW Visual Assets to INSPIRE YOU! (APRIL 2026)
-    - youTubeId: v2E2OkAYjs4
-      title: How to make $50 MILLION Indie Game (MECCHA CHAMELEON)
-  websiteLatestVideosTimestamp: 1783518946
+  websiteLatestVideosTimestamp: 1783784563

@@ -117,6 +117,8 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
         //Debug.Log(selectedCounter);
     }
 
+    
+
     private void HandleMovement()//处理玩家移动逻辑的函数
     {
         Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
