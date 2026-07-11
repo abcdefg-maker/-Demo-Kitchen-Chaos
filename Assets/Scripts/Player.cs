@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class Player : MonoBehaviour , IKitchenObjectParent
+public class Player : NetworkBehaviour, IKitchenObjectParent
 {
     public static Player Instance { get; private set; } //属性（property）要用帕斯卡尔命名
 
@@ -46,6 +47,10 @@ public class Player : MonoBehaviour , IKitchenObjectParent
 
     private void Update()
     {
+        if (!IsOwner)
+        {
+            return;
+        }
         HandleMovement();
         HandleInteractions();
     }
