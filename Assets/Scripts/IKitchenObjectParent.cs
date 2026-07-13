@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
 //  C#接口
 public interface IKitchenObjectParent      //C#接口（interface）像是一个合同，
@@ -26,5 +27,7 @@ public interface IKitchenObjectParent      //C#接口（interface）像是一个
 
 
     public bool HasKitchenObject();  //查看kO是否被赋值
+
+    public NetworkObject GetNetworkObject(); //获取继承了NetworkObject的父类的NetworkObject组件
     
 }

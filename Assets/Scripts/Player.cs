@@ -242,4 +242,9 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
     {
         return kitchenObject != null;
     }
+
+    public NetworkObject GetNetworkObject() //获取继承了NetworkObject的父类的NetworkObject组件
+    {
+        return NetworkObject;
+    }
 }

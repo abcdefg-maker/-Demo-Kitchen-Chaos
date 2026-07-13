@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class KitchenObject : MonoBehaviour
+public class KitchenObject : NetworkBehaviour
 {
     [SerializeField] private KitchenObjectSO kitchenObjectSO;
     
@@ -16,6 +17,9 @@ public class KitchenObject : MonoBehaviour
     }
     /// <summary>
     /// 函数功能：初始化或修改kitchenObject的位置
+    /// 
+    /// 传函数接口作为参数的原因：
+    ///  只要是实现了这个接口的父类，都可以作为parent，减少代码重载的次数
     /// </summary>
     /// <param name="kitchenObjectParent"></param>
     public void SetKitchenObjectParent(IKitchenObjectParent kitchenObjectParent)      
@@ -42,9 +46,9 @@ public class KitchenObject : MonoBehaviour
 
         kitchenObjectParent.SetKitchenObject(this);    //把这个CC上的kO修改为this
 
-        transform.parent = kitchenObjectParent.GetKitchenObjectFollowTransform();  //因为视觉和逻辑分离，所以这里获取的是EmptyObject,
-                                                                            //也就是prefab（视觉）的parent
-        transform.localPosition = Vector3.zero;                             //视觉上，让物品处于counterTopPoint的中心
+        // transform.parent = kitchenObjectParent.GetKitchenObjectFollowTransform();  //因为视觉和逻辑分离，所以这里获取的是EmptyObject,
+        //                                                                     //也就是prefab（视觉）的parent
+        // transform.localPosition = Vector3.zero;                             //视觉上，让物品处于counterTopPoint的中心
     }
 
     public IKitchenObjectParent GetKitchenObjectParent()
@@ -60,16 +64,9 @@ public class KitchenObject : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public static KitchenObject SpawnKitchenObject(KitchenObjectSO kitchenObjectSO,IKitchenObjectParent kitchenObjectParent) //封装好的生成kO的函数
+    public static void SpawnKitchenObject(KitchenObjectSO kitchenObjectSO,IKitchenObjectParent kitchenObjectParent) //封装好的生成kO的函数
     {
-
-        Transform kitchenObjectTransform = Instantiate(kitchenObjectSO.prefabs);   //在unity内构造一个transform（视觉实现）
-                                                                                   //把台面顶部作为番茄transfrom的parent
-        kitchenObjectTransform.GetComponent<KitchenObject>().SetKitchenObjectParent(kitchenObjectParent);     //把物品放上来（逻辑实现）
-
-        KitchenObject kitchenObject = kitchenObjectTransform.GetComponent<KitchenObject>();
-
-        return kitchenObject;
+        KitchenGameMutiplayer.Instance.SpawnKitchenObject(kitchenObjectSO, kitchenObjectParent); //联网生成kO
     }
 
     public bool TryGetPlate(out PlateKitchenObject plateKitchenObject) //C#不像Python支持多个返回值，out是函数返回多个值的方法

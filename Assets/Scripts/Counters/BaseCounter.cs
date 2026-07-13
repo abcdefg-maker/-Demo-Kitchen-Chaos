@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
 public class BaseCounter : MonoBehaviour, IKitchenObjectParent //利用接口来实现多继承（C#类不支持多继承）
 {
@@ -51,5 +52,10 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent //利用接口来
     public bool HasKitchenObject()  //查看kO是否被赋值
     {
         return kitchenObject != null;
+    }
+
+    public NetworkObject GetNetworkObject() //获取继承了NetworkObject的父类的NetworkObject组件
+    {
+        return null;
     }
 }
