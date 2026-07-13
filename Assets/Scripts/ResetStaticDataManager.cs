@@ -10,5 +10,6 @@ public class ResetStaticDataManager : MonoBehaviour //由于静态对象在切�
         CuttingCounter.ResetStaticData();
         BaseCounter.ResetStaticData();
         TrashCounter.ResetStaticData();
+        Player.ResetStaticData();
     }
 }

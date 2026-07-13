@@ -28,7 +28,7 @@ public class SoundManager : MonoBehaviour //管理各种音效的类
         DeliveryManager.Instance.OnRecipeFailed += DeliveryManager_OnRecipeFailed;
         DeliveryManager.Instance.OnRecipeSuccess += DeliveryManager_OnRecipeSuccess;
         CuttingCounter.OnAnyCut += CuttingCounter_OnAnyCut;
-        Player.Instance.OnPickedSomething += Player_OnPickedSomething;
+        Player.OnAnyPickedSomething += Player_OnPickedSomething;
         BaseCounter.OnAnyObjectPlacedHere += BaseCounter_OnAnyObjectPlacedHere;
         TrashCounter.OnAnyObjectTrashed += TrashCounter_OnAnyObjectTrashed;
     }
@@ -47,7 +47,8 @@ public class SoundManager : MonoBehaviour //管理各种音效的类
 
     private void Player_OnPickedSomething(object sender, System.EventArgs e)
     {
-        PlaySound(audioClipRefsSO.objectPickUp, Player.Instance.transform.position);
+        Player player = sender as Player; //sender是事件源，类型是object，需要强制转换为Player类型才能访问Player类的属性和方法
+        PlaySound(audioClipRefsSO.objectPickUp, player.transform.position);
     }
 
     private void CuttingCounter_OnAnyCut(object sender, System.EventArgs e)

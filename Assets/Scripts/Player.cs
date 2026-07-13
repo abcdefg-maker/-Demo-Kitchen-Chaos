@@ -6,7 +6,16 @@ using Unity.Netcode;
 
 public class Player : NetworkBehaviour, IKitchenObjectParent
 {
-    public static Player Instance { get; private set; } //属性（property）要用帕斯卡尔命名
+    public static event EventHandler OnAnyPlayerSpawned; //静态事件，所有玩家都会触发这个事件
+    public static event EventHandler OnAnyPickedSomething;
+    public static void ResetStaticData() //重置静态数据的函数
+                                         //需要此函数的原因是静态成员在切换场景时不会被销毁，可能导致重复进入游戏的时候产生bug
+    {
+        OnAnyPlayerSpawned = null; //重置事件，防止事件重复订阅
+    }
+
+
+    public static Player LocalInstance { get; private set; } //属性（property）要用帕斯卡尔命名
 
 
     public event EventHandler OnPickedSomething; //捡起物品时候调用音效的事件 
@@ -29,12 +38,11 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
 
     private void Awake()
     {
-        if(Instance != null)//单例模式的安全检查
-        {
-            Debug.Log("出现超过一个玩家");
-        }
-
-        Instance = this; 
+        // if(LocalInstance != null)//单例模式的安全检查
+        // {
+        //     Debug.Log("出现超过一个玩家");
+        // }
+        //LocalInstance = this; 
     }
 
     private void Start()
@@ -43,7 +51,14 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
         GameInput.Instance.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
     }
 
-    
+    public override void OnNetworkSpawn() //这个函数的作用是当网络对象被生成时调用的回调函数。它在网络游戏中用于初始化玩家对象，并确保每个玩家实例在网络上正确注册和管理。
+    {
+        if (IsOwner)
+        {
+            LocalInstance = this;
+        }
+        OnAnyPlayerSpawned?.Invoke(this, EventArgs.Empty); //触发事件，通知所有监听者有玩家生成了
+    }
 
     private void Update()
     {
@@ -213,6 +228,8 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
         if(kitchenObjtect != null)
         {
             OnPickedSomething?.Invoke(this, EventArgs.Empty); //捡起物品时候调用音效的事件
+            OnAnyPickedSomething?.Invoke(this, EventArgs.Empty); //联网捡起物品时候调用音效的事件
+
         }
     }
     public KitchenObject GetKitchenObject() { return kitchenObject; } //物品查
