@@ -10,7 +10,13 @@ public class KitchenObject : NetworkBehaviour
     
     
     private IKitchenObjectParent kitchenObjectParent;  //为了给当前的物品定位，确定它处于哪个位置
+    private FollowTranform followTranform;  //为了让物品跟随玩家移动，必须有一个FollowTransform组件
 
+
+    private void Awake()
+    {
+        followTranform = GetComponent<FollowTranform>();
+    }
     public KitchenObjectSO GetKitchenObjectSO()
     {
         return kitchenObjectSO;
@@ -30,7 +36,28 @@ public class KitchenObject : NetworkBehaviour
                                                                 //逻辑：
                                                                 //删除原cc上的kO → kO.cc = new CC → 确保new CC上没有kO → new CC.kO = kO
     {
-        if (this.kitchenObjectParent != null)   //如果kO之前已经在某个台面上放着
+        SetKitchenObjectParentServerRpc(kitchenObjectParent.GetNetworkObject());
+
+       /* 从前单机的实现
+        transform.parent = kitchenObjectParent.GetKitchenObjectFollowTransform();  //因为视觉和逻辑分离，所以这里获取的是EmptyObject,
+                                                                            //也就是prefab（视觉）的parent
+        transform.localPosition = Vector3.zero;                             //视觉上，让物品处于counterTopPoint的中心
+        */
+    }
+
+    [ServerRpc(RequireOwnership = false)] 
+    private void SetKitchenObjectParentServerRpc(NetworkObjectReference kitchenObjectParentNetworkObjectReference)
+    {
+          SetKitchenObjectParentClientRpc(kitchenObjectParentNetworkObjectReference);
+    }
+
+    [ClientRpc]
+     private void SetKitchenObjectParentClientRpc(NetworkObjectReference kitchenObjectParentNetworkObjectReference)
+    {
+        kitchenObjectParentNetworkObjectReference.TryGet(out NetworkObject kitchenObjectParentNetworkObject);
+        IKitchenObjectParent kitchenObjectParent = kitchenObjectParentNetworkObject.GetComponent<IKitchenObjectParent>();
+        
+         if (this.kitchenObjectParent != null)   //如果kO之前已经在某个台面上放着
         {
             this.kitchenObjectParent.ClearKitchenObject(); //如果移动位置前的CC上有kO，删了它,
                                                     //如果这里不删，那this.cc被切换为新的cc后，新的cc.kO被赋值，
@@ -46,10 +73,9 @@ public class KitchenObject : NetworkBehaviour
 
         kitchenObjectParent.SetKitchenObject(this);    //把这个CC上的kO修改为this
 
-        // transform.parent = kitchenObjectParent.GetKitchenObjectFollowTransform();  //因为视觉和逻辑分离，所以这里获取的是EmptyObject,
-        //                                                                     //也就是prefab（视觉）的parent
-        // transform.localPosition = Vector3.zero;                             //视觉上，让物品处于counterTopPoint的中心
+        followTranform.SetTarget(kitchenObjectParent.GetKitchenObjectFollowTransform());
     }
+
 
     public IKitchenObjectParent GetKitchenObjectParent()
     {
