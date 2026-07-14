@@ -71,4 +71,28 @@ public class KitchenGameMutiplayer : NetworkBehaviour
     {
         return kitchenObjectListSO.kitchenObjectSOList[kitchenObjectSOIndex];
     }
+
+    public void DestoryKitchenObject(KitchenObject kitchenObject)
+    {
+        DestoryKitchenObjectServerRpc(kitchenObject.NetworkObject);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void DestoryKitchenObjectServerRpc(NetworkObjectReference kitchenObjectNetworkObjectReference)
+    {
+        kitchenObjectNetworkObjectReference.TryGet(out NetworkObject kitchenObjectNetworkObject);
+        KitchenObject kitchenObject = kitchenObjectNetworkObject.GetComponent<KitchenObject>();
+
+        ClearKitchenObjectOnParentClientRpc(kitchenObjectNetworkObjectReference); //把kO从parent上清除（逻辑上）
+
+        kitchenObject.DestorySelf();//把一个GameObject在自身（视觉上）清除
+    }
+
+    [ClientRpc]
+    private void ClearKitchenObjectOnParentClientRpc(NetworkObjectReference kitchenObjectNetworkObjectReference)
+    {
+        kitchenObjectNetworkObjectReference.TryGet(out NetworkObject kitchenObjectNetworkObject);
+        KitchenObject kitchenObject = kitchenObjectNetworkObject.GetComponent<KitchenObject>();
+        kitchenObject.ClearKitchenObjectOnParent();
+    }
 }

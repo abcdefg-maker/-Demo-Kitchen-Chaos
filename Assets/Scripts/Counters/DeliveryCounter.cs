@@ -18,7 +18,8 @@ public class DeliveryCounter : BaseCounter
                 //只有玩家手里拿着盘子的时候才能够往传送带上放东西
 
                 DeliveryManager.Instance.DeliveryRecipe(plateKitchenObject);
-                player.GetKitchenObject().DestorySelf();
+
+                KitchenObject.DestoryKitchenObject(player.GetKitchenObject()); //服务器销毁物品
             }
         }
     }

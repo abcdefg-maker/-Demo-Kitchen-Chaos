@@ -82,12 +82,16 @@ public class KitchenObject : NetworkBehaviour
         return this.kitchenObjectParent;
     }
     /// <summary>
-    /// 把一个GameObject在parent（逻辑上）和自身（视觉上）都清除
+    /// 把一个GameObject在自身（视觉上）清除
     /// </summary>
     public void DestorySelf() 
     {
-        kitchenObjectParent.ClearKitchenObject();
         Destroy(gameObject);
+    }
+
+    public void ClearKitchenObjectOnParent() //把kO从parent上清除（逻辑上）
+    {
+        kitchenObjectParent.ClearKitchenObject();
     }
 
     public static void SpawnKitchenObject(KitchenObjectSO kitchenObjectSO,IKitchenObjectParent kitchenObjectParent) //封装好的生成kO的函数
@@ -111,4 +115,12 @@ public class KitchenObject : NetworkBehaviour
             return false;
         }
     }
+
+    //static(包括上面的spawn函数的static)，都是不希望用一个具体的实体，来调用这个生成/删除实体的函数，这样感觉有点奇怪，逻辑上也说不通)
+    public static void DestoryKitchenObject(KitchenObject kitchenObject) 
+    {
+        KitchenGameMutiplayer.Instance.DestoryKitchenObject(kitchenObject); //联网删除kO
+    }
+
+
 }
