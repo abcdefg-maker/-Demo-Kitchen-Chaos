@@ -13,7 +13,7 @@ public class KitchenObject : NetworkBehaviour
     private FollowTranform followTranform;  //为了让物品跟随玩家移动，必须有一个FollowTransform组件
 
 
-    private void Awake()
+    protected virtual void Awake() //Awake()在继承类(其实也就是PlateKitchenObject子类 )中也会被调用，所以这里用protected
     {
         followTranform = GetComponent<FollowTranform>();
     }

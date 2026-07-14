@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class BaseCounter : MonoBehaviour, IKitchenObjectParent //利用接口来实现多继承（C#类不支持多继承）
+public class BaseCounter : NetworkBehaviour, IKitchenObjectParent //利用接口来实现多继承（C#类不支持多继承）
 {
     public static event EventHandler OnAnyObjectPlacedHere; //调用放置物品音效的事件
 
@@ -56,6 +56,6 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent //利用接口来
 
     public NetworkObject GetNetworkObject() //获取继承了NetworkObject的父类的NetworkObject组件
     {
-        return null;
+        return NetworkObject;
     }
 }
