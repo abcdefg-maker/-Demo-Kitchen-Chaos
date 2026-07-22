@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -31,15 +33,20 @@ public class CuttingCounter : BaseCounter , IHasProgress
                 // 玩家手里有东西
                 if (HasRecipeWithInput(player.GetKitchenObject().GetKitchenObjectSO()))//东西是可以切片的
                 {
+                    /*原单机代码实现
+
+                    在联机版本，SetKichenObjectParent是发送一个serverRPC，并不是在一帧内就能够创建出kitchenObject
+                    所以在执行到最后一行的时候GetkitchenObject（）== null
+
                     player.GetKitchenObject().SetKitchenObjectParent(this); //把东西放在台面上
                     cuttingProgress = 0;
 
                     CuttingRecipeSO cuttingRecipeSO = GetCuttingRecipeSOWithInput(GetKitchenObject().GetKitchenObjectSO());
+                    */
 
-                    OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
-                    {
-                        progressNormalized = (float) cuttingProgress / cuttingRecipeSO.cuttingProgressMax
-                    });
+                    KitchenObject kitchenObject = player.GetKitchenObject(); // 将玩家手里的物品直接缓存
+                    kitchenObject.SetKitchenObjectParent(this); //把东西放在台面上
+                    InteractLogicPlaceObjectOnCounterServerRpc();
                 }
             }
             else
@@ -77,33 +84,70 @@ public class CuttingCounter : BaseCounter , IHasProgress
             }
         }
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void InteractLogicPlaceObjectOnCounterServerRpc()
+    {
+        InteractLogicPlaceObjectOnCounterClientRpc();
+    }
+    
+    [ClientRpc]
+    private void InteractLogicPlaceObjectOnCounterClientRpc()
+    {
+        cuttingProgress = 0;
+        
+        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+        {
+            progressNormalized = 0f
+        });
+    }
+
     public override void InteractAlternate(Player player)
     {
        if(HasKitchenObject() && HasRecipeWithInput(GetKitchenObject().GetKitchenObjectSO())) //保证切片一次之后，Slice不再被切
         {
-            //台面上有东西
-            cuttingProgress++;
+           CuttingObjectServerRPC();
+           TestingCuttingProgressDoneServerRpc();
+        }
+    }
 
-            OnCut?.Invoke(this,EventArgs.Empty);    //调动切菜动画的事件
-            OnAnyCut?.Invoke(this,EventArgs.Empty); //调动切菜声音的事件
+    [ServerRpc(RequireOwnership = false)]
+    private void CuttingObjectServerRPC()
+    {
+        CuttingObjectClientRPC();
+    }
+    [ClientRpc]
+    private void CuttingObjectClientRPC()
+    {
+         //台面上有东西
+        cuttingProgress++;
 
-            CuttingRecipeSO cuttingRecipeSO = GetCuttingRecipeSOWithInput(GetKitchenObject().GetKitchenObjectSO());
+        OnCut?.Invoke(this,EventArgs.Empty);    //调动切菜动画的事件
+        OnAnyCut?.Invoke(this,EventArgs.Empty); //调动切菜声音的事件
 
-            OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
-            {
-                progressNormalized = (float)cuttingProgress / cuttingRecipeSO.cuttingProgressMax
-            });
+        CuttingRecipeSO cuttingRecipeSO = GetCuttingRecipeSOWithInput(GetKitchenObject().GetKitchenObjectSO());
 
+        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+        {
+            progressNormalized = (float)cuttingProgress / cuttingRecipeSO.cuttingProgressMax
+        });
 
-            if (cuttingProgress >= cuttingRecipeSO.cuttingProgressMax) //如果切的次数到了，就变成片
-            {
-                KitchenObjectSO outputKitchenObjectSO = GetOutputForInput(GetKitchenObject().GetKitchenObjectSO()); //找切片后的SO
-
-                this.GetKitchenObject().DestorySelf();
+    }
 
 
-                KitchenObject.SpawnKitchenObject(outputKitchenObjectSO, this);//生成切片后SO对应的prefab
-            }
+    [ServerRpc(RequireOwnership = false)]//生成物品的逻辑在服务器只运行一次，否则会重复生成物品 (这个函数的代码本来在上面这个clientRPC)
+    private void TestingCuttingProgressDoneServerRpc()
+    {
+        CuttingRecipeSO cuttingRecipeSO = GetCuttingRecipeSOWithInput(GetKitchenObject().GetKitchenObjectSO());
+
+         if (cuttingProgress >= cuttingRecipeSO.cuttingProgressMax) //如果切的次数到了，就变成片
+        {
+            KitchenObjectSO outputKitchenObjectSO = GetOutputForInput(GetKitchenObject().GetKitchenObjectSO()); //找切片后的SO
+
+            KitchenObject.DestoryKitchenObject(this.GetKitchenObject()); //一个网络同步的destory
+
+
+            KitchenObject.SpawnKitchenObject(outputKitchenObjectSO, this);//生成切片后SO对应的prefab
         }
     }
 
