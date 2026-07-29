@@ -41,10 +41,9 @@ public class StoveCounter :BaseCounter, IHasProgress
     private BurningRecipeSO burningRecipeSO;
 
 
-    private void Start()
-    {
-        state.Value = State.Idle; //初始化状态机状态
-    }
+    //不再需要在 Start() 里初始化 state：
+    //1. NetworkVariable<State> 构造时已默认 State.Idle
+    //2. Start() 会在所有实例（含客户端）运行，客户端写 state.Value 属于非法写入会抛异常
 
     public override void OnNetworkSpawn()//unity netcode for Object的生命周期回调
                                          //当这个NetworkObject在网络上被Spawn的时候才调用
@@ -203,7 +202,9 @@ public class StoveCounter :BaseCounter, IHasProgress
                                                                                                      //所以如果后续需要拓展这种玩法的话，这块的代码是需要改的
                     {
                         KitchenObject.DestoryKitchenObject(GetKitchenObject());
-                        state.Value = State.Idle; //玩家拿起肉饼后，重置为初始状态
+                        SetStateIdleServerRpc(); //玩家拿起肉饼后，重置为初始状态
+                                                 //注意不能直接写 state.Value（NetworkVariable 只有服务器可写），
+                                                 //客户端必须走 ServerRpc，否则状态不同步、进度条不消失
 
                     }
                 }
@@ -224,6 +225,8 @@ public class StoveCounter :BaseCounter, IHasProgress
     [ServerRpc(RequireOwnership = false)]
     private void SetStateIdleServerRpc()
     {
+        fryingTimer.Value = 0f;
+        burningTimer.Value = 0f;
         state.Value = State.Idle;
     }
 
