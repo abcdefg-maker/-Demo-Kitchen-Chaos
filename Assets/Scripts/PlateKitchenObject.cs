@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class PlateKitchenObject : KitchenObject
@@ -42,16 +43,28 @@ public class PlateKitchenObject : KitchenObject
         }
         else
         {
-
-            kitchenObjectSOList.Add(kitchenObjectSO); //逻辑上把物品的so加入盘子的list
+            AddIngredientServerRpc(
+                KitchenGameMutiplayer.Instance.GetKitchenObjectSOIndex(kitchenObjectSO)
+            );
+        
+            return true;
+        }
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void AddIngredientServerRpc(int kitchenObjectSOIndex)
+    {
+        AddIngredientClientRpc(kitchenObjectSOIndex);
+    }
+    [ClientRpc]
+    private void AddIngredientClientRpc(int kitchenObjectSOIndex)
+    {
+        KitchenObjectSO kitchenObjectSO = KitchenGameMutiplayer.Instance.GetKitchenObjectSOFromIndex(kitchenObjectSOIndex);
+         kitchenObjectSOList.Add(kitchenObjectSO); //逻辑上把物品的so加入盘子的list
 
             OnIngredientAdd?.Invoke(this, new OnIngredinetAddEventArgs //视觉上激活这个ingredient的组件的事件
             {
                 kitchenObjectSO = kitchenObjectSO,
             });
-
-            return true;
-        }
     }
 
     public List<KitchenObjectSO> GetKitchenObjectSOList()

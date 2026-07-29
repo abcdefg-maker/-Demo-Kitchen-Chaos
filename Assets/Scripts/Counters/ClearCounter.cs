@@ -42,7 +42,7 @@ public class ClearCounter : BaseCounter
                                                                                                      //（e.g. double cheese ...）
                                                                                                      //所以如果后续需要拓展这种玩法的话，这块的代码是需要改的
                     {
-                        GetKitchenObject().DestorySelf();
+                        KitchenObject.DestoryKitchenObject(this.GetKitchenObject());
                     }
                 }
                 else
@@ -53,7 +53,8 @@ public class ClearCounter : BaseCounter
                         if (plateKitchenObject.TryAddIngredient(player.GetKitchenObject().GetKitchenObjectSO()))
                         {
                             //把玩家手里的东西放到盘子上
-                            player.GetKitchenObject().DestorySelf();
+                            KitchenObject.DestoryKitchenObject(player.GetKitchenObject());
+                            
                         }
                     }
                 }
