@@ -27,7 +27,10 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
 
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private LayerMask counterLayerMask;
+    [SerializeField] private LayerMask collisionsLayerMask;
+
     [SerializeField] private Transform kitchenObjectHoldPoint;
+    [SerializeField] private List<Vector3> spawnPositionList;
 
 
     private bool isWalking;
@@ -57,6 +60,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
         {
             LocalInstance = this;
         }
+        transform.position = spawnPositionList[(int)OwnerClientId]; //OwnClientId 似乎是在创建（spawn）时自动赋值的一个变量，那这样来说每个NetworkObject都应该有这个id
         OnAnyPlayerSpawned?.Invoke(this, EventArgs.Empty); //触发事件，通知所有监听者有玩家生成了
     }
 
@@ -107,7 +111,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
 
         RaycastHit raycastHit;//用这种包含out的raycast函数重构，可以获取碰撞到物体的信息
                                //raycast传参layermask，可以只检测固定layer的碰撞
-        if (Physics.Raycast(transform.position, lastInteractDir, out raycastHit,interactDistance,counterLayerMask))
+        if (Physics.Raycast(transform.position, lastInteractDir, out raycastHit,interactDistance,collisionsLayerMask))
         {
             if(raycastHit.transform.TryGetComponent(out BaseCounter baseCounter))
             {
@@ -142,7 +146,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
         float moveDistance = moveSpeed * Time.deltaTime;
         float playerRadius = .7f;
         float playerHeight = 2f;
-        bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, moveDistance);
+        bool canMove = !Physics.BoxCast(transform.position, Vector3.one * playerRadius,  moveDir, Quaternion.identity ,moveDistance,collisionsLayerMask);
         if (!canMove)
         {
             //如果只在一个方向（X/Z轴）有碰撞限制，那么按多个方向键时，在另外的方向应该能够移动
@@ -152,7 +156,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
 
             //看X轴能否移动
             Vector3 movDirX = new Vector3(moveDir.x, 0, 0).normalized;//归一化，取消对角线移动的减速。下同
-            canMove = moveDir.x != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, movDirX, moveDistance);
+            canMove = moveDir.x != 0 && !Physics.BoxCast(transform.position, Vector3.one * playerRadius,  movDirX, Quaternion.identity ,moveDistance,collisionsLayerMask);
             if (canMove)
             {
                 //只能在x轴移动
@@ -165,7 +169,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
                 //在X轴不能移动，看在Z轴能否移动
 
                 Vector3 movDirZ = new Vector3(0, 0, moveDir.z).normalized;
-                canMove = moveDir.z != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, movDirZ, moveDistance);
+                canMove = moveDir.z != 0 && !Physics.BoxCast(transform.position,  Vector3.one * playerRadius, movDirZ, Quaternion.identity , moveDistance);
                 if (canMove)
                 {
                     //在X轴不能移动，在Z轴能移动
