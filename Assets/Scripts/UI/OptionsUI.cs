@@ -68,7 +68,7 @@ public class OptionsUI : MonoBehaviour
 
     private void Start()
     {
-        KitchenGameManager.Instance.OnGameUnpaused += KitchenGameManager_OnGameUnpaused; //同时这个option界面也支持esc关闭，
+        KitchenGameManager.Instance.OnLocalGameUnpaused += KitchenGameManager_OnGameUnpaused; //同时这个option界面也支持esc关闭，
                                                                                         //这时同时关闭pasue界面和option界面
         UpdateVisual();
 
