@@ -172,6 +172,11 @@ public class KitchenGameManager : NetworkBehaviour
         }
     }
 
+    public bool IsWaitingToStart()
+    {
+        return state.Value == State.WaitingToStart;
+    }
+
     public  bool IsGamePlaying()
     {
         //判断游戏是否在GamePlaying状态

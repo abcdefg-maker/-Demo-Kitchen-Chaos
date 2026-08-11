@@ -1799,7 +1799,7 @@ MonoBehaviour:
       OverridingTargetPrefab: {fileID: 0}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
-    ConnectionApproval: 0
+    ConnectionApproval: 1
     ConnectionData: 
     EnableTimeResync: 0
     TimeResyncInterval: 30
@@ -2773,7 +2773,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 333899796}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f6f38de623e8d04ca764a184e0bd855, type: 3}
+  m_Script: {fileID: 11500000, guid: db93c553e024f3f48ad04caf315f61d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &363648937
@@ -14345,7 +14345,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1796507634}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03ae269a25ee07741bba95cfcaabcfd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 391b8b1ab5ba52a4ab729c644f2f0f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startHostButton: {fileID: 1560603147}
@@ -15265,8 +15265,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1892742439}
-  - component: {fileID: 1892742442}
   - component: {fileID: 1892742441}
+  - component: {fileID: 1892742442}
   m_Layer: 5
   m_Name: HostDisconnectedUI
   m_TagString: Untagged
@@ -15321,7 +15321,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1892742438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84b6a456010e4d74fa882f4a8eaae95f, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f6f7543196fcdd4a967bb8c280013a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playAgainButton: {fileID: 1009535967}

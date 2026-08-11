@@ -15,6 +15,34 @@ public class KitchenGameMutiplayer : NetworkBehaviour
         Instance = this;
     }
 
+    public void StartHost()
+    {
+        //当有客户端尝试连接到服务器/主机时， 
+        //Netcode 会调用这个回调，让你决定：这个连接批不批准。
+        NetworkManager.Singleton.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback; 
+        NetworkManager.Singleton.StartHost();
+    }
+
+    private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest, NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)
+    {
+        if (KitchenGameManager.Instance.IsWaitingToStart()) //如果游戏处于等待开始状态
+        {
+            connectionApprovalResponse.Approved = true;
+            connectionApprovalResponse.CreatePlayerObject = true; //允许创建玩家对象
+        }
+        else
+        {
+            connectionApprovalResponse.Approved = false;
+        }
+        return;
+
+    }
+
+    public void StartClient()
+    {
+        NetworkManager.Singleton.StartClient();
+    }
+
     //传函数接口作为参数的原因：
     //  只要是实现了这个接口的父类，都可以作为parent，减少代码重载的次数
     public void SpawnKitchenObject(KitchenObjectSO kitchenObjectSO,IKitchenObjectParent kitchenObjectParent) //封装好的生成kO的函数
