@@ -62,6 +62,20 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
         }
         transform.position = spawnPositionList[(int)OwnerClientId]; //OwnClientId 似乎是在创建（spawn）时自动赋值的一个变量，那这样来说每个NetworkObject都应该有这个id
         OnAnyPlayerSpawned?.Invoke(this, EventArgs.Empty); //触发事件，通知所有监听者有玩家生成了
+
+        if(IsServer) //如果是服务器端
+        {
+            //OnClientDisconnectCallback在客户端和服务器端都会触发，这里只要求在服务器触发，所以写一层if(IsServer)判断
+            NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_OnClientDisconnectCallback; //订阅客户端断开连接的事件
+        }
+    }
+
+    private void NetworkManager_OnClientDisconnectCallback(ulong clientId) //客户端断开连接的回调函数
+    {
+        if(clientId == OwnerClientId && HasKitchenObject()) //如果断开连接的客户端是这个玩家的拥有者
+        {
+            KitchenObject.DestroyKitchenObject(GetKitchenObject()); //销毁玩家手上的物品          
+        }
     }
 
     private void Update()

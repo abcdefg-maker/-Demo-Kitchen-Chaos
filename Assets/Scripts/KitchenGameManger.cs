@@ -30,11 +30,12 @@ public class KitchenGameManager : NetworkBehaviour
     //private float waitingToStartTimer = 1f;
     private NetworkVariable<float> countdownToStartTimer = new NetworkVariable<float>(3f);
     private NetworkVariable<float> gamePlayingTimer = new NetworkVariable<float>(0f);
-    private float gamePlayingTimerMax = 90f;
+    private float gamePlayingTimerMax = 10f;
     private bool isLoaclGamePaused = false;
     private NetworkVariable<bool> isGamePaused = new NetworkVariable<bool>(false);  //游戏是否暂停的网络变量
     private Dictionary<ulong, bool> playerReadyDictionary;
     private Dictionary<ulong, bool> playerPauseDictionary;
+    private bool autoTestGamePausedState = true;  //自动测试游戏暂停状态的开关
 
     private void Awake()
     {
@@ -56,6 +57,15 @@ public class KitchenGameManager : NetworkBehaviour
     {
        state.OnValueChanged += State_OnValueChanged;
        isGamePaused.OnValueChanged += IsGamePaused_OnValueChanged;
+
+        if (IsServer)
+        {
+            NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_OnClientDisconnectCallback;
+        }
+    }
+    private void NetworkManager_OnClientDisconnectCallback(ulong clientId)
+    {
+        autoTestGamePausedState = true;  //当有客户端断开连接时，自动测试游戏暂停状态
     }
 
     private void IsGamePaused_OnValueChanged(bool previousValue, bool newValue)
@@ -151,6 +161,15 @@ public class KitchenGameManager : NetworkBehaviour
                 break;
         }
 
+    }
+    
+    private void LateUpdate()
+    {
+        if (autoTestGamePausedState)
+        {
+            autoTestGamePausedState = false;  //复位
+            TestGamePausedState();
+        }
     }
 
     public  bool IsGamePlaying()

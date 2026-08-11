@@ -117,7 +117,7 @@ public class KitchenObject : NetworkBehaviour
     }
 
     //static(包括上面的spawn函数的static)，都是不希望用一个具体的实体，来调用这个生成/删除实体的函数，这样感觉有点奇怪，逻辑上也说不通)
-    public static void DestoryKitchenObject(KitchenObject kitchenObject) 
+    public static void DestroyKitchenObject(KitchenObject kitchenObject) 
     {
         KitchenGameMutiplayer.Instance.DestoryKitchenObject(kitchenObject); //联网删除kO
     }

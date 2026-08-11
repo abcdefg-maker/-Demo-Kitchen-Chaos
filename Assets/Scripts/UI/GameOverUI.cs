@@ -2,10 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using Unity.Netcode;
 
 public class GameOverUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI recipesDeliveriedText;
+    [SerializeField] private Button playAgainButton;
+
+
+    private void Awake()
+    {
+        playAgainButton.onClick.AddListener(() =>
+        {
+            NetworkManager.Singleton.Shutdown();  //关闭网络连接
+            Loader.Load(Loader.Scene.MainMenuScene);
+        });
+    }
 
     private void Start()
     {
