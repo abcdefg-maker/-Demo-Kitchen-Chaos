@@ -144,7 +144,7 @@ public class CuttingCounter : BaseCounter , IHasProgress
         {
             KitchenObjectSO outputKitchenObjectSO = GetOutputForInput(GetKitchenObject().GetKitchenObjectSO()); //找切片后的SO
 
-            KitchenObject.DestoryKitchenObject(this.GetKitchenObject()); //一个网络同步的destory
+            KitchenObject.DestroyKitchenObject(this.GetKitchenObject()); //一个网络同步的destory
 
 
             KitchenObject.SpawnKitchenObject(outputKitchenObjectSO, this);//生成切片后SO对应的prefab

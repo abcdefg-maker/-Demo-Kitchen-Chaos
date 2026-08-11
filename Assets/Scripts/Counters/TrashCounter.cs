@@ -16,7 +16,7 @@ public class TrashCounter : BaseCounter
     {
         if (player.HasKitchenObject())
         {
-            KitchenObject.DestoryKitchenObject(player.GetKitchenObject()); //服务器清除ko物品
+            KitchenObject.DestroyKitchenObject(player.GetKitchenObject()); //服务器清除ko物品
 
             InteractLogicServerRpc();  //触发动画/音效事件
         }

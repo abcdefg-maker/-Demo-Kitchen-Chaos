@@ -19,7 +19,7 @@ public class DeliveryCounter : BaseCounter
 
                 DeliveryManager.Instance.DeliveryRecipe(plateKitchenObject);
 
-                KitchenObject.DestoryKitchenObject(player.GetKitchenObject()); //服务器销毁物品
+                KitchenObject.DestroyKitchenObject(player.GetKitchenObject()); //服务器销毁物品
             }
         }
     }

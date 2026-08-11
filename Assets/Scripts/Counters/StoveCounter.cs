@@ -113,7 +113,7 @@ public class StoveCounter :BaseCounter, IHasProgress
                         //煎炸好了
                         fryingTimer.Value = 0f;
 
-                       KitchenObject.DestoryKitchenObject(GetKitchenObject());
+                       KitchenObject.DestroyKitchenObject(GetKitchenObject());
 
                         KitchenObject.SpawnKitchenObject(fryingRecipeSO.output, this);
 
@@ -135,7 +135,7 @@ public class StoveCounter :BaseCounter, IHasProgress
                     if (burningTimer.Value >= burningRecipeSO.burningTimerMax)
                     {
                         //煎炸过头了
-                        KitchenObject.DestoryKitchenObject(GetKitchenObject());
+                        KitchenObject.DestroyKitchenObject(GetKitchenObject());
 
                         KitchenObject.SpawnKitchenObject(burningRecipeSO.output, this);
 
@@ -201,7 +201,7 @@ public class StoveCounter :BaseCounter, IHasProgress
                                                                                                      //（e.g. double cheese ...）
                                                                                                      //所以如果后续需要拓展这种玩法的话，这块的代码是需要改的
                     {
-                        KitchenObject.DestoryKitchenObject(GetKitchenObject());
+                        KitchenObject.DestroyKitchenObject(GetKitchenObject());
                         SetStateIdleServerRpc(); //玩家拿起肉饼后，重置为初始状态
                                                  //注意不能直接写 state.Value（NetworkVariable 只有服务器可写），
                                                  //客户端必须走 ServerRpc，否则状态不同步、进度条不消失
