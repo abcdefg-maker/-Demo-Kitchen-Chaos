@@ -22,7 +22,7 @@ public class MainMenuUI : MonoBehaviour
             //  ()内为参数表，
             //  =>表示执行后面{}的代码，
             //  {}内放置函数体
-            Loader.Load(Loader.Scene.MainScene);
+            Loader.Load(Loader.Scene.LobbyScene);
         });
 
         quitButton.onClick.AddListener(() =>

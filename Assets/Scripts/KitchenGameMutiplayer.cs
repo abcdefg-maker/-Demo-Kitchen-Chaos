@@ -2,10 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.SceneManagement;
+using System;
 
 public class KitchenGameMutiplayer : NetworkBehaviour
 {
+
+    private const int MAX_PLAYER_COUNT = 4; //最大玩家数量
     public static KitchenGameMutiplayer Instance { get; private set; }
+
+    public event EventHandler OnTryingToJoinGame; //当有客户端尝试连接到服务器/主机时，触发这个事件
+    public event EventHandler OnFailedToJoinGame; //当有客户端尝试连接到服务器/主机失败时，触发这个事件
 
     [SerializeField] private KitchenObjectListSO kitchenObjectListSO;
 
@@ -13,6 +20,8 @@ public class KitchenGameMutiplayer : NetworkBehaviour
     private void Awake()
     {
         Instance = this;
+
+        DontDestroyOnLoad(gameObject); //切换场景时不销毁这个对象
     }
 
     public void StartHost()
@@ -25,22 +34,36 @@ public class KitchenGameMutiplayer : NetworkBehaviour
 
     private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest, NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)
     {
-        if (KitchenGameManager.Instance.IsWaitingToStart()) //如果游戏处于等待开始状态
+        if(SceneManager.GetActiveScene().name != Loader.Scene.CharacterSelectScene.ToString()) //如果当前场景不是角色选择场景
         {
-            connectionApprovalResponse.Approved = true;
-            connectionApprovalResponse.CreatePlayerObject = true; //允许创建玩家对象
+            connectionApprovalResponse.Approved = false; //不批准连接
+            connectionApprovalResponse.Reason = "Game has already started. Cannot join now."; //拒绝原因
+            return;
         }
-        else
+
+        if (NetworkManager.Singleton.ConnectedClientsIds.Count >= MAX_PLAYER_COUNT) //如果当前已连接的客户端数量>=最大玩家数量
         {
-            connectionApprovalResponse.Approved = false;
+            connectionApprovalResponse.Approved = false; //不批准连接
+            connectionApprovalResponse.Reason = "Game is full. Cannot join now."; //拒绝原因
+            return;
         }
+        connectionApprovalResponse.Approved = true;
+
         return;
 
     }
 
     public void StartClient()
     {
+        OnTryingToJoinGame?.Invoke(this, EventArgs.Empty); //触发事件：有客户端尝试连接到服务器/主机
+
+        NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_OnClientDisconnectCallback; //当客户端断开连接时，调用这个回调
         NetworkManager.Singleton.StartClient();
+    }
+
+    private void NetworkManager_OnClientDisconnectCallback(ulong clientId)
+    {
+        OnFailedToJoinGame?.Invoke(this, EventArgs.Empty); //触发事件：有客户端尝试连接到服务器/主机失败
     }
 
     //传函数接口作为参数的原因：

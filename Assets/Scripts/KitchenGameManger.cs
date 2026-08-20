@@ -25,6 +25,8 @@ public class KitchenGameManager : NetworkBehaviour
         GameOver,
     }
 
+    [SerializeField] private Transform playerPrefab;
+
     private NetworkVariable<State> state = new NetworkVariable<State>(State.WaitingToStart);  //游戏状态的网络变量 
     private bool isLocalPlayerReady;
     //private float waitingToStartTimer = 1f;
@@ -61,6 +63,21 @@ public class KitchenGameManager : NetworkBehaviour
         if (IsServer)
         {
             NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_OnClientDisconnectCallback;
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadEventCompleted;
+        }
+    }
+
+    //网络场景加载完成后（所有客户端都进入了游戏场景），由服务器为每个玩家生成角色
+    //只有服务器会订阅这个回调（见 OnNetworkSpawn 里的 IsServer 判断），所以只在服务器端执行
+    private void SceneManager_OnLoadEventCompleted(string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    {
+        //遍历所有已连接的客户端，为每一个都生成一个玩家角色
+        foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
+        {
+            Transform playerTransform = Instantiate(playerPrefab);   //在服务器端实例化玩家预制体
+            //把这个对象作为该 clientId 的“玩家对象”在网络上生成（Spawn），同步到所有客户端
+            //第二个参数 true 表示：该客户端断开时，自动销毁这个玩家对象
+            playerTransform.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
         }
     }
     private void NetworkManager_OnClientDisconnectCallback(ulong clientId)
@@ -99,9 +116,12 @@ public class KitchenGameManager : NetworkBehaviour
             SetPlayerReadyServerRpc();   //通知服务器：本玩家已准备好，服务器据此判断是否所有人都ready
         }
     }
+    /// <summary>
+    /// 一个结构体参数。当客户端调用 SetPlayerReadyServerRpc() 时，
+    ///  Netcode 会在服务器端自动往里面塞入调用方的信息
+    /// </summary>
+    /// <param name="serverRpcParams"></param>
 
-    //一个结构体参数。当客户端调用 SetPlayerReadyServerRpc() 时，
-    // Netcode 会在服务器端自动往里面塞入调用方的信息
     [ServerRpc(RequireOwnership = false)]
     private void SetPlayerReadyServerRpc(ServerRpcParams serverRpcParams = default)
     {
