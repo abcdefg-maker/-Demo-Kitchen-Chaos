@@ -238,21 +238,21 @@ public class KitchenGameMutiplayer : NetworkBehaviour
             return; //直接返回，不做任何处理
         }
         
-        //因为List是网络变量，不能直接修改它里面的元素，所以要先取出来，修改后再写回去
-        //具体原因：
-        // 1.struct 是值拷贝所以原地改改的是废拷贝（语言限制）
-        // 2. NetworkList 只认自己的 setter 才会触发同步（框架设计），两个原因叠一起，只能"取出→改→写回"。
-        //这才是更关键的原因。NetworkList 要把变化同步到所有客户端、并触发 OnListChanged 事件，它必须知道哪个元素被改了。
-        //它是怎么知道的？——通过它自己的方法：Add()、Remove()、以及索引器的 setter list[i] = value。
-        // 只有走这些方法，NetworkList 才会把对应元素标记为"脏"（dirty），排队等着通过网络发出去。
-        //假如 C# 允许你原地改结构体字段，绕过了 setter，
-        // 那 NetworkList 根本不知道发生了变化 → 不会同步给客户端，也不会触发事件。等于改了个寂寞。
+        //因为List是网络变量，不能直接修改它里面的元素，所以要先取出来，修改后再写回去 
+        //具体原因： 
+        // 1.struct 是值拷贝所以原地改改的是废拷贝（语言限制） 
+        // 2. NetworkList 只认自己的 setter 才会触发同步（框架设计），两个原因叠一起，只能"取出→改→写回"。 
+        //这才是更关键的原因。NetworkList 要把变化同步到所有客户端、并触发 OnListChanged 事件，它必须知道哪个元素被改了。 
+        //它是怎么知道的？——通过它自己的方法：Add()、Remove()、以及索引器的 setter list[i] = value。 
+        // 只有走这些方法，NetworkList 才会把对应元素标记为"脏"（dirty），排队等着通过网络发出去。 
+        //假如 C# 允许你原地改结构体字段，绕过了 setter， 
+        // 那 NetworkList 根本不知道发生了变化 → 不会同步给客户端，也不会触发事件。等于改了个寂寞。 
 
         
-        int playerDataIndex = GetPlayerDataIndexFromClientId(serverRpcParams.Receive.SenderClientId); //获取这个玩家数据的索引
-        PlayerData playerData = playerDataNetworkList[playerDataIndex]; //获取这个玩家数据
-        playerData.colorId = colorId; //修改玩家数据的颜色id
-        playerDataNetworkList[playerDataIndex] = playerData; //把修改后的玩家数据写回网络列表
+        int playerDataIndex = GetPlayerDataIndexFromClientId(serverRpcParams.Receive.SenderClientId); //获取这个玩家数据的索引 
+        PlayerData playerData = playerDataNetworkList[playerDataIndex]; //获取这个玩家数据 
+        playerData.colorId = colorId; //修改玩家数据的颜色id 
+        playerDataNetworkList[playerDataIndex] = playerData; //把修改后的玩家数据写回网络列表 
     }
 
     private bool IsColorAvailable(int colorId)
