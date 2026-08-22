@@ -12,6 +12,11 @@ public class HostDisconnectUI : NetworkBehaviour
     {
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_OnClientDisconnectCallback;
 
+        playAgainButton.onClick.AddListener(() =>
+        {
+            Loader.Load(Loader.Scene.MainMenuScene); //加载主菜单场景
+        });
+
         Hide();
     }
 
@@ -33,5 +38,10 @@ public class HostDisconnectUI : NetworkBehaviour
     public void Hide()
     {
         gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        NetworkManager.Singleton.OnClientDisconnectCallback -= NetworkManager_OnClientDisconnectCallback;
     }
 }

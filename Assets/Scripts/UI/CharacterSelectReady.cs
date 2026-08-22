@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
-public class CharacterSelectReady :NetworkBehaviour
+using System;
+public class CharacterSelectReady : NetworkBehaviour
 {
     public static CharacterSelectReady Instance { get; private set; }
+
+
+    public event EventHandler OnReadyChanged; //当所有玩家都准备好时，触发这个事件
 
     private Dictionary<ulong, bool> playerReadyDictionary;
 
@@ -38,6 +42,9 @@ public class CharacterSelectReady :NetworkBehaviour
         //靠 serverRpcParams.Receive.SenderClientId 来区分到底是谁调用的
         playerReadyDictionary[serverRpcParams.Receive.SenderClientId] = true;
 
+        //通知所有客户端：这个玩家已准备好
+        SetPlayerReadyClientRpc(serverRpcParams.Receive.SenderClientId);
+
         bool allPlayersReady = true;
         foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
         {
@@ -52,5 +59,17 @@ public class CharacterSelectReady :NetworkBehaviour
             Loader.LoadNetwork(Loader.Scene.MainScene);
         }
 
+    }
+
+    [ClientRpc]
+    private void SetPlayerReadyClientRpc(ulong clientId)
+    {
+        playerReadyDictionary[clientId] = true;
+        OnReadyChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    public bool IsPlayerReady(ulong clientId)
+    {
+        return playerReadyDictionary.ContainsKey(clientId) && playerReadyDictionary[clientId];
     }
 }

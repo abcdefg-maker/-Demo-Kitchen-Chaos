@@ -31,6 +31,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
 
     [SerializeField] private Transform kitchenObjectHoldPoint;
     [SerializeField] private List<Vector3> spawnPositionList;
+    [SerializeField] private PlayerVisual playerVisual;
 
 
     private bool isWalking;
@@ -52,6 +53,9 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
     {
         GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
         GameInput.Instance.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
+
+        PlayerData playerData = KitchenGameMutiplayer.Instance.GetPlayerDataFromClientId(OwnerClientId); //获取这个玩家的数据
+        playerVisual.SetPlayerColor(KitchenGameMutiplayer.Instance.GetPlayerColor(playerData.colorId)); //设置玩家的颜色
     }
 
     public override void OnNetworkSpawn() //这个函数的作用是当网络对象被生成时调用的回调函数。它在网络游戏中用于初始化玩家对象，并确保每个玩家实例在网络上正确注册和管理。
@@ -60,7 +64,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
         {
             LocalInstance = this;
         }
-        transform.position = spawnPositionList[(int)OwnerClientId]; //OwnClientId 似乎是在创建（spawn）时自动赋值的一个变量，那这样来说每个NetworkObject都应该有这个id
+        transform.position = spawnPositionList[KitchenGameMutiplayer.Instance.GetPlayerDataIndexFromClientId(OwnerClientId)]; //OwnClientId 似乎是在创建（spawn）时自动赋值的一个变量，那这样来说每个NetworkObject都应该有这个id
         OnAnyPlayerSpawned?.Invoke(this, EventArgs.Empty); //触发事件，通知所有监听者有玩家生成了
 
         if(IsServer) //如果是服务器端
