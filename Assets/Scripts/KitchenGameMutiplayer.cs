@@ -8,7 +8,7 @@ using System;
 public class KitchenGameMutiplayer : NetworkBehaviour
 {
 
-    private const int MAX_PLAYER_COUNT = 4; //最大玩家数量
+    public const int MAX_PLAYER_COUNT = 4; //最大玩家数量
     public static KitchenGameMutiplayer Instance { get; private set; }
 
     public event EventHandler OnTryingToJoinGame; //当有客户端尝试连接到服务器/主机时，触发这个事件
