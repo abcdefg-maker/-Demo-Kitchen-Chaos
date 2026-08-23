@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a67a6ad6958142578ceda1d520aabfb, type: 3}
+  m_Name: UOSSettings
+  m_EditorClassIdentifier: 
+  encryptedAppID: 6iH2wu4KV+9LYcVZacfikUgV1mJV+q5KIlwlyIitpoB8C93WNS9GZdV8WpQAYI2S
+  encryptedAppSecret: hTKtMeBrgQ6baWNkA+62mNCpfjDqS63G4X7MO7uv5bqsX1NH3iDq2UZy7oNhQfZc
+  encryptedAppServiceSecret: WuznDHCIBUlJLEvWcmlDSoxsC9WeyKz2gUnU10AWBfbEjG2TtVnqcI8MQ2LzICoU
+  encrptedProjectId: dD11/jV9jYqcrKRys9nrundYjE5QZOo1mu3/G9/sk51GauEYWDV1RIpaNzTzzee8
+  encrptedUserName: O+K+7iFIHYXK9tGP5w/Z+g==
+  encryptedRoomProfileUUID: 
+  encryptedMatchmakingConfigID: 
+  configPairs: []

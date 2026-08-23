@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentVersion: 1.01
   subtype: kitchenchaos
-  lastShownTimestamp: 1787321524
+  lastShownTimestamp: 1787409772
   lastUpdateResponse:
     version: 1.01
     versionUrl: https://unitycodemonkey.com
-  checkedLastUpdateTimestamp: 1787321524
+  checkedLastUpdateTimestamp: 1787409772
   lastQOTDResponse:
     questionId: 334
     questionText: If you add the attribute [ExecuteInEditMode] to a MonoBehaviour
@@ -28,7 +28,7 @@ MonoBehaviour:
     answerC: Framerate shown in Game - Stats window
     answerD: 
     answerE: 
-  lastQotdTimestamp: 1787321524
+  lastQotdTimestamp: 1787409772
   lastDynamicHeaderResponse:
     topImageUrl: https://codemonkeyexternal.blob.core.windows.net/external/Misc/summer2025CodeMonkeyBundle_EndsSoon.png
     topText: Get 80% OFF on ALL my Courses and Games!!! (ENDS AUGUST)
@@ -36,11 +36,11 @@ MonoBehaviour:
     bottomText: DONT MISS the latest important trends, sign up for my FREE Weekly
       Newsletter!
     bottomLink: gamedevreport
-  lastDynamicHeaderTimestamp: 1787321524
+  lastDynamicHeaderTimestamp: 1787409772
   websiteLatestMessage:
     text: <a href="https://cmonkey.co/freecourses">Check out all my FREE courses!
       Click here!</a>
-  websiteLatestMessageTimestamp: 1787321524
+  websiteLatestMessageTimestamp: 1787409772
   websiteLatestVideos:
     videos:
     - youTubeId: 2QKVo8m5ozQ
@@ -52,4 +52,4 @@ MonoBehaviour:
       title: The SECRET WEAPON making Unity 7 AWESOME - CoreCLR Explained
     - youTubeId: xsQTCKSHte8
       title: TOP 10 NEW Games, Made with Unity! (JULY 2026)
-  websiteLatestVideosTimestamp: 1787321524
+  websiteLatestVideosTimestamp: 1787409772

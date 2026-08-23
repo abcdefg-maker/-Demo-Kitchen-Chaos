@@ -1,0 +1,30 @@
+{
+    "name": "Unity.Sync.Relay.Samples.Netcode",
+    "rootNamespace": "",
+    "references": [
+        "Unity.Sync.Relay",
+        "Unity.Netcode.Runtime",
+        "Unity.Netcode.Components",
+        "Unity.Runtime.Joystick"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.netcode.gameobjects",
+            "expression": "1.3.1",
+            "define": "NETCODE_GAMEOBJECTS_1_3_1"
+        },
+        {
+            "name": "com.unity.transport",
+            "expression": "2.0.0-exp",
+            "define": "UTP_TRANSPORT_2_0_ABOVE"
+        }
+    ],
+    "noEngineReferences": false
+}
