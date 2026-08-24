@@ -61,7 +61,45 @@
 
 
 
-## 4. 我的工作与学习收获 · My Contributions & Takeaways
+## 4. 多人联机功能 · Multiplayer Networking
+
+在教程单机版本基础上，我使用 Unity Netcode for GameObjects 和 UOS Sync Relay / Lobby 完成多人联机功能，支持最多 4 名玩家通过 Relay 跨网络进入同一厨房。
+
+### 4.1 联机流程
+
+- 大厅创建与加入
+  - Host 创建公开房间，等待 UOS Relay 完成房间分配后启动 NGO Host
+  - Client 通过 Quick Join 查找可加入房间，获取房间信息后启动 NGO Client
+  - 使用 `RelayTransportNetcode` 连接 Relay，避免依赖局域网直连
+- 场景与连接管理
+  - 通过 `NetworkManager` 管理 Host/Client 生命周期及客户端连接回调
+  - 由 Host 使用 `NetworkSceneManager` 同步加载角色选择和主游戏场景
+  - 连接审批限制最多 4 名玩家，并拒绝游戏开始后的 Late Join
+  - 处理加入失败、玩家离开、Host 断线及 Host 迁移等状态
+
+### 4.2 玩家状态同步
+
+- 使用 `NetworkList<PlayerData>` 同步玩家 `clientId` 和角色颜色
+- 使用 `ServerRpc` 处理准备状态和角色颜色选择，再通过 `ClientRpc` 通知所有客户端更新 UI
+- 使用 `INetworkSerializable` 定义 `PlayerData` 的网络序列化方式
+- 通过 `ClientNetworkTransform` 和 `OwnerNetworkAnimator` 实现客户端控制角色移动与动画同步
+
+### 4.3 厨房交互同步
+
+- 厨房工作台交互通过 ServerRpc 请求服务器执行，再用 ClientRpc 同步反馈、音效和动画
+- 炉灶状态、煎制进度和烧焦进度使用 `NetworkVariable` 同步
+- 食材生成和销毁由服务器执行，使用 `NetworkObject` 和 `NetworkObjectReference` 在客户端与服务器之间定位网络对象
+- 共享物品和工作台状态由 Host 统一处理，减少多人同时操作时的状态冲突
+
+### 4.4 联机测试
+
+- Windows 端已完成 Host/Client 联机测试
+- 测试内容包括创建房间、快速加入、角色选择、准备状态、厨房交互、食材流转和游戏场景同步
+- 运行联机功能需要正确配置 UOS Sync Relay 服务及对应的 Unity 项目环境
+
+---
+
+## 5. 我的工作与学习收获 · My Contributions & Takeaways
 
 在本项目中，我主要做了以下工作：
 
@@ -72,20 +110,27 @@
   - 订单管理、UI 更新、事件广播等模块
 - 对工程结构、代码组织方式进行理解与归纳，作为自己之后写 Unity 项目的参考模板
 - 完成项目打包流程，将最终可执行版本纳入仓库，模拟「对外交付」的工作场景
+- 在单机教程基础上完成多人联机功能的接入与改造：
+  - 使用 Unity Netcode for GameObjects 和 UOS Sync Relay / Lobby，完成创建房间、快速加入和 Host/Client 连接流程
+  - 为玩家数据、角色颜色、准备状态、角色移动和动画补充网络同步逻辑
+  - 将厨房工作台、食材生成与销毁、炉灶状态等共享交互改造为服务器权威的同步流程
+  - 实现人数上限、游戏开始后拒绝加入、断线处理和房主状态处理等联机边界逻辑
+- 在 Windows 端进行 Host/Client 双端联机测试，验证房间连接、角色选择、场景切换和厨房交互同步
 
 本仓库更多用于展示：
 
 - 我在实际项目中阅读、理解并扩展他人代码的能力
 - 我在 Unity / C# 开发中的代码风格和注释习惯
 - 我对完整开发流程（从教程到成品打包、到版本管理与作品展示）的理解
+- 我将单机玩法扩展为多人协作体验，并对网络状态同步与异常场景处理进行了实践
 
 ---
 
-## 5. 版权与使用说明 · Copyright & Usage
+## 6. 版权与使用说明 · Copyright & Usage
 
 本仓库严格区分「原作者内容」与「我个人内容」：
 
-### 5.1 原作者：Code Monkey
+### 6.1 原作者：Code Monkey
 
 - 教程视频、课程设计、游戏玩法整体框架  
 - 原始 3D 模型、纹理、音频等美术与音频资源  
@@ -99,7 +144,7 @@
 此外，根据 Code Monkey 在公开讨论中的说明，学习者可以在自己完整的终端项目中使用课程中的代码和项目文件（包括商业项目），但**不允许**直接原样打包出售课程的源文件或素材。:contentReference[oaicite:1]{index=1}  
 本 README 仅为对该立场的转述，**不构成任何法律意见**。
 
-### 5.2 本人工作成果
+### 6.2 本人工作成果
 
 - 在原项目基础上添加的**中文注释、说明文档与少量工程配置调整**由我本人创作
 - 本仓库整体仅用于：
@@ -107,7 +152,7 @@
   - **面试 / 作品集展示**
 - 不以此项目单独进行任何形式的商业销售或收费服务
 
-### 5.3 二次使用说明（给浏览本仓库的读者）
+### 6.3 二次使用说明（给浏览本仓库的读者）
 
 如果你希望：
 
@@ -124,45 +169,7 @@
 
 ---
 
-## 6. 致谢 · Acknowledgements
+## 7. 致谢 · Acknowledgements
 
 - **Code Monkey**：提供了完整且高质量的 Kitchen Chaos 教程与项目资源，让我有机会系统性实践 Unity 3D 游戏开发与工程化代码编写。
 - 所有查看本仓库的面试官 / 同行：欢迎提出任何建议或改进意见，也欢迎讨论 Unity、C#、项目工程结构等相关话题。
-
----
-
-## 7. 多人联机功能 · Multiplayer Networking
-
-在教程单机版本基础上，我使用 Unity Netcode for GameObjects 和 UOS Sync Relay / Lobby 完成多人联机功能，支持最多 4 名玩家通过 Relay 跨网络进入同一厨房。
-
-### 7.1 联机流程
-
-- 大厅创建与加入
-  - Host 创建公开房间，等待 UOS Relay 完成房间分配后启动 NGO Host
-  - Client 通过 Quick Join 查找可加入房间，获取房间信息后启动 NGO Client
-  - 使用 `RelayTransportNetcode` 连接 Relay，避免依赖局域网直连
-- 场景与连接管理
-  - 通过 `NetworkManager` 管理 Host/Client 生命周期及客户端连接回调
-  - 由 Host 使用 `NetworkSceneManager` 同步加载角色选择和主游戏场景
-  - 连接审批限制最多 4 名玩家，并拒绝游戏开始后的 Late Join
-  - 处理加入失败、玩家离开、Host 断线及 Host 迁移等状态
-
-### 7.2 玩家状态同步
-
-- 使用 `NetworkList<PlayerData>` 同步玩家 `clientId` 和角色颜色
-- 使用 `ServerRpc` 处理准备状态和角色颜色选择，再通过 `ClientRpc` 通知所有客户端更新 UI
-- 使用 `INetworkSerializable` 定义 `PlayerData` 的网络序列化方式
-- 通过 `ClientNetworkTransform` 和 `OwnerNetworkAnimator` 实现客户端控制角色移动与动画同步
-
-### 7.3 厨房交互同步
-
-- 厨房工作台交互通过 ServerRpc 请求服务器执行，再用 ClientRpc 同步反馈、音效和动画
-- 炉灶状态、煎制进度和烧焦进度使用 `NetworkVariable` 同步
-- 食材生成和销毁由服务器执行，使用 `NetworkObject` 和 `NetworkObjectReference` 在客户端与服务器之间定位网络对象
-- 共享物品和工作台状态由 Host 统一处理，减少多人同时操作时的状态冲突
-
-### 7.4 联机测试
-
-- Windows 端已完成 Host/Client 联机测试
-- 测试内容包括创建房间、快速加入、角色选择、准备状态、厨房交互、食材流转和游戏场景同步
-- 运行联机功能需要正确配置 UOS Sync Relay 服务及对应的 Unity 项目环境
